@@ -3,6 +3,8 @@ SYSTEM: Library Loan Management System
 OVERVIEW:
 A web-based library system that manages book borrowing with a verification workflow. The system supports two roles: USER and ADMIN. Borrowing is not instantly approved; instead, it requires validation to ensure realistic constraints such as stock availability and user eligibility.
 
+HTML, CSS, JS, PHP Native. No framework
+
 ROLES:
 
 1. USER:
