@@ -12,6 +12,7 @@ class HomeController extends Controller
     {
         $this->view('pages/home', [
             'title' => 'Home',
+            'isLandingPage' => true,
         ]);
     }
 }
