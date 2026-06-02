@@ -2,22 +2,7 @@
 
 declare(strict_types=1);
 
-ini_set('session.use_strict_mode', '1');
-ini_set('session.use_only_cookies', '1');
-
-$isHttps = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-    || (($_SERVER['SERVER_PORT'] ?? null) === '443');
-
-session_set_cookie_params([
-    'httponly' => true,
-    'lifetime' => 0,
-    'path' => '/',
-    'samesite' => 'Lax',
-    'secure' => $isHttps,
-]);
-
-session_start();
-
+define('APP_TESTING', true);
 define('BASE_PATH', dirname(__DIR__));
 
 require BASE_PATH . '/app/helpers/functions.php';
@@ -52,6 +37,6 @@ spl_autoload_register(function (string $class): void {
     }
 });
 
-$app = new App\Core\App();
-$app->run();
-
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}

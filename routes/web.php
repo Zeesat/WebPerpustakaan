@@ -10,7 +10,12 @@ return [
     ],
     'auth' => [
         '/login' => 'AuthController@login',
+        'POST /login' => 'AuthController@authenticate',
         '/register' => 'AuthController@register',
+        'POST /register' => 'AuthController@store',
+        '/forgot-password' => 'AuthController@forgotPassword',
+        '/reset-password' => 'AuthController@resetPassword',
+        'POST /logout' => 'AuthController@logout',
     ],
     'user' => [
         '/dashboard' => 'DashboardController@index',

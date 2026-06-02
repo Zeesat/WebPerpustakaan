@@ -14,6 +14,9 @@ use App\Controllers\BookController;
 use App\Controllers\DashboardController;
 use App\Controllers\HomeController;
 use App\Controllers\LoanController;
+use App\Middleware\AdminMiddleware;
+use App\Middleware\AuthMiddleware;
+use App\Middleware\GuestMiddleware;
 
 class App
 {
@@ -34,18 +37,23 @@ class App
         $router->get('/books', [BookController::class, 'index']);
         $router->get('/books/show', [BookController::class, 'show']);
 
-        $router->get('/login', [AuthController::class, 'login']);
-        $router->get('/register', [AuthController::class, 'register']);
+        $router->get('/login', [AuthController::class, 'login'], [GuestMiddleware::class]);
+        $router->post('/login', [AuthController::class, 'authenticate'], [GuestMiddleware::class]);
+        $router->get('/register', [AuthController::class, 'register'], [GuestMiddleware::class]);
+        $router->post('/register', [AuthController::class, 'store'], [GuestMiddleware::class]);
+        $router->get('/forgot-password', [AuthController::class, 'forgotPassword'], [GuestMiddleware::class]);
+        $router->get('/reset-password', [AuthController::class, 'resetPassword'], [GuestMiddleware::class]);
+        $router->post('/logout', [AuthController::class, 'logout'], [AuthMiddleware::class]);
 
-        $router->get('/dashboard', [DashboardController::class, 'index']);
-        $router->get('/loans/my', [LoanController::class, 'myLoans']);
-        $router->get('/loans/request', [LoanController::class, 'requestForm']);
+        $router->get('/dashboard', [DashboardController::class, 'index'], [AuthMiddleware::class]);
+        $router->get('/loans/my', [LoanController::class, 'myLoans'], [AuthMiddleware::class]);
+        $router->get('/loans/request', [LoanController::class, 'requestForm'], [AuthMiddleware::class]);
 
-        $router->get('/admin', [AdminDashboardController::class, 'index']);
-        $router->get('/admin/books', [BookManagementController::class, 'index']);
-        $router->get('/admin/categories', [CategoryManagementController::class, 'index']);
-        $router->get('/admin/users', [UserManagementController::class, 'index']);
-        $router->get('/admin/loans', [LoanVerificationController::class, 'index']);
+        $router->get('/admin', [AdminDashboardController::class, 'index'], [AdminMiddleware::class]);
+        $router->get('/admin/books', [BookManagementController::class, 'index'], [AdminMiddleware::class]);
+        $router->get('/admin/categories', [CategoryManagementController::class, 'index'], [AdminMiddleware::class]);
+        $router->get('/admin/users', [UserManagementController::class, 'index'], [AdminMiddleware::class]);
+        $router->get('/admin/loans', [LoanVerificationController::class, 'index'], [AdminMiddleware::class]);
     }
 }
 

@@ -13,12 +13,24 @@
             <a class="text-slate-600 font-semibold hover:text-blue-700 transition-all duration-200" href="/books">Catalog</a>
         </nav>
         <div class="flex items-center gap-4">
-            <a class="px-5 py-2.5 rounded-lg border border-blue-800 text-blue-800 font-semibold hover:bg-slate-50 active:scale-95 transition-all" href="/login">
-                Login
-            </a>
-            <a class="px-5 py-2.5 rounded-lg bg-primary text-on-primary font-semibold shadow-md active:scale-95 transition-all" href="/register">
-                Get Started
-            </a>
+            <?php if (auth_check()): ?>
+                <a class="px-5 py-2.5 rounded-lg border border-blue-800 text-blue-800 font-semibold hover:bg-slate-50 active:scale-95 transition-all" href="<?= htmlspecialchars(auth_is_admin() ? '/admin' : '/dashboard'); ?>">
+                    <?= htmlspecialchars(auth_is_admin() ? 'Admin Panel' : 'Dashboard'); ?>
+                </a>
+                <form action="/logout" method="POST">
+                    <?= csrf_field(); ?>
+                    <button class="px-5 py-2.5 rounded-lg bg-primary text-on-primary font-semibold shadow-md active:scale-95 transition-all" type="submit">
+                        Logout
+                    </button>
+                </form>
+            <?php else: ?>
+                <a class="px-5 py-2.5 rounded-lg border border-blue-800 text-blue-800 font-semibold hover:bg-slate-50 active:scale-95 transition-all" href="/login">
+                    Login
+                </a>
+                <a class="px-5 py-2.5 rounded-lg bg-primary text-on-primary font-semibold shadow-md active:scale-95 transition-all" href="/register">
+                    Get Started
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 </header>

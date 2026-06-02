@@ -121,6 +121,18 @@
     <?php endif; ?>
 
     <main<?= $isLandingPage ? '' : ' class="container"' ?>>
+        <?php if (! empty($status)): ?>
+            <div class="flash-message flash-message-success" role="status">
+                <?= htmlspecialchars((string) $status); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (! empty($error)): ?>
+            <div class="flash-message flash-message-error" role="alert">
+                <?= htmlspecialchars((string) $error); ?>
+            </div>
+        <?php endif; ?>
+
         <?php require $viewPath; ?>
     </main>
 
