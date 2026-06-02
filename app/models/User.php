@@ -63,9 +63,15 @@ class User
                 'password' => $attributes['password'],
                 'role' => $attributes['role'] ?? 'user',
             ]);
-        } catch (PDOException) {
-            return null;
-        }
+        } catch (PDOException $e) {
+    die(
+        '<pre>'
+        . $e->getMessage()
+        . PHP_EOL
+        . print_r($e->errorInfo, true)
+        . '</pre>'
+    );
+}
 
         $id = $this->connection->lastInsertId();
 
