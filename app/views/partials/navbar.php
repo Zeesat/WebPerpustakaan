@@ -1,25 +1,34 @@
-<header class="site-header">
-    <div class="container">
-        <a class="brand" href="/">LibManage</a>
-
-        <nav class="nav">
-            <a href="/">Home</a>
-            <a href="/books">Books</a>
+<header class="bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm sticky top-0 z-50 font-manrope antialiased">
+    <div class="max-w-[1200px] mx-auto flex justify-between items-center h-20 px-6">
+        <div class="flex items-center gap-2">
+            <span class="text-2xl font-extrabold tracking-tight text-blue-900">LibManage</span>
+            <span class="hidden lg:block text-xs font-semibold text-slate-500 border-l border-slate-300 pl-2 uppercase tracking-widest">
+                Library Loan Management
+            </span>
+        </div>
+        <nav class="hidden md:flex items-center gap-8">
+            <a class="text-blue-700 border-b-2 border-blue-700 font-semibold pb-1" href="/">Features</a>
+            <a class="text-slate-600 font-semibold hover:text-blue-700 transition-all duration-200" href="/books">Catalog</a>
+        </nav>
+        <div class="flex items-center gap-4">
             <?php if (auth_check()): ?>
-                <a href="/dashboard">Dashboard</a>
-                <?php if (auth_is_admin()): ?>
-                    <a href="/admin">Admin</a>
-                <?php endif; ?>
-                <span class="nav-user">Hi, <?= htmlspecialchars((string) (auth_user()['name'] ?? 'Reader')); ?></span>
-                <form action="/logout" method="POST" class="inline-form">
+                <a class="px-5 py-2.5 rounded-lg border border-blue-800 text-blue-800 font-semibold hover:bg-slate-50 active:scale-95 transition-all" href="<?= htmlspecialchars(auth_is_admin() ? '/admin' : '/dashboard'); ?>">
+                    <?= htmlspecialchars(auth_is_admin() ? 'Admin Panel' : 'Dashboard'); ?>
+                </a>
+                <form action="/logout" method="POST">
                     <?= csrf_field(); ?>
-                    <button type="submit" class="btn btn-secondary">Logout</button>
+                    <button class="px-5 py-2.5 rounded-lg bg-primary text-on-primary font-semibold shadow-md active:scale-95 transition-all" type="submit">
+                        Logout
+                    </button>
                 </form>
             <?php else: ?>
-                <a href="/login" class="btn btn-secondary">Login</a>
-                <a href="/register" class="btn btn-primary">Register</a>
+                <a class="px-5 py-2.5 rounded-lg border border-blue-800 text-blue-800 font-semibold hover:bg-slate-50 active:scale-95 transition-all" href="/login">
+                    Login
+                </a>
+                <a class="px-5 py-2.5 rounded-lg bg-primary text-on-primary font-semibold shadow-md active:scale-95 transition-all" href="/register">
+                    Get Started
+                </a>
             <?php endif; ?>
-        </nav>
+        </div>
     </div>
 </header>
-

@@ -8,8 +8,6 @@
         </div>
         <nav class="hidden md:flex items-center gap-8">
             <a class="text-blue-700 border-b-2 border-blue-700 font-semibold pb-1" href="/">Features</a>
-            <a class="text-slate-600 font-semibold hover:text-blue-700 transition-all duration-200" href="/admin">For Librarians</a>
-            <a class="text-slate-600 font-semibold hover:text-blue-700 transition-all duration-200" href="/dashboard">For Students</a>
             <a class="text-slate-600 font-semibold hover:text-blue-700 transition-all duration-200" href="/books">Catalog</a>
         </nav>
         <div class="flex items-center gap-4">
