@@ -42,17 +42,6 @@
                         </div>
                         <span class="material-symbols-outlined text-slate-300 group-hover:text-primary transition-colors">chevron_right</span>
                     </a>
-
-                    <a class="group p-5 rounded-lg border border-slate-200 hover:border-primary-container hover:bg-surface-container-low transition-all cursor-pointer flex items-center gap-4" href="/admin">
-                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-primary">
-                            <span class="material-symbols-outlined">admin_panel_settings</span>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-label-md text-label-md text-primary">For Admins</h3>
-                            <p class="text-sm text-slate-500">Verify requests, manage catalog, and monitor logs.</p>
-                        </div>
-                        <span class="material-symbols-outlined text-slate-300 group-hover:text-primary transition-colors">chevron_right</span>
-                    </a>
                 </div>
             </div>
         </div>
