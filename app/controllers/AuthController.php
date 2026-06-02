@@ -18,6 +18,7 @@ class AuthController extends Controller
     {
         $this->view('auth/login', [
             'title' => 'Login',
+            'isLandingPage' => true,
             'status' => flash_get('status'),
             'error' => flash_get('error'),
             'errors' => flash_get('errors', []),
@@ -28,6 +29,7 @@ class AuthController extends Controller
     {
         $this->view('auth/register', [
             'title' => 'Register',
+            'isLandingPage' => true,
             'error' => flash_get('error'),
             'errors' => flash_get('errors', []),
         ]);

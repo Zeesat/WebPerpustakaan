@@ -121,16 +121,32 @@
     <?php endif; ?>
 
     <main<?= $isLandingPage ? '' : ' class="container"' ?>>
-        <?php if (! empty($status)): ?>
-            <div class="flash-message flash-message-success" role="status">
-                <?= htmlspecialchars((string) $status); ?>
-            </div>
-        <?php endif; ?>
+        <?php if ($isLandingPage && (! empty($status) || ! empty($error))): ?>
+            <div class="max-w-[1200px] mx-auto px-6 pt-6">
+                <?php if (! empty($status)): ?>
+                    <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-semibold text-emerald-800 shadow-sm" role="status">
+                        <?= htmlspecialchars((string) $status); ?>
+                    </div>
+                <?php endif; ?>
 
-        <?php if (! empty($error)): ?>
-            <div class="flash-message flash-message-error" role="alert">
-                <?= htmlspecialchars((string) $error); ?>
+                <?php if (! empty($error)): ?>
+                    <div class="rounded-xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-semibold text-rose-800 shadow-sm<?= ! empty($status) ? ' mt-4' : ''; ?>" role="alert">
+                        <?= htmlspecialchars((string) $error); ?>
+                    </div>
+                <?php endif; ?>
             </div>
+        <?php elseif (! $isLandingPage): ?>
+            <?php if (! empty($status)): ?>
+                <div class="flash-message flash-message-success" role="status">
+                    <?= htmlspecialchars((string) $status); ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (! empty($error)): ?>
+                <div class="flash-message flash-message-error" role="alert">
+                    <?= htmlspecialchars((string) $error); ?>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
 
         <?php require $viewPath; ?>

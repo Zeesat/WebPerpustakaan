@@ -1,6 +1,6 @@
 <header class="site-header">
     <div class="container">
-        <a class="brand" href="/">ShelfFlow</a>
+        <a class="brand" href="/">LibManage</a>
 
         <nav class="nav">
             <a href="/">Home</a>
