@@ -1,14 +1,16 @@
-<footer class="bg-slate-50 border-t border-gray-200 font-manrope text-sm">
-    <div class="max-w-[1200px] mx-auto py-12 px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="space-y-2 text-center md:text-left">
-            <span class="font-bold text-slate-900 text-lg">LibManage</span>
-            <p class="text-slate-500">&copy; <span data-year></span> LibManage. Institutional Reliability &amp; Modern Efficiency.</p>
+<footer class="site-footer">
+    <div class="container site-footer__inner">
+        <div class="site-footer__brand">
+            <span class="site-footer__title">LibManage</span>
+            <p>&copy; <span data-year></span> LibManage. Institutional reliability for modern library operations.</p>
         </div>
-        <div class="flex flex-wrap justify-center gap-6">
-            <a class="text-slate-500 hover:text-blue-600 underline decoration-blue-500 underline-offset-4 transition-opacity" href="#">Privacy Policy</a>
-            <a class="text-slate-500 hover:text-blue-600 underline decoration-blue-500 underline-offset-4 transition-opacity" href="#">Terms of Service</a>
-            <a class="text-slate-500 hover:text-blue-600 underline decoration-blue-500 underline-offset-4 transition-opacity" href="#">Help Desk</a>
-            <a class="text-slate-500 hover:text-blue-600 underline decoration-blue-500 underline-offset-4 transition-opacity" href="#">Contact Us</a>
+
+        <div class="site-footer__links">
+            <a href="<?= htmlspecialchars(url('/')); ?>">Home</a>
+            <a href="<?= htmlspecialchars(url('/books')); ?>">Catalog</a>
+            <a href="<?= htmlspecialchars(url(auth_check() ? (auth_is_admin() ? '/admin' : '/dashboard') : '/login')); ?>">
+                <?= htmlspecialchars(auth_check() ? (auth_is_admin() ? 'Admin Panel' : 'Dashboard') : 'Login'); ?>
+            </a>
         </div>
     </div>
 </footer>

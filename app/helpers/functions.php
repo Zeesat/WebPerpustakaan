@@ -30,6 +30,24 @@ function url(string $path = '/'): string
     return $baseUrl . ($normalizedPath === '/' ? '' : $normalizedPath);
 }
 
+function current_path(): string
+{
+    $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+
+    if (! is_string($path) || $path === '') {
+        return '/';
+    }
+
+    return $path;
+}
+
+function is_current_path(string $path): bool
+{
+    $normalizedPath = '/' . ltrim($path, '/');
+
+    return current_path() === $normalizedPath;
+}
+
 function redirect(string $path, int $statusCode = 302): void
 {
     if (defined('APP_TESTING') && APP_TESTING) {

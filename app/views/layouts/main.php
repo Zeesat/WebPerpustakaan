@@ -1,5 +1,7 @@
 <?php $title = $title ?? 'Library Loan Management System'; ?>
 <?php $isLandingPage = $isLandingPage ?? false; ?>
+<?php $bodyClass = $bodyClass ?? ($isLandingPage ? 'bg-background font-body-md text-on-surface' : ''); ?>
+<?php $mainClass = $mainClass ?? ($isLandingPage ? '' : 'container'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,14 +115,14 @@
         <link rel="stylesheet" href="<?= htmlspecialchars(asset('css/app.css')); ?>">
     <?php endif; ?>
 </head>
-<body<?= $isLandingPage ? ' class="bg-background font-body-md text-on-surface"' : ''; ?>>
+<body<?= $bodyClass !== '' ? ' class="' . htmlspecialchars($bodyClass) . '"' : ''; ?>>
     <?php if ($isLandingPage): ?>
         <?php require BASE_PATH . '/app/views/partials/navbar-landing.php'; ?>
     <?php else: ?>
         <?php require BASE_PATH . '/app/views/partials/navbar.php'; ?>
     <?php endif; ?>
 
-    <main<?= $isLandingPage ? '' : ' class="container"' ?>>
+    <main<?= $mainClass !== '' ? ' class="' . htmlspecialchars($mainClass) . '"' : ''; ?>>
         <?php if ($isLandingPage && (! empty($status) || ! empty($error))): ?>
             <div class="max-w-[1200px] mx-auto px-6 pt-6">
                 <?php if (! empty($status)): ?>

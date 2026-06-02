@@ -1,33 +1,34 @@
-<header class="bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm sticky top-0 z-50 font-manrope antialiased">
-    <div class="max-w-[1200px] mx-auto flex justify-between items-center h-20 px-6">
-        <div class="flex items-center gap-2">
-            <span class="text-2xl font-extrabold tracking-tight text-blue-900">LibManage</span>
-            <span class="hidden lg:block text-xs font-semibold text-slate-500 border-l border-slate-300 pl-2 uppercase tracking-widest">
-                Library Loan Management
+<?php $isCatalogPage = is_current_path('/books') || is_current_path('/books/show'); ?>
+<header class="site-nav">
+    <div class="container site-nav__inner">
+        <a class="site-nav__brand" href="<?= htmlspecialchars(url('/')); ?>">
+            <span class="site-nav__brand-mark">L</span>
+            <span>
+                <span class="site-nav__brand-title">LibManage</span>
+                <span class="site-nav__brand-subtitle">Library Loan Management</span>
             </span>
-        </div>
-        <nav class="hidden md:flex items-center gap-8">
-            <a class="text-blue-700 border-b-2 border-blue-700 font-semibold pb-1" href="/">Features</a>
-            <a class="text-slate-600 font-semibold hover:text-blue-700 transition-all duration-200" href="/books">Catalog</a>
+        </a>
+
+        <nav class="site-nav__links" aria-label="Primary navigation">
+            <a class="site-nav__link<?= is_current_path('/') ? ' is-active' : ''; ?>" href="<?= htmlspecialchars(url('/')); ?>">Home</a>
+            <a class="site-nav__link<?= $isCatalogPage ? ' is-active' : ''; ?>" href="<?= htmlspecialchars(url('/books')); ?>">Catalog</a>
+            <?php if (auth_check() && ! auth_is_admin()): ?>
+                <a class="site-nav__link<?= is_current_path('/loans/my') ? ' is-active' : ''; ?>" href="<?= htmlspecialchars(url('/loans/my')); ?>">My Loans</a>
+            <?php endif; ?>
         </nav>
-        <div class="flex items-center gap-4">
+
+        <div class="site-nav__actions">
             <?php if (auth_check()): ?>
-                <a class="px-5 py-2.5 rounded-lg border border-blue-800 text-blue-800 font-semibold hover:bg-slate-50 active:scale-95 transition-all" href="<?= htmlspecialchars(auth_is_admin() ? '/admin' : '/dashboard'); ?>">
+                <a class="site-nav__button site-nav__button--ghost" href="<?= htmlspecialchars(url(auth_is_admin() ? '/admin' : '/dashboard')); ?>">
                     <?= htmlspecialchars(auth_is_admin() ? 'Admin Panel' : 'Dashboard'); ?>
                 </a>
-                <form action="/logout" method="POST">
+                <form action="<?= htmlspecialchars(url('/logout')); ?>" class="inline-form" method="POST">
                     <?= csrf_field(); ?>
-                    <button class="px-5 py-2.5 rounded-lg bg-primary text-on-primary font-semibold shadow-md active:scale-95 transition-all" type="submit">
-                        Logout
-                    </button>
+                    <button class="site-nav__button site-nav__button--primary" type="submit">Logout</button>
                 </form>
             <?php else: ?>
-                <a class="px-5 py-2.5 rounded-lg border border-blue-800 text-blue-800 font-semibold hover:bg-slate-50 active:scale-95 transition-all" href="/login">
-                    Login
-                </a>
-                <a class="px-5 py-2.5 rounded-lg bg-primary text-on-primary font-semibold shadow-md active:scale-95 transition-all" href="/register">
-                    Get Started
-                </a>
+                <a class="site-nav__button site-nav__button--ghost" href="<?= htmlspecialchars(url('/login')); ?>">Login</a>
+                <a class="site-nav__button site-nav__button--primary" href="<?= htmlspecialchars(url('/register')); ?>">Get Started</a>
             <?php endif; ?>
         </div>
     </div>
