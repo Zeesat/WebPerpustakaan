@@ -14,7 +14,7 @@ body {
     overflow-x: hidden;           /* fallback for browsers that don't support clip */
     overflow-x: clip;             /* modern: prevents accidental horizontal scroll */
     overscroll-behavior-x: none;  /* prevent rubber-band horizontal shift */
-    overscroll-behavior-y: contain; /* prevent viewport shifting to empty space on vertical bounce */
+    overscroll-behavior-y: none; /* prevent viewport shifting to empty space on vertical bounce */
 }
 
 html {
