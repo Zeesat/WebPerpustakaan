@@ -9,42 +9,42 @@ use PDO;
 
 class Book
 {
-    public function __construct(private ?PDO $connection = null)
+    public function __construct(private ?PDO  = null)
     {
-        $this->connection ??= Database::connection();
+        ->connection ??= Database::connection();
     }
 
-    public function getCatalogBooks(array $filters = []): array
+    public function getCatalogBooks(array  = []): array
     {
-        if (! $this->connection instanceof PDO) {
+        if (! ->connection instanceof PDO) {
             return [];
         }
 
-        $conditions = [];
-        $bindings = [];
+        \ = [];
+        \ = [];
 
-        $search = trim((string) ($filters['search'] ?? ''));
-        if ($search !== '') {
-            $conditions[] = '(b.title LIKE :search OR b.author LIKE :search OR COALESCE(b.description, \'\') LIKE :search)';
-            $bindings['search'] = '%' . $search . '%';
+        \ = trim((string) (\['search'] ?? ''));
+        if (\ !== '') {
+            \[] = '(b.title LIKE :search OR b.author LIKE :search OR COALESCE(b.description, \'\') LIKE :search)';
+            \['search'] = '%' . \ . '%';
         }
 
-        $categoryId = $filters['category_id'] ?? null;
-        if (is_int($categoryId) && $categoryId > 0) {
-            $conditions[] = 'b.category_id = :category_id';
-            $bindings['category_id'] = $categoryId;
+        \ = \['category_id'] ?? null;
+        if (is_int(\) && \ > 0) {
+            \[] = 'b.category_id = :category_id';
+            \['category_id'] = \;
         }
 
-        $availability = (string) ($filters['availability'] ?? 'all');
-        if ($availability === 'available') {
-            $conditions[] = 'b.stock > 0';
-        } elseif ($availability === 'out_of_stock') {
-            $conditions[] = 'b.stock <= 0';
+        \ = (string) (\['availability'] ?? 'all');
+        if (\ === 'available') {
+            \[] = 'b.stock > 0';
+        } elseif (\ === 'out_of_stock') {
+            \[] = 'b.stock <= 0';
         }
 
-        $whereClause = $conditions === [] ? '' : 'WHERE ' . implode(' AND ', $conditions);
+        \ = \ === [] ? '' : 'WHERE ' . implode(' AND ', \);
 
-        $sortSql = match ((string) ($filters['sort'] ?? 'latest')) {
+        \ = match ((string) (\['sort'] ?? 'latest')) {
             'title_asc' => 'b.title ASC, b.author ASC',
             'title_desc' => 'b.title DESC, b.author DESC',
             'author_asc' => 'b.author ASC, b.title ASC',
@@ -52,7 +52,7 @@ class Book
             default => 'b.id DESC',
         };
 
-        $statement = $this->connection->prepare(
+        \ = ->connection->prepare(
             "SELECT
                 b.id,
                 b.title,
@@ -63,17 +63,40 @@ class Book
                 c.name AS category_name
             FROM books b
             INNER JOIN categories c ON c.id = b.category_id
-            {$whereClause}
-            ORDER BY {$sortSql}"
+            {\}
+            ORDER BY {\}"
         );
-        $statement->execute($bindings);
+        \->execute(\);
 
-        return $statement->fetchAll() ?: [];
+        return \->fetchAll() ?: [];
+    }
+
+    public function getAll(): array
+    {
+        if (! ->connection instanceof PDO) {
+            return [];
+        }
+
+        \ = ->connection->query(
+            "SELECT
+                b.id,
+                b.title,
+                b.author,
+                b.stock,
+                COALESCE(b.description, '') AS description,
+                b.category_id,
+                COALESCE(c.name, 'Uncategorized') AS category_name
+            FROM books b
+            LEFT JOIN categories c ON c.id = b.category_id
+            ORDER BY b.id DESC"
+        );
+
+        return \->fetchAll() ?: [];
     }
 
     public function getCatalogSummary(): array
     {
-        if (! $this->connection instanceof PDO) {
+        if (! ->connection instanceof PDO) {
             return [
                 'total_titles' => 0,
                 'available_titles' => 0,
@@ -82,7 +105,7 @@ class Book
             ];
         }
 
-        $statement = $this->connection->query(
+        \ = ->connection->query(
             'SELECT
                 COUNT(*) AS total_titles,
                 SUM(CASE WHEN stock > 0 THEN 1 ELSE 0 END) AS available_titles,
@@ -91,9 +114,9 @@ class Book
             FROM books'
         );
 
-        $summary = $statement ? $statement->fetch() : null;
+        \ = \ ? \->fetch() : null;
 
-        if (! is_array($summary)) {
+        if (! is_array(\)) {
             return [
                 'total_titles' => 0,
                 'available_titles' => 0,
@@ -103,49 +126,49 @@ class Book
         }
 
         return [
-            'total_titles' => (int) ($summary['total_titles'] ?? 0),
-            'available_titles' => (int) ($summary['available_titles'] ?? 0),
-            'out_of_stock_titles' => (int) ($summary['out_of_stock_titles'] ?? 0),
-            'total_copies' => (int) ($summary['total_copies'] ?? 0),
+            'total_titles' => (int) (\['total_titles'] ?? 0),
+            'available_titles' => (int) (\['available_titles'] ?? 0),
+            'out_of_stock_titles' => (int) (\['out_of_stock_titles'] ?? 0),
+            'total_copies' => (int) (\['total_copies'] ?? 0),
         ];
     }
 
-    public function findById(int $id): ?array
+    public function findById(int \): ?array
     {
-        if (! $this->connection instanceof PDO) {
+        if (! ->connection instanceof PDO) {
             return null;
         }
 
-        $statement = $this->connection->prepare(
+        \ = ->connection->prepare(
             'SELECT
                 b.id,
                 b.title,
                 b.author,
                 b.stock,
                 COALESCE(b.description, \'\') AS description,
-                c.id AS category_id,
-                c.name AS category_name
+                b.category_id,
+                COALESCE(c.name, \'Uncategorized\') AS category_name
             FROM books b
-            INNER JOIN categories c ON c.id = b.category_id
+            LEFT JOIN categories c ON c.id = b.category_id
             WHERE b.id = :id
             LIMIT 1'
         );
-        $statement->execute(['id' => $id]);
+        \->execute(['id' => \]);
 
-        $book = $statement->fetch();
+        \ = \->fetch();
 
-        return is_array($book) ? $book : null;
+        return is_array(\) ? \ : null;
     }
 
-    public function findRelatedByCategory(int $categoryId, int $excludeId, int $limit = 3): array
+    public function findRelatedByCategory(int \, int \, int \ = 3): array
     {
-        if (! $this->connection instanceof PDO) {
+        if (! ->connection instanceof PDO) {
             return [];
         }
 
-        $limit = max(1, min($limit, 8));
+        \ = max(1, min(\, 8));
 
-        $statement = $this->connection->prepare(
+        \ = ->connection->prepare(
             "SELECT
                 b.id,
                 b.title,
@@ -159,14 +182,97 @@ class Book
             WHERE b.category_id = :category_id
                 AND b.id <> :exclude_id
             ORDER BY b.id DESC
-            LIMIT {$limit}"
+            LIMIT {\}"
         );
-        $statement->execute([
-            'category_id' => $categoryId,
-            'exclude_id' => $excludeId,
+        \->execute([
+            'category_id' => \,
+            'exclude_id' => \,
         ]);
 
-        return $statement->fetchAll() ?: [];
+        return \->fetchAll() ?: [];
+    }
+
+    // ============================================================
+    //  ADMIN: CRUD Operations
+    // ============================================================
+
+    public function create(string \, string \, int \, string \, int \): int|false
+    {
+        if (! ->connection instanceof PDO) {
+            return false;
+        }
+
+        \ = ->connection->prepare(
+            'INSERT INTO books (title, author, category_id, description, stock)
+             VALUES (:title, :author, :category_id, :description, :stock)'
+        );
+
+        \->execute([
+            'title' => \,
+            'author' => \,
+            'category_id' => \,
+            'description' => \ !== '' ? \ : null,
+            'stock' => \,
+        ]);
+
+        return (int) ->connection->lastInsertId();
+    }
+
+    public function update(int \, string \, string \, int \, string \, int \): bool
+    {
+        if (! ->connection instanceof PDO) {
+            return false;
+        }
+
+        \ = ->connection->prepare(
+            'UPDATE books
+             SET title = :title,
+                 author = :author,
+                 category_id = :category_id,
+                 description = :description,
+                 stock = :stock
+             WHERE id = :id'
+        );
+
+        \->execute([
+            'id' => \,
+            'title' => \,
+            'author' => \,
+            'category_id' => \,
+            'description' => \ !== '' ? \ : null,
+            'stock' => \,
+        ]);
+
+        return \->rowCount() > 0;
+    }
+
+    public function delete(int \): bool
+    {
+        if (! ->connection instanceof PDO) {
+            return false;
+        }
+
+        \ = ->connection->prepare('DELETE FROM books WHERE id = :id');
+        \->execute(['id' => \]);
+
+        return \->rowCount() > 0;
+    }
+
+    public function countByCategory(int \): int
+    {
+        if (! ->connection instanceof PDO) {
+            return 0;
+        }
+
+        \ = ->connection->prepare(
+            'SELECT COUNT(*) AS cnt FROM books WHERE category_id = :category_id'
+        );
+        \->execute(['category_id' => \]);
+
+        \ = \->fetch();
+
+        return (int) (\['cnt'] ?? 0);
     }
 }
 
+// test

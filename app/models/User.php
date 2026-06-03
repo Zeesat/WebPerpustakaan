@@ -72,4 +72,29 @@ class User
 
         return $id === false ? null : (int) $id;
     }
+
+    public function countAll(): int
+    {
+        if (! $this->connection instanceof PDO) {
+            return 0;
+        }
+
+        $statement = $this->connection->query('SELECT COUNT(*) FROM users');
+
+        return $statement ? (int) $statement->fetchColumn() : 0;
+    }
+
+    public function getAll(): array
+    {
+        if (! $this->connection instanceof PDO) {
+            return [];
+        }
+
+        $statement = $this->connection->query(
+            'SELECT id, name, email, role, created_at FROM users ORDER BY created_at DESC'
+        );
+
+        return $statement ? ($statement->fetchAll() ?: []) : [];
+    }
 }
+

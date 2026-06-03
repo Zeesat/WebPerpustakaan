@@ -51,7 +51,15 @@ class App
 
         $router->get('/admin', [AdminDashboardController::class, 'index'], [AdminMiddleware::class]);
         $router->get('/admin/books', [BookManagementController::class, 'index'], [AdminMiddleware::class]);
+        $router->get('/admin/books/create', [BookManagementController::class, 'createForm'], [AdminMiddleware::class]);
+        $router->post('/admin/books/store', [BookManagementController::class, 'store'], [AdminMiddleware::class]);
+        $router->get('/admin/books/edit', [BookManagementController::class, 'editForm'], [AdminMiddleware::class]);
+        $router->post('/admin/books/update', [BookManagementController::class, 'update'], [AdminMiddleware::class]);
+        $router->post('/admin/books/delete', [BookManagementController::class, 'destroy'], [AdminMiddleware::class]);
         $router->get('/admin/categories', [CategoryManagementController::class, 'index'], [AdminMiddleware::class]);
+        $router->post('/admin/categories/store', [CategoryManagementController::class, 'store'], [AdminMiddleware::class]);
+        $router->post('/admin/categories/update', [CategoryManagementController::class, 'update'], [AdminMiddleware::class]);
+        $router->post('/admin/categories/delete', [CategoryManagementController::class, 'destroy'], [AdminMiddleware::class]);
         $router->get('/admin/users', [UserManagementController::class, 'index'], [AdminMiddleware::class]);
         $router->get('/admin/loans', [LoanVerificationController::class, 'index'], [AdminMiddleware::class]);
     }
