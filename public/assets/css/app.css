@@ -1,14 +1,14 @@
 :root {
-    --bg: #f6f1e8;
-    --surface: #fffaf2;
+    --bg: #f1f5f9;
+    --surface: #f8faff;
     --surface-strong: #ffffff;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --primary: #0f766e;
-    --primary-dark: #115e59;
-    --accent: #c2410c;
-    --border: #e5dccb;
-    --shadow: 0 12px 30px rgba(31, 41, 55, 0.08);
+    --text: #0f172a;
+    --muted: #64748b;
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --accent: #0284c7;
+    --border: #cbd5e1;
+    --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
 * {
@@ -17,11 +17,11 @@
 
 body {
     margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
     color: var(--text);
     background:
-        radial-gradient(circle at top left, rgba(15, 118, 110, 0.12), transparent 35%),
-        linear-gradient(180deg, #f8f4ec 0%, #f2ebde 100%);
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 40%),
+        linear-gradient(180deg, #f0f4ff 0%, #e8edf5 100%);
 }
 
 a {
@@ -39,7 +39,7 @@ a {
     top: 0;
     z-index: 10;
     backdrop-filter: blur(10px);
-    background: rgba(248, 244, 236, 0.88);
+    background: rgba(248, 250, 255, 0.88);
     border-bottom: 1px solid var(--border);
 }
 
@@ -214,7 +214,7 @@ a {
 
 .auth-hero {
     background:
-        linear-gradient(140deg, rgba(15, 118, 110, 0.92), rgba(17, 94, 89, 0.86)),
+        linear-gradient(140deg, rgba(29, 78, 216, 0.92), rgba(30, 64, 175, 0.86)),
         radial-gradient(circle at top right, rgba(255, 255, 255, 0.18), transparent 30%);
     color: #fff;
     border-radius: 24px;
@@ -295,7 +295,7 @@ a {
 }
 
 .form-field input:focus {
-    outline: 2px solid rgba(15, 118, 110, 0.2);
+    outline: 2px solid rgba(37, 99, 235, 0.2);
     border-color: var(--primary);
 }
 
@@ -355,8 +355,8 @@ td {
     padding: 6px 10px;
     border-radius: 999px;
     font-size: 0.85rem;
-    background: #ecfdf5;
-    color: #065f46;
+    background: #dbeafe;
+    color: #1d40a0;
 }
 
 .site-nav {
@@ -364,8 +364,8 @@ td {
     top: 0;
     z-index: 50;
     backdrop-filter: blur(14px);
-    background: rgba(255, 250, 242, 0.86);
-    border-bottom: 1px solid rgba(229, 220, 203, 0.9);
+    background: rgba(248, 250, 255, 0.86);
+    border-bottom: 1px solid rgba(203, 213, 225, 0.9);
 }
 
 .site-nav__inner,
@@ -391,10 +391,10 @@ td {
     align-items: center;
     justify-content: center;
     border-radius: 14px;
-    background: linear-gradient(135deg, #0f766e, #0b5f58);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: #fff;
     font-weight: 700;
-    box-shadow: 0 14px 24px rgba(15, 118, 110, 0.18);
+    box-shadow: 0 14px 24px rgba(37, 99, 235, 0.18);
 }
 
 .site-nav__brand-title,
@@ -438,7 +438,7 @@ td {
 }
 
 .site-nav__link.is-active {
-    background: rgba(15, 118, 110, 0.1);
+    background: rgba(37, 99, 235, 0.1);
     color: var(--primary-dark);
 }
 
@@ -458,15 +458,15 @@ td {
 }
 
 .site-nav__button--ghost {
-    border-color: rgba(15, 118, 110, 0.2);
+    border-color: rgba(37, 99, 235, 0.2);
     color: var(--primary-dark);
     background: rgba(255, 255, 255, 0.72);
 }
 
 .site-nav__button--primary {
-    background: linear-gradient(135deg, #0f766e, #115e59);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: #fff;
-    box-shadow: 0 16px 30px rgba(15, 118, 110, 0.18);
+    box-shadow: 0 16px 30px rgba(37, 99, 235, 0.18);
 }
 
 .site-footer {
@@ -475,7 +475,7 @@ td {
 }
 
 .site-footer__inner {
-    border-top: 1px solid rgba(229, 220, 203, 0.9);
+    border-top: 1px solid rgba(203, 213, 225, 0.9);
 }
 
 .site-footer__brand {
@@ -494,12 +494,15 @@ td {
     color: #64748b;
 }
 
+/* ============ CATALOG — books/index.php ============ */
+
 .catalog-page-body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
     background:
-        radial-gradient(circle at top left, rgba(15, 118, 110, 0.16), transparent 28%),
-        radial-gradient(circle at top right, rgba(194, 65, 12, 0.11), transparent 24%),
-        linear-gradient(180deg, #fbf7f1 0%, #f4ecde 100%);
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        linear-gradient(rgba(15, 23, 42, 0.55), rgba(15, 23, 42, 0.60)),
+        url('https://lh3.googleusercontent.com/pw/AP1GczPU64t1t6bYR6vYIJ6G0_MmZCNVQJ-4v4Hn_sTDyZQfW-WfN6NRrZvyQqBcOZqCV7S67MHrY7-KfFnX0SqLRWe2BPiOVvixCh8i9XH_TvNqGQ7gW9PMJDPw0ibVY8qFz-6tR5v_bzWvQ3lYVW9H1A0Vlg=w1920-h1080') no-repeat center center fixed;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .catalog-main {
@@ -519,10 +522,10 @@ td {
 .book-detail__card,
 .book-detail__sidebar,
 .empty-state {
-    background: rgba(255, 255, 255, 0.78);
-    border: 1px solid rgba(226, 212, 191, 0.88);
-    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.07);
-    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
+    backdrop-filter: blur(16px);
 }
 
 .catalog-hero {
@@ -537,8 +540,8 @@ td {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(120deg, rgba(15, 118, 110, 0.14), transparent 45%),
-        radial-gradient(circle at right center, rgba(194, 65, 12, 0.12), transparent 25%);
+        linear-gradient(120deg, rgba(37, 99, 235, 0.10), transparent 45%),
+        radial-gradient(circle at right center, rgba(2, 132, 199, 0.08), transparent 25%);
     pointer-events: none;
 }
 
@@ -554,7 +557,7 @@ td {
     margin: 0 0 10px;
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--accent);
+    color: #0369a1;
     letter-spacing: 0.12em;
     text-transform: uppercase;
 }
@@ -585,7 +588,7 @@ td {
 .catalog-section__subtitle,
 .book-detail__meta,
 .book-detail__description {
-    color: #475569;
+    color: #334155;
 }
 
 .catalog-hero__subtitle {
@@ -605,7 +608,7 @@ td {
 .catalog-search__field,
 .catalog-toolbar__select {
     width: 100%;
-    border: 1px solid rgba(203, 213, 225, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.7);
     border-radius: 18px;
     padding: 15px 16px;
     background: rgba(255, 255, 255, 0.95);
@@ -615,7 +618,7 @@ td {
 
 .catalog-search__field:focus,
 .catalog-toolbar__select:focus {
-    outline: 2px solid rgba(15, 118, 110, 0.2);
+    outline: 2px solid rgba(37, 99, 235, 0.2);
     border-color: var(--primary);
 }
 
@@ -635,9 +638,9 @@ td {
 .catalog-search__button,
 .book-card__button,
 .empty-state__button {
-    background: linear-gradient(135deg, #0f766e, #115e59);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: #fff;
-    box-shadow: 0 14px 28px rgba(15, 118, 110, 0.18);
+    box-shadow: 0 14px 28px rgba(37, 99, 235, 0.18);
 }
 
 .catalog-search__button:hover,
@@ -650,8 +653,8 @@ td {
 .catalog-hero__summary {
     border-radius: 24px;
     padding: 24px;
-    background: rgba(15, 118, 110, 0.06);
-    border: 1px solid rgba(15, 118, 110, 0.12);
+    background: rgba(37, 99, 235, 0.05);
+    border: 1px solid rgba(37, 99, 235, 0.10);
 }
 
 .catalog-hero__summary-list {
@@ -735,6 +738,7 @@ td {
     text-transform: uppercase;
     letter-spacing: 0.12em;
     font-weight: 700;
+    color: #334155;
 }
 
 .catalog-filter-link,
@@ -746,14 +750,20 @@ td {
     width: 100%;
     padding: 12px 14px;
     border-radius: 18px;
-    background: rgba(248, 250, 252, 0.9);
+    background: rgba(241, 245, 249, 0.9);
     border: 1px solid transparent;
+    transition: 120ms ease;
+}
+
+.catalog-filter-link:hover,
+.catalog-radio:hover {
+    background: rgba(219, 234, 254, 0.7);
 }
 
 .catalog-filter-link.is-active,
 .catalog-radio.is-active {
-    background: rgba(15, 118, 110, 0.08);
-    border-color: rgba(15, 118, 110, 0.16);
+    background: rgba(37, 99, 235, 0.08);
+    border-color: rgba(37, 99, 235, 0.16);
 }
 
 .catalog-filter-link__title,
@@ -795,7 +805,7 @@ td {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(15, 118, 110, 0.09);
+    background: rgba(37, 99, 235, 0.09);
     color: var(--primary-dark);
 }
 
@@ -842,32 +852,32 @@ td {
 
 .book-card__cover--classic,
 .book-detail__cover--classic {
-    background: linear-gradient(150deg, #1d4ed8, #0f766e);
+    background: linear-gradient(150deg, #2563eb, #1d4ed8);
 }
 
 .book-card__cover--science,
 .book-detail__cover--science {
-    background: linear-gradient(150deg, #0f766e, #065f46);
+    background: linear-gradient(150deg, #059669, #047857);
 }
 
 .book-card__cover--technology,
 .book-detail__cover--technology {
-    background: linear-gradient(150deg, #0369a1, #164e63);
+    background: linear-gradient(150deg, #0284c7, #0369a1);
 }
 
 .book-card__cover--history,
 .book-detail__cover--history {
-    background: linear-gradient(150deg, #c2410c, #7c2d12);
+    background: linear-gradient(150deg, #ea580c, #c2410c);
 }
 
 .book-card__cover--business,
 .book-detail__cover--business {
-    background: linear-gradient(150deg, #b45309, #78350f);
+    background: linear-gradient(150deg, #d97706, #b45309);
 }
 
 .book-card__cover--growth,
 .book-detail__cover--growth {
-    background: linear-gradient(150deg, #7c3aed, #4c1d95);
+    background: linear-gradient(150deg, #7c3aed, #6d28d9);
 }
 
 .book-card__cover-badge,
