@@ -184,11 +184,14 @@ class BookService
         );
     }
 
-    private function presentBookCard(array $book): array
+        private function presentBookCard(array $book): array
     {
         $stock = (int) ($book['stock'] ?? 0);
         $categoryName = trim((string) ($book['category_name'] ?? 'General'));
         $theme = $this->resolveTheme($categoryName);
+        $coverFilename = isset($book['cover']) && is_string($book['cover']) && $book['cover'] !== ''
+            ? $book['cover']
+            : null;
 
         return [
             'id' => (int) $book['id'],
@@ -205,6 +208,7 @@ class BookService
             'cover' => [
                 'initials' => $this->buildInitials((string) $book['title']),
                 'tone' => $theme['cover'],
+                'url' => cover_url($coverFilename),
             ],
         ];
     }

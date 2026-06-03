@@ -219,11 +219,27 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
             <?php else: ?>
                 <div class="catalog-grid">
                     <?php foreach ($books as $book): ?>
-                        <article class="book-card">
+                                                <article class="book-card">
+                            <?php if ($book['cover']['url'] !== null): ?>
+                            <div class="book-card__cover" style="padding: 0; min-height: 240px;">
+                                <img
+                                    src="<?= htmlspecialchars($book['cover']['url']); ?>"
+                                    alt="Cover of <?= htmlspecialchars($book['title']); ?>"
+                                    class="book-card__cover-img"
+                                    loading="lazy"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                >
+                                <div class="book-card__cover book-card__cover--<?= htmlspecialchars($book['cover']['tone']); ?>" style="display: none; min-height: 240px;">
+                                    <span class="book-card__cover-badge"><?= htmlspecialchars($book['availability']['label']); ?></span>
+                                    <span class="book-card__cover-initials"><?= htmlspecialchars($book['cover']['initials']); ?></span>
+                                </div>
+                            </div>
+                            <?php else: ?>
                             <div class="book-card__cover book-card__cover--<?= htmlspecialchars($book['cover']['tone']); ?>">
                                 <span class="book-card__cover-badge"><?= htmlspecialchars($book['availability']['label']); ?></span>
                                 <span class="book-card__cover-initials"><?= htmlspecialchars($book['cover']['initials']); ?></span>
                             </div>
+                            <?php endif; ?>
 
                             <span class="book-card__category book-card__category--<?= htmlspecialchars($book['category']['tone']); ?>">
                                 <?= htmlspecialchars($book['category']['name']); ?>

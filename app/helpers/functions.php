@@ -175,3 +175,118 @@ function verify_csrf_token(?string $token): bool
     return hash_equals($sessionToken, $token);
 }
 
+// ============================================================
+//  COVER IMAGE HELPERS
+// ============================================================
+
+/**
+ * Generate URL for a book cover image.
+ * Returns null if no cover is set.
+ */
+function cover_url(?string $cover): ?string
+{
+    if ($cover === null || $cover === '') {
+        return null;
+    }
+
+    return url('/uploads/covers/' . ltrim($cover, '/'));
+}
+
+/**
+ * Save an uploaded cover file to the covers directory.
+ * The file should already be WebP (converted client-side).
+ * Falls back to GD conversion if needed.
+ * Returns the filename (e.g., "42.webp") on success, or null on failure.
+ */
+function save_cover_file(array $file, int $bookId): ?string
+{
+    if (! isset($file['tmp_name']) || ! is_uploaded_file($file['tmp_name'])) {
+        return null;
+    }
+
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        return null;
+    }
+
+    // Validate supported image types
+    $allowedMimes = ['image/webp', 'image/jpeg', 'image/png', 'image/gif'];
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mime = finfo_file($finfo, $file['tmp_name']);
+    finfo_close($finfo);
+
+    if (! in_array($mime, $allowedMimes, true)) {
+        return null;
+    }
+
+    // Max file size: 5MB
+    if ($file['size'] > 5 * 1024 * 1024) {
+        return null;
+    }
+
+    $uploadDir = BASE_PATH . '/public/uploads/covers/';
+
+    if (! is_dir($uploadDir)) {
+        if (! mkdir($uploadDir, 0755, true) && ! is_dir($uploadDir)) {
+            return null;
+        }
+    }
+
+    $filename = $bookId . '.webp';
+    $destination = $uploadDir . $filename;
+
+    // If already WebP, just move it
+    if ($mime === 'image/webp') {
+        if (! move_uploaded_file($file['tmp_name'], $destination)) {
+            return null;
+        }
+        return $filename;
+    }
+
+    // Server-side conversion fallback via GD
+    $image = null;
+    switch ($mime) {
+        case 'image/jpeg':
+            $image = @imagecreatefromjpeg($file['tmp_name']);
+            break;
+        case 'image/png':
+            $image = @imagecreatefrompng($file['tmp_name']);
+            break;
+        case 'image/gif':
+            $image = @imagecreatefromgif($file['tmp_name']);
+            break;
+    }
+
+    if ($image) {
+        imagealphablending($image, true);
+        imagesavealpha($image, true);
+        $success = imagewebp($image, $destination, 85);
+        imagedestroy($image);
+
+        if ($success) {
+            return $filename;
+        }
+    }
+
+    // Final fallback: store as-is
+    if (move_uploaded_file($file['tmp_name'], $destination)) {
+        return $filename;
+    }
+
+    return null;
+}
+
+/**
+ * Delete a cover file by filename.
+ */
+function delete_cover_file(?string $cover): void
+{
+    if ($cover === null || $cover === '') {
+        return;
+    }
+
+    $filePath = BASE_PATH . '/public/uploads/covers/' . ltrim($cover, '/');
+
+    if (file_exists($filePath)) {
+        @unlink($filePath);
+    }
+}

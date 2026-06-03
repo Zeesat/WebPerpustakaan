@@ -828,6 +828,18 @@ td {
     gap: 14px;
 }
 
+.book-card__cover-img,
+.book-detail__cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 24px;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
 .book-card__cover,
 .book-detail__cover {
     position: relative;

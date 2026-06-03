@@ -15,8 +15,9 @@
     <section class="panel table-wrap" style="margin-top: 20px;">
         <table>
             <thead>
-                <tr>
+                                <tr>
                     <th>ID</th>
+                    <th>Cover</th>
                     <th>Title</th>
                     <th>Author</th>
                     <th>Category</th>
@@ -26,8 +27,15 @@
             </thead>
             <tbody>
                 <?php foreach ($books as $book): ?>
-                    <tr>
+                                        <tr>
                         <td><?= htmlspecialchars((string) $book['id']); ?></td>
+                        <td>
+                            <?php if (isset($book['cover']) && is_string($book['cover']) && $book['cover'] !== ''): ?>
+                                <img src="<?= htmlspecialchars(cover_url($book['cover']) ?? ''); ?>" alt="Cover" style="width: 40px; height: 56px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border);" onerror="this.outerHTML='<span style=\'display:inline-flex;align-items:center;justify-content:center;width:40px;height:56px;background:#dbeafe;border-radius:6px;font-size:0.7rem;font-weight:700;color:#1d4ed8;\'>--</span>'">
+                            <?php else: ?>
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 56px; background: #dbeafe; border-radius: 6px; font-size: 0.7rem; font-weight: 700; color: #1d4ed8;">--</span>
+                            <?php endif; ?>
+                        </td>
                         <td><strong><?= htmlspecialchars($book['title']); ?></strong></td>
                         <td><?= htmlspecialchars($book['author']); ?></td>
                         <td><span class="badge"><?= htmlspecialchars($book['category_name'] ?? 'Uncategorized'); ?></span></td>

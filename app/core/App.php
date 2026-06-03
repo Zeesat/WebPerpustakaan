@@ -55,6 +55,8 @@ class App
         $router->post('/admin/books/store', [BookManagementController::class, 'store'], [AdminMiddleware::class]);
         $router->get('/admin/books/edit', [BookManagementController::class, 'editForm'], [AdminMiddleware::class]);
         $router->post('/admin/books/update', [BookManagementController::class, 'update'], [AdminMiddleware::class]);
+        $router->post('/admin/books/update-cover', [BookManagementController::class, 'updateCover'], [AdminMiddleware::class]);
+        $router->post('/admin/books/delete-cover', [BookManagementController::class, 'deleteCover'], [AdminMiddleware::class]);
         $router->post('/admin/books/delete', [BookManagementController::class, 'destroy'], [AdminMiddleware::class]);
         $router->get('/admin/categories', [CategoryManagementController::class, 'index'], [AdminMiddleware::class]);
         $router->post('/admin/categories/store', [CategoryManagementController::class, 'store'], [AdminMiddleware::class]);

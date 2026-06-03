@@ -16,10 +16,26 @@
     </article>
 
     <aside class="book-detail__sidebar">
+                <?php if ($book['cover']['url'] !== null): ?>
+        <div class="book-detail__cover" style="padding: 0; min-height: 320px;">
+            <img
+                src="<?= htmlspecialchars($book['cover']['url']); ?>"
+                alt="Cover of <?= htmlspecialchars($book['title']); ?>"
+                class="book-detail__cover-img"
+                loading="lazy"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            >
+            <div class="book-detail__cover book-detail__cover--<?= htmlspecialchars($book['cover']['tone']); ?>" style="display: none; min-height: 320px;">
+                <span class="book-detail__cover-badge"><?= htmlspecialchars($book['category']['name']); ?></span>
+                <span class="book-detail__cover-initials"><?= htmlspecialchars($book['cover']['initials']); ?></span>
+            </div>
+        </div>
+        <?php else: ?>
         <div class="book-detail__cover book-detail__cover--<?= htmlspecialchars($book['cover']['tone']); ?>">
             <span class="book-detail__cover-badge"><?= htmlspecialchars($book['category']['name']); ?></span>
             <span class="book-detail__cover-initials"><?= htmlspecialchars($book['cover']['initials']); ?></span>
         </div>
+        <?php endif; ?>
 
         <div class="book-detail__cta">
             <a class="book-card__button" href="<?= htmlspecialchars(url('/books')); ?>">Back to Catalog</a>
@@ -44,11 +60,27 @@
 
         <div class="catalog-grid">
             <?php foreach ($relatedBooks as $relatedBook): ?>
-                <article class="book-card">
+                                <article class="book-card">
+                    <?php if ($relatedBook['cover']['url'] !== null): ?>
+                    <div class="book-card__cover" style="padding: 0; min-height: 240px;">
+                        <img
+                            src="<?= htmlspecialchars($relatedBook['cover']['url']); ?>"
+                            alt="Cover of <?= htmlspecialchars($relatedBook['title']); ?>"
+                            class="book-card__cover-img"
+                            loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        >
+                        <div class="book-card__cover book-card__cover--<?= htmlspecialchars($relatedBook['cover']['tone']); ?>" style="display: none; min-height: 240px;">
+                            <span class="book-card__cover-badge"><?= htmlspecialchars($relatedBook['availability']['label']); ?></span>
+                            <span class="book-card__cover-initials"><?= htmlspecialchars($relatedBook['cover']['initials']); ?></span>
+                        </div>
+                    </div>
+                    <?php else: ?>
                     <div class="book-card__cover book-card__cover--<?= htmlspecialchars($relatedBook['cover']['tone']); ?>">
                         <span class="book-card__cover-badge"><?= htmlspecialchars($relatedBook['availability']['label']); ?></span>
                         <span class="book-card__cover-initials"><?= htmlspecialchars($relatedBook['cover']['initials']); ?></span>
                     </div>
+                    <?php endif; ?>
 
                     <span class="book-card__category book-card__category--<?= htmlspecialchars($relatedBook['category']['tone']); ?>">
                         <?= htmlspecialchars($relatedBook['category']['name']); ?>

@@ -59,7 +59,8 @@ class Book
                 b.id,
                 b.title,
                 b.author,
-                b.stock,
+                                b.stock,
+                b.cover,
                 COALESCE(b.description, '') AS description,
                 c.id AS category_id,
                 c.name AS category_name
@@ -84,7 +85,8 @@ class Book
                 b.id,
                 b.title,
                 b.author,
-                b.stock,
+                                b.stock,
+                b.cover,
                 COALESCE(b.description, '') AS description,
                 b.category_id,
                 COALESCE(c.name, 'Uncategorized') AS category_name
@@ -146,7 +148,8 @@ class Book
                 b.id,
                 b.title,
                 b.author,
-                b.stock,
+                                b.stock,
+                b.cover,
                 COALESCE(b.description, \'\') AS description,
                 b.category_id,
                 COALESCE(c.name, \'Uncategorized\') AS category_name
@@ -178,7 +181,8 @@ class Book
                 b.id,
                 b.title,
                 b.author,
-                b.stock,
+                                b.stock,
+                b.cover,
                 COALESCE(b.description, '') AS description,
                 c.id AS category_id,
                 c.name AS category_name
@@ -272,6 +276,45 @@ class Book
         $stmt->execute(['id' => $id]);
 
         return $stmt->rowCount() > 0;
+    }
+
+            // ============================================================
+    //  COVER OPERATIONS
+    // ============================================================
+
+        public function updateCover(int $id, ?string $cover): bool
+    {
+        if (! $this->connection instanceof PDO) {
+            return false;
+        }
+
+        $stmt = $this->connection->prepare(
+            'UPDATE books SET cover = :cover WHERE id = :id'
+        );
+        $stmt->execute([
+            'id' => $id,
+            'cover' => $cover,
+        ]);
+
+        return $stmt->rowCount() > 0;
+    }
+
+        public function getCover(int $id): ?string
+    {
+        if (! $this->connection instanceof PDO) {
+            return null;
+        }
+
+        $stmt = $this->connection->prepare(
+            'SELECT cover FROM books WHERE id = :id LIMIT 1'
+        );
+        $stmt->execute(['id' => $id]);
+
+        $result = $stmt->fetch();
+
+        $cover = $result['cover'] ?? null;
+
+        return is_string($cover) && $cover !== '' ? $cover : null;
     }
 
         public function countByCategory(int $categoryId): int
