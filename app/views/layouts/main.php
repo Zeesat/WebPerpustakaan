@@ -13,10 +13,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
-    <?php if ($isLandingPage): ?>
-        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
         <script>
             tailwind.config = {
+                corePlugins: {
+                    preflight: false
+                },
                 darkMode: "class",
                 theme: {
                     extend: {
@@ -85,6 +87,8 @@
                             "stack-lg": "32px"
                         },
                         fontFamily: {
+                            manrope: ["Manrope"],
+                            inter: ["Inter"],
                             "headline-md": ["Manrope"],
                             "label-md": ["Inter"],
                             "body-md": ["Inter"],
@@ -144,16 +148,10 @@
                         background: linear-gradient(rgba(0, 44, 120, 0.8), rgba(0, 44, 120, 0.6));
                     }
                 </style>
-    <?php else: ?>
-        <link rel="stylesheet" href="<?= htmlspecialchars(asset('css/app.css')); ?>">
-    <?php endif; ?>
+    <link rel="stylesheet" href="<?= htmlspecialchars(asset('css/app.css')); ?>">
 </head>
 <body<?= $bodyClass !== '' ? ' class="' . htmlspecialchars($bodyClass) . '"' : ''; ?>>
-    <?php if ($isLandingPage): ?>
-        <?php require BASE_PATH . '/app/views/partials/navbar-landing.php'; ?>
-    <?php else: ?>
-        <?php require BASE_PATH . '/app/views/partials/navbar.php'; ?>
-    <?php endif; ?>
+    <?php require BASE_PATH . '/app/views/partials/navbar-landing.php'; ?>
 
     <main<?= $mainClass !== '' ? ' class="' . htmlspecialchars($mainClass) . '"' : ''; ?>>
         <?php if ($isLandingPage && (! empty($status) || ! empty($error))): ?>
@@ -187,11 +185,7 @@
         <?php require $viewPath; ?>
     </main>
 
-    <?php if ($isLandingPage): ?>
-        <?php require BASE_PATH . '/app/views/partials/footer-landing.php'; ?>
-    <?php else: ?>
-        <?php require BASE_PATH . '/app/views/partials/footer.php'; ?>
-    <?php endif; ?>
+    <?php require BASE_PATH . '/app/views/partials/footer-landing.php'; ?>
     <script src="<?= htmlspecialchars(asset('js/app.js')); ?>"></script>
 </body>
 </html>
