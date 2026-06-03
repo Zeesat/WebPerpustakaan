@@ -104,27 +104,43 @@
             };
         </script>
                 <style>
-            /* ================================================
-               SCROLLBAR UNIFORMITY — prevent navbar shift
-               ================================================ */
-            html {
-                overflow-y: scroll;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-            }
-            html::-webkit-scrollbar {
-                width: 0;
-                height: 0;
-                display: none;
-            }
+                    /* ================================================
+                       SCROLLBAR UNIFORMITY — prevent navbar shift
+                       ================================================ */
+                    html,
+                    body {
+                        max-width: 100%;
+                        overflow-x: hidden;
+                        overflow-x: clip;
+                        overscroll-behavior-x: none;
+                        overscroll-behavior-y: contain;
+                    }
+                    html {
+                        overflow-y: scroll;
+                        scrollbar-width: none;
+                        -ms-overflow-style: none;
+                    }
+                    html::-webkit-scrollbar {
+                        width: 0;
+                        height: 0;
+                        display: none;
+                    }
 
-            .material-symbols-outlined {
-                font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-            }
-            .hero-overlay {
-                background: linear-gradient(rgba(0, 44, 120, 0.8), rgba(0, 44, 120, 0.6));
-            }
-        </style>
+                    img,
+                    video,
+                    canvas,
+                    svg,
+                    iframe {
+                        max-width: 100%;
+                    }
+
+                    .material-symbols-outlined {
+                        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+                    }
+                    .hero-overlay {
+                        background: linear-gradient(rgba(0, 44, 120, 0.8), rgba(0, 44, 120, 0.6));
+                    }
+                </style>
     <?php else: ?>
         <link rel="stylesheet" href="<?= htmlspecialchars(asset('css/app.css')); ?>">
     <?php endif; ?>

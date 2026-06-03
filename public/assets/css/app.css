@@ -7,6 +7,16 @@
    between pages with/without scrollable content.
    ============================================================ */
 
+/* ── LAYOUT LOCK: prevent accidental horizontal overflow & overscroll bounce ── */
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;           /* fallback for browsers that don't support clip */
+    overflow-x: clip;             /* modern: prevents accidental horizontal scroll */
+    overscroll-behavior-x: none;  /* prevent rubber-band horizontal shift */
+    overscroll-behavior-y: contain; /* prevent viewport shifting to empty space on vertical bounce */
+}
+
 html {
     overflow-y: scroll;
 }
@@ -23,6 +33,27 @@ html {
 
 html {
     -ms-overflow-style: none;
+}
+
+/* ── MEDIA: prevent media elements from exceeding viewport ── */
+img,
+video,
+canvas,
+svg,
+iframe {
+    max-width: 100%;
+}
+
+/* ── FLEX FIX: prevent long content from forcing parent to grow beyond viewport ── */
+.flex-child,
+.nav,
+.nav a,
+.btn,
+.site-nav__brand,
+.site-nav__links,
+.site-nav__actions,
+.site-footer__links {
+    min-width: 0;
 }
 
 :root {
