@@ -113,7 +113,7 @@
                         overflow-x: hidden;
                         overflow-x: clip;
                         overscroll-behavior-x: none;
-                        overscroll-behavior-y: contain;
+                        overscroll-behavior-y: none;
                     }
                     html {
                         overflow-y: scroll;
