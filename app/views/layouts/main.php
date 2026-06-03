@@ -103,7 +103,21 @@
                 }
             };
         </script>
-        <style>
+                <style>
+            /* ================================================
+               SCROLLBAR UNIFORMITY — prevent navbar shift
+               ================================================ */
+            html {
+                overflow-y: scroll;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            html::-webkit-scrollbar {
+                width: 0;
+                height: 0;
+                display: none;
+            }
+
             .material-symbols-outlined {
                 font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
             }
