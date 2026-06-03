@@ -1,3 +1,30 @@
+/* ============================================================
+   SCROLLBAR UNIFORMITY — prevent navbar shift on page change
+   ============================================================
+   Always show vertical scrollbar space, but hide the scrollbar
+   visually so the viewport width stays consistent across all pages,
+   preventing the navbar from shifting left/right when navigating
+   between pages with/without scrollable content.
+   ============================================================ */
+
+html {
+    overflow-y: scroll;
+}
+
+html::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+html {
+    scrollbar-width: none;
+}
+
+html {
+    -ms-overflow-style: none;
+}
+
 :root {
     --bg: #f1f5f9;
     --surface: #f8faff;
