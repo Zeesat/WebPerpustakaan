@@ -19,6 +19,7 @@ return [
     ],
     'user' => [
         '/dashboard' => 'DashboardController@index',
+        '/loans' => 'LoanController@myLoans',
         '/loans/my' => 'LoanController@myLoans',
         '/loans/request' => 'LoanController@requestForm',
     ],

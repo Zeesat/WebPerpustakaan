@@ -46,6 +46,7 @@ class App
         $router->post('/logout', [AuthController::class, 'logout'], [AuthMiddleware::class]);
 
         $router->get('/dashboard', [DashboardController::class, 'index'], [AuthMiddleware::class]);
+        $router->get('/loans', [LoanController::class, 'myLoans'], [AuthMiddleware::class]);
         $router->get('/loans/my', [LoanController::class, 'myLoans'], [AuthMiddleware::class]);
         $router->get('/loans/request', [LoanController::class, 'requestForm'], [AuthMiddleware::class]);
 
@@ -66,4 +67,3 @@ class App
         $router->get('/admin/loans', [LoanVerificationController::class, 'index'], [AdminMiddleware::class]);
     }
 }
-

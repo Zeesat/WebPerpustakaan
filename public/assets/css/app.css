@@ -436,10 +436,11 @@ td {
 .site-nav {
     position: sticky;
     top: 0;
-    z-index: 50;
+    z-index: 1000;
     backdrop-filter: blur(14px);
     background: rgba(248, 250, 255, 0.86);
     border-bottom: 1px solid rgba(203, 213, 225, 0.9);
+    overflow: visible;
 }
 
 .site-nav__inner,
@@ -554,6 +555,23 @@ td {
 
 .site-nav__button--primary:hover {
     background: var(--primary-dark);
+}
+
+#user-dropdown-wrapper {
+    position: relative;
+    overflow: visible;
+    isolation: isolate;
+}
+
+#user-dropdown-menu {
+    transform-origin: top right;
+    will-change: opacity, transform;
+}
+
+#user-dropdown-menu.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .site-footer {

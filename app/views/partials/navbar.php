@@ -1,4 +1,7 @@
-<?php $isCatalogPage = is_current_path('/books') || is_current_path('/books/show'); ?>
+<?php
+    $isCatalogPage = is_current_path('/books') || is_current_path('/books/show');
+    $isMyLoansPage = is_current_path('/loans') || is_current_path('/loans/my');
+?>
 <header class="site-nav">
     <div class="container site-nav__inner">
         <a class="site-nav__brand" href="<?= htmlspecialchars(url('/')); ?>">
@@ -13,7 +16,7 @@
             <a class="site-nav__link<?= is_current_path('/') ? ' is-active' : ''; ?>" href="<?= htmlspecialchars(url('/')); ?>">Home</a>
             <a class="site-nav__link<?= $isCatalogPage ? ' is-active' : ''; ?>" href="<?= htmlspecialchars(url('/books')); ?>">Catalog</a>
             <?php if (auth_check() && ! auth_is_admin()): ?>
-                <a class="site-nav__link<?= is_current_path('/loans/my') ? ' is-active' : ''; ?>" href="<?= htmlspecialchars(url('/loans/my')); ?>">My Loans</a>
+                <a class="site-nav__link<?= $isMyLoansPage ? ' is-active' : ''; ?>" href="<?= htmlspecialchars(url('/loans')); ?>">My Loans</a>
             <?php endif; ?>
         </nav>
 

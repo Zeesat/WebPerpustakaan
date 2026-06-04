@@ -31,6 +31,40 @@ class Loan
         return (int) $statement->fetchColumn();
     }
 
+    public function getLoanItemsByUser(int $userId): array
+    {
+        if (! $this->connection instanceof PDO) {
+            return [];
+        }
+
+        $statement = $this->connection->prepare(
+            "SELECT
+                l.id AS loan_id,
+                l.user_id,
+                l.loan_date,
+                l.due_date,
+                l.status,
+                l.returned_at,
+                l.fine,
+                l.created_at,
+                ld.id AS loan_detail_id,
+                ld.quantity,
+                b.id AS book_id,
+                b.title AS book_title,
+                b.author AS book_author,
+                b.cover AS book_cover
+            FROM loans l
+            INNER JOIN loan_details ld ON ld.loan_id = l.id
+            INNER JOIN books b ON b.id = ld.book_id
+            WHERE l.user_id = :user_id
+                AND l.status <> 'rejected'
+            ORDER BY l.loan_date DESC, l.id DESC, ld.id ASC"
+        );
+        $statement->execute(['user_id' => $userId]);
+
+        return $statement->fetchAll() ?: [];
+    }
+
     public function getPendingLoans(): array
     {
         if (! $this->connection instanceof PDO) {

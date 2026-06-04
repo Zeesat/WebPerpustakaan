@@ -148,7 +148,7 @@
                         background: linear-gradient(rgba(0, 44, 120, 0.8), rgba(0, 44, 120, 0.6));
                     }
                 </style>
-    <link rel="stylesheet" href="<?= htmlspecialchars(asset('css/app.css')); ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(asset('css/app.css') . '?v=' . filemtime(BASE_PATH . '/public/assets/css/app.css')); ?>">
 </head>
 <body<?= $bodyClass !== '' ? ' class="' . htmlspecialchars($bodyClass) . '"' : ''; ?>>
     <?php require BASE_PATH . '/app/views/partials/navbar-landing.php'; ?>
@@ -186,7 +186,7 @@
     </main>
 
     <?php require BASE_PATH . '/app/views/partials/footer-landing.php'; ?>
-    <script src="<?= htmlspecialchars(asset('js/app.js')); ?>"></script>
+    <script src="<?= htmlspecialchars(asset('js/app.js') . '?v=' . filemtime(BASE_PATH . '/public/assets/js/app.js')); ?>"></script>
 </body>
 </html>
 
