@@ -47,23 +47,28 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
 };
 ?>
 
-<div class="catalog-page">
-    <section class="catalog-hero">
-        <div class="catalog-hero__layout">
-            <div class="catalog-hero__content">
-                <p class="catalog-hero__eyebrow">Library Catalog</p>
-                <h1 class="catalog-hero__title">Welcome, <?= htmlspecialchars($welcomeName); ?></h1>
-                <p class="catalog-hero__subtitle">
-                    Discover verified library titles, monitor live availability, and move from search to borrowing without leaving the catalog.
+<div class="catalog-page-wrapper bg-[#f4f7fb] min-h-screen">
+    <div class="catalog-hero-redesign relative bg-[#0a1e42] text-white overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0a1e42] via-[#0a1e42]/90 to-[#0a1e42]/40"></div>
+        
+        <div class="max-w-[1240px] mx-auto px-6 py-12 relative z-10 flex flex-col lg:flex-row justify-between items-center gap-10">
+            <div class="w-full lg:w-[55%]">
+                <h1 class="text-[34px] font-bold mb-3 tracking-tight">Welcome, <?= htmlspecialchars($welcomeName); ?>! 👋</h1>
+                <p class="text-[16px] text-blue-100 mb-8 max-w-xl">
+                    Discover books, request loans, and expand your knowledge.
                 </p>
 
-                <form action="<?= htmlspecialchars(url('/books')); ?>" class="catalog-search" method="GET">
+                <form action="<?= htmlspecialchars(url('/books')); ?>" class="relative flex items-center bg-white rounded-lg shadow-lg overflow-hidden h-[54px] w-full max-w-2xl" method="GET">
+                    <div class="pl-5 text-slate-400 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[22px]">search</span>
+                    </div>
                     <input
-                        class="catalog-search__field"
+                        class="flex-1 bg-transparent border-none outline-none text-slate-700 px-3 py-3 text-[15px] placeholder:text-slate-400"
                         name="search"
                         type="search"
                         value="<?= htmlspecialchars($filters['search']); ?>"
-                        placeholder="Search by title, author, or keyword"
+                        placeholder="Search books by title, author, or keyword..."
                     >
                     <?php if ($filters['category_id'] !== null): ?>
                         <input name="category" type="hidden" value="<?= htmlspecialchars((string) $filters['category_id']); ?>">
@@ -74,64 +79,64 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                     <?php if ($filters['sort'] !== 'latest'): ?>
                         <input name="sort" type="hidden" value="<?= htmlspecialchars($filters['sort']); ?>">
                     <?php endif; ?>
-                    <button class="catalog-search__button" type="submit">Search Catalog</button>
+                    <div class="pr-2">
+                        <button class="bg-[#1e4ed8] hover:bg-blue-800 text-white font-medium px-7 py-2.5 rounded-md transition-colors" type="submit">Search</button>
+                    </div>
                 </form>
             </div>
 
-            <aside class="catalog-hero__summary">
-                <p class="catalog-section__eyebrow">Current Snapshot</p>
-                <h2 class="catalog-section__title"><?= htmlspecialchars($catalogTitle); ?></h2>
-                <p><?= htmlspecialchars($catalogSubtitle); ?></p>
-                <ul class="catalog-hero__summary-list">
-                    <li>
-                        <span>Visible titles</span>
-                        <strong><?= htmlspecialchars((string) count($books)); ?></strong>
-                    </li>
-                    <li>
-                        <span>Availability mode</span>
-                        <strong><?= htmlspecialchars($selectedAvailabilityLabel); ?></strong>
-                    </li>
-                    <li>
-                        <span>Active category</span>
-                        <strong><?= htmlspecialchars($activeCategory['name'] ?? 'All Categories'); ?></strong>
-                    </li>
-                </ul>
-            </aside>
+            <div class="w-full lg:w-[45%] flex gap-4 justify-end">
+                <?php foreach ($heroStats as $index => $stat): ?>
+                    <?php 
+                        $icon = 'menu_book';
+                        $colorClass = 'text-blue-500 bg-blue-50';
+                        if ($index === 1) { $icon = 'category'; $colorClass = 'text-green-600 bg-green-50'; }
+                        if ($index === 2) { $icon = 'bookmark'; $colorClass = 'text-purple-500 bg-purple-50'; }
+                    ?>
+                    <article class="bg-white rounded-xl p-5 w-[140px] shadow-sm flex flex-col items-center text-center">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3 <?= $colorClass ?>">
+                            <span class="material-symbols-outlined text-[20px]"><?= $icon ?></span>
+                        </div>
+                        <h2 class="text-xl font-bold text-slate-800 leading-none mb-1.5"><?= htmlspecialchars($stat['value']); ?></h2>
+                        <p class="text-[12px] text-slate-500 font-medium leading-snug"><?= htmlspecialchars($stat['label']); ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
         </div>
+    </div>
 
-        <div class="catalog-stats">
-            <?php foreach ($heroStats as $stat): ?>
-                <article class="catalog-stat-card">
-                    <p class="catalog-section__eyebrow"><?= htmlspecialchars($stat['label']); ?></p>
-                    <h2 class="catalog-stat-card__value"><?= htmlspecialchars($stat['value']); ?></h2>
-                    <p class="catalog-stat-card__detail"><?= htmlspecialchars($stat['detail']); ?></p>
-                </article>
-            <?php endforeach; ?>
-        </div>
-    </section>
-
-    <div class="catalog-layout">
-        <aside>
-            <section class="catalog-filter-card">
-                <div class="catalog-filter-group">
-                    <span class="catalog-filter-group__label">Categories</span>
-                    <a class="catalog-filter-link<?= $activeCategory === null ? ' is-active' : ''; ?>" href="<?= htmlspecialchars($buildCatalogUrl(['category' => null])); ?>">
-                        <span class="catalog-filter-link__title">All Categories</span>
-                        <span class="catalog-filter-link__meta"><?= htmlspecialchars((string) $catalogTotals['total_titles']); ?> titles</span>
+    <div class="max-w-[1240px] mx-auto px-6 py-8 flex flex-col md:flex-row gap-8 items-start">
+        <aside class="w-full md:w-[260px] flex-shrink-0 flex flex-col gap-6">
+            <section class="bg-white rounded-xl shadow-sm p-4 border border-slate-100">
+                <h3 class="text-[15px] font-bold text-slate-800 mb-3 px-2">Categories</h3>
+                <div class="flex flex-col gap-1">
+                    <a class="flex items-center justify-between px-3 py-2 rounded-lg text-[14px] <?= $activeCategory === null ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-slate-600 hover:bg-slate-50'; ?>" href="<?= htmlspecialchars($buildCatalogUrl(['category' => null])); ?>">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[18px] <?= $activeCategory === null ? 'text-blue-600' : 'text-slate-400' ?>">menu_book</span>
+                            <span>All Categories</span>
+                        </div>
+                        <span class="<?= $activeCategory === null ? 'text-blue-600 bg-blue-100' : 'text-slate-400 bg-slate-100' ?> text-[11px] font-bold px-2 py-0.5 rounded-md"><?= htmlspecialchars((string) $catalogTotals['total_titles']); ?></span>
                     </a>
 
-                    <?php foreach ($categories as $category): ?>
-                        <a class="catalog-filter-link<?= $category['active'] ? ' is-active' : ''; ?>" href="<?= htmlspecialchars($buildCatalogUrl(['category' => $category['id']])); ?>">
-                            <span class="catalog-filter-link__title"><?= htmlspecialchars($category['name']); ?></span>
-                            <span class="catalog-filter-link__meta"><?= htmlspecialchars((string) $category['book_count']); ?> titles</span>
+                    <?php foreach ($categories as $index => $category): ?>
+                        <?php
+                            $catIcons = ['book', 'science', 'computer', 'history', 'business_center', 'self_improvement', 'category'];
+                            $icon = $catIcons[$index % count($catIcons)];
+                        ?>
+                        <a class="flex items-center justify-between px-3 py-2 rounded-lg text-[14px] <?= $category['active'] ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-slate-600 hover:bg-slate-50'; ?>" href="<?= htmlspecialchars($buildCatalogUrl(['category' => $category['id']])); ?>">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[18px] <?= $category['active'] ? 'text-blue-600' : 'text-slate-400' ?>"><?= $icon ?></span>
+                                <span><?= htmlspecialchars($category['name']); ?></span>
+                            </div>
+                            <span class="<?= $category['active'] ? 'text-blue-600 bg-blue-100' : 'text-slate-400 bg-slate-100' ?> text-[11px] font-bold px-2 py-0.5 rounded-md"><?= htmlspecialchars((string) $category['book_count']); ?></span>
                         </a>
                     <?php endforeach; ?>
                 </div>
             </section>
 
-            <section class="catalog-filter-card">
-                <form action="<?= htmlspecialchars(url('/books')); ?>" class="catalog-filter-group" method="GET">
-                    <span class="catalog-filter-group__label">Availability</span>
+            <section class="bg-white rounded-xl shadow-sm p-5 border border-slate-100">
+                <h3 class="text-[15px] font-bold text-slate-800 mb-4">Availability</h3>
+                <form action="<?= htmlspecialchars(url('/books')); ?>" class="flex flex-col gap-3.5" method="GET" id="availability-form">
                     <?php if ($filters['search'] !== ''): ?>
                         <input name="search" type="hidden" value="<?= htmlspecialchars($filters['search']); ?>">
                     <?php endif; ?>
@@ -143,42 +148,30 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                     <?php endif; ?>
 
                     <?php foreach ($availabilityOptions as $option): ?>
-                        <label class="catalog-radio<?= $option['selected'] ? ' is-active' : ''; ?>">
-                            <span>
-                                <input
-                                    name="availability"
-                                    type="radio"
-                                    value="<?= htmlspecialchars($option['value']); ?>"
-                                    <?= $option['selected'] ? 'checked' : ''; ?>
-                                >
-                                <span class="catalog-radio__label"><?= htmlspecialchars($option['label']); ?></span>
-                            </span>
-                            <span class="catalog-radio__count">
-                                <?php if ($option['value'] === 'available'): ?>
-                                    <?= htmlspecialchars((string) $catalogTotals['available_titles']); ?>
-                                <?php elseif ($option['value'] === 'out_of_stock'): ?>
-                                    <?= htmlspecialchars((string) $catalogTotals['out_of_stock_titles']); ?>
-                                <?php else: ?>
-                                    <?= htmlspecialchars((string) $catalogTotals['total_titles']); ?>
-                                <?php endif; ?>
-                            </span>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input
+                                name="availability"
+                                type="radio"
+                                value="<?= htmlspecialchars($option['value']); ?>"
+                                <?= $option['selected'] ? 'checked' : ''; ?>
+                                class="w-4 h-4 text-blue-600 border-slate-300 focus:ring-blue-500"
+                                onchange="document.getElementById('availability-form').submit()"
+                            >
+                            <span class="text-[14px] <?= $option['selected'] ? 'text-slate-800 font-medium' : 'text-slate-600 group-hover:text-slate-800' ?>"><?= htmlspecialchars($option['label']); ?></span>
                         </label>
                     <?php endforeach; ?>
-
-                    <button class="catalog-search__button" type="submit">Apply Availability</button>
                 </form>
             </section>
         </aside>
 
-        <section>
-            <div class="catalog-section__header">
-                <div>
-                    <p class="catalog-section__eyebrow">Browse</p>
-                    <h2 class="catalog-section__title"><?= htmlspecialchars($catalogTitle); ?></h2>
-                    <p class="catalog-section__subtitle"><?= htmlspecialchars($resultSummary); ?></p>
+        <section class="flex-1 min-w-0">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+                <div class="flex items-baseline gap-3">
+                    <h2 class="text-[20px] font-bold text-slate-800"><?= htmlspecialchars($catalogTitle); ?></h2>
+                    <p class="text-[14px] text-slate-500"><?= htmlspecialchars($resultSummary); ?></p>
                 </div>
 
-                <form action="<?= htmlspecialchars(url('/books')); ?>" class="catalog-toolbar__controls" method="GET">
+                <form action="<?= htmlspecialchars(url('/books')); ?>" class="flex items-center gap-2 bg-white rounded-lg border border-slate-200 px-3 py-1.5 shadow-sm" method="GET">
                     <?php if ($filters['search'] !== ''): ?>
                         <input name="search" type="hidden" value="<?= htmlspecialchars($filters['search']); ?>">
                     <?php endif; ?>
@@ -189,7 +182,8 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                         <input name="availability" type="hidden" value="<?= htmlspecialchars($filters['availability']); ?>">
                     <?php endif; ?>
 
-                    <select class="catalog-toolbar__select" name="sort" onchange="this.form.submit()">
+                    <span class="text-[13px] font-medium text-slate-500 whitespace-nowrap">Sort by:</span>
+                    <select class="bg-transparent border-none outline-none text-[14px] text-slate-700 font-medium cursor-pointer pr-6 py-1" style="box-shadow: none;" name="sort" onchange="this.form.submit()">
                         <?php foreach ($sortOptions as $option): ?>
                             <option value="<?= htmlspecialchars($option['value']); ?>" <?= $option['selected'] ? 'selected' : ''; ?>>
                                 <?= htmlspecialchars($option['label']); ?>
@@ -200,66 +194,67 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
             </div>
 
             <?php if ($hasActiveFilters): ?>
-                <div class="catalog-toolbar" style="margin-top: 16px;">
-                    <div class="catalog-toolbar__controls">
-                        <a class="catalog-chip" href="<?= htmlspecialchars(url('/books')); ?>">Reset all filters</a>
-                    </div>
+                <div class="mb-6">
+                    <a class="inline-block px-4 py-1.5 bg-white border border-slate-200 rounded-full text-[13px] font-medium text-slate-600 hover:bg-slate-50 transition-colors" href="<?= htmlspecialchars(url('/books')); ?>">Reset all filters</a>
                 </div>
             <?php endif; ?>
 
             <?php if ($books === []): ?>
-                <article class="empty-state" style="margin-top: 22px;">
-                    <p class="catalog-section__eyebrow">No Results</p>
-                    <h3 class="empty-state__title">No books matched your current filters.</h3>
-                    <p class="empty-state__text">
+                <article class="bg-white rounded-xl p-10 text-center shadow-sm border border-slate-100">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">No books matched your current filters.</h3>
+                    <p class="text-slate-500 mb-6 max-w-md mx-auto">
                         Try switching category, clearing the search keyword, or returning to the full catalog to explore all available titles.
                     </p>
-                    <a class="empty-state__button" href="<?= htmlspecialchars(url('/books')); ?>">Back to Full Catalog</a>
+                    <a class="inline-block px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors" href="<?= htmlspecialchars(url('/books')); ?>">Back to Full Catalog</a>
                 </article>
             <?php else: ?>
-                <div class="catalog-grid">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                     <?php foreach ($books as $book): ?>
-                                                <article class="book-card">
-                            <?php if ($book['cover']['url'] !== null): ?>
-                            <div class="book-card__cover" style="padding: 0; min-height: 240px;">
-                                <img
-                                    src="<?= htmlspecialchars($book['cover']['url']); ?>"
-                                    alt="Cover of <?= htmlspecialchars($book['title']); ?>"
-                                    class="book-card__cover-img"
-                                    loading="lazy"
-                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                                >
-                                <div class="book-card__cover book-card__cover--<?= htmlspecialchars($book['cover']['tone']); ?>" style="display: none; min-height: 240px;">
-                                    <span class="book-card__cover-badge"><?= htmlspecialchars($book['availability']['label']); ?></span>
-                                    <span class="book-card__cover-initials"><?= htmlspecialchars($book['cover']['initials']); ?></span>
+                        <article class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow group flex flex-col h-full">
+                            <div class="w-full aspect-[3/4] p-5 pb-0 bg-white flex items-center justify-center relative overflow-hidden">
+                                <?php if ($book['cover']['url'] !== null): ?>
+                                    <img
+                                        src="<?= htmlspecialchars($book['cover']['url']); ?>"
+                                        alt="Cover of <?= htmlspecialchars($book['title']); ?>"
+                                        class="h-full w-auto object-contain shadow-md rounded-sm group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                    >
+                                    <div class="h-full w-full flex items-center justify-center bg-slate-100 rounded-sm" style="display: none;">
+                                        <span class="text-3xl font-bold text-slate-300"><?= htmlspecialchars($book['cover']['initials']); ?></span>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="h-full w-full flex items-center justify-center bg-slate-100 rounded-sm shadow-md">
+                                        <span class="text-3xl font-bold text-slate-400"><?= htmlspecialchars($book['cover']['initials']); ?></span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="p-5 flex flex-col flex-1">
+                                <h3 class="text-[15px] font-bold text-slate-800 leading-tight mb-1 truncate"><?= htmlspecialchars($book['title']); ?></h3>
+                                <p class="text-[13px] text-slate-500 mb-3 truncate"><?= htmlspecialchars($book['author']); ?></p>
+
+                                <div class="mt-auto flex flex-col gap-3">
+                                    <div class="flex flex-col items-start gap-1">
+                                        <?php
+                                            // Determine badge color
+                                            $catTone = $book['category']['tone'] ?? 'default';
+                                            $badgeClasses = 'bg-blue-50 text-blue-600';
+                                            if ($catTone === 'success') $badgeClasses = 'bg-green-50 text-green-600';
+                                            if ($catTone === 'warning') $badgeClasses = 'bg-orange-50 text-orange-600';
+                                            if ($catTone === 'error') $badgeClasses = 'bg-red-50 text-red-600';
+                                            if ($catTone === 'purple') $badgeClasses = 'bg-purple-50 text-purple-600';
+                                        ?>
+                                        <span class="inline-block px-2 py-0.5 rounded text-[11px] font-medium <?= $badgeClasses ?> mb-1">
+                                            <?= htmlspecialchars($book['category']['name']); ?>
+                                        </span>
+                                        <span class="text-[12px] font-medium <?= $book['stock'] > 0 ? 'text-emerald-600' : 'text-rose-500' ?>">
+                                            Stock: <?= htmlspecialchars((string) $book['stock']); ?> available
+                                        </span>
+                                    </div>
+                                    <a class="block w-full py-2 border border-blue-200 text-blue-600 text-[14px] font-semibold text-center rounded-lg hover:bg-blue-50 transition-colors" href="<?= htmlspecialchars(url('/books/show?id=' . $book['id'])); ?>">View Details</a>
                                 </div>
                             </div>
-                            <?php else: ?>
-                            <div class="book-card__cover book-card__cover--<?= htmlspecialchars($book['cover']['tone']); ?>">
-                                <span class="book-card__cover-badge"><?= htmlspecialchars($book['availability']['label']); ?></span>
-                                <span class="book-card__cover-initials"><?= htmlspecialchars($book['cover']['initials']); ?></span>
-                            </div>
-                            <?php endif; ?>
-
-                            <span class="book-card__category book-card__category--<?= htmlspecialchars($book['category']['tone']); ?>">
-                                <?= htmlspecialchars($book['category']['name']); ?>
-                            </span>
-
-                            <div>
-                                <h3 class="book-card__title"><?= htmlspecialchars($book['title']); ?></h3>
-                                <p class="book-card__author">by <?= htmlspecialchars($book['author']); ?></p>
-                            </div>
-
-                            <p class="book-card__description"><?= htmlspecialchars($book['description']); ?></p>
-
-                            <div class="book-card__meta">
-                                <span class="book-card__stock">Stock: <?= htmlspecialchars((string) $book['stock']); ?></span>
-                                <span class="book-card__status book-card__status--<?= htmlspecialchars($book['availability']['tone']); ?>">
-                                    <?= htmlspecialchars($book['availability']['detail']); ?>
-                                </span>
-                            </div>
-
-                            <a class="book-card__button" href="<?= htmlspecialchars(url('/books/show?id=' . $book['id'])); ?>">View Details</a>
                         </article>
                     <?php endforeach; ?>
                 </div>

@@ -50,8 +50,8 @@ class BookService
 
         return [
             'title' => 'Book Catalog',
-            'mainClass' => 'catalog-main',
-            'bodyClass' => 'catalog-page-body',
+            'mainClass' => '',
+            'bodyClass' => '',
             'filters' => $filters,
             'sortOptions' => $this->mapOptions(self::SORT_OPTIONS, $filters['sort']),
             'availabilityOptions' => $this->mapOptions(self::AVAILABILITY_OPTIONS, $filters['availability']),
