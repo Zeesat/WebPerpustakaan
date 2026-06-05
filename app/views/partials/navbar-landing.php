@@ -19,7 +19,7 @@
 
         <nav class="hidden md:flex items-center gap-10">
             <a class="<?= $isHome ? $navLinkActive : $navLinkBase; ?>" href="<?= htmlspecialchars(url('/')); ?>">Home</a>
-            <?php if (auth_check() && ! auth_is_admin()): ?>
+            <?php if (auth_check()): ?>
                 <a class="<?= $isMyLoans ? $navLinkActive : $navLinkBase; ?>" href="<?= htmlspecialchars(url('/loans')); ?>">My Loans</a>
             <?php endif; ?>
             <a class="<?= $isCatalog ? $navLinkActive : $navLinkBase; ?>" href="<?= htmlspecialchars(url('/books')); ?>">Browse Books</a>
