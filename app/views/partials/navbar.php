@@ -15,7 +15,7 @@
         <nav class="site-nav__links" aria-label="Primary navigation">
             <a class="site-nav__link<?= is_current_path('/') ? ' is-active' : ''; ?>" href="<?= htmlspecialchars(url('/')); ?>">Home</a>
             <a class="site-nav__link<?= $isCatalogPage ? ' is-active' : ''; ?>" href="<?= htmlspecialchars(url('/books')); ?>">Catalog</a>
-            <?php if (auth_check() && ! auth_is_admin()): ?>
+            <?php if (auth_check()): ?>
                 <a class="site-nav__link<?= $isMyLoansPage ? ' is-active' : ''; ?>" href="<?= htmlspecialchars(url('/loans')); ?>">My Loans</a>
             <?php endif; ?>
         </nav>
