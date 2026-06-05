@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Core\Database;
 use PDO;
+use PDOException;
 
 class Book
 {
@@ -216,20 +217,29 @@ class Book
             return false;
         }
 
-        $stmt = $this->connection->prepare(
-            'INSERT INTO books (title, author, category_id, description, stock)
-             VALUES (:title, :author, :category_id, :description, :stock)'
-        );
+        try {
+            $stmt = $this->connection->prepare(
+                'INSERT INTO books (title, author, category_id, description, stock)
+                 VALUES (:title, :author, :category_id, :description, :stock)'
+            );
 
-        $stmt->execute([
-            'title' => $title,
-            'author' => $author,
-            'category_id' => $categoryId,
-            'description' => $description !== '' ? $description : null,
-            'stock' => $stock,
-        ]);
+            $created = $stmt->execute([
+                'title' => $title,
+                'author' => $author,
+                'category_id' => max(0, $categoryId),
+                'description' => $description !== '' ? $description : null,
+                'stock' => max(0, $stock),
+            ]);
 
-        return (int) $this->connection->lastInsertId();
+            if (! $created) {
+                return false;
+            }
+
+            return (int) $this->connection->lastInsertId();
+        } catch (PDOException $exception) {
+            error_log($exception->getMessage());
+            return false;
+        }
     }
 
         public function update(
@@ -244,26 +254,29 @@ class Book
             return false;
         }
 
-        $stmt = $this->connection->prepare(
-            'UPDATE books
-             SET title = :title,
-                 author = :author,
-                 category_id = :category_id,
-                 description = :description,
-                 stock = :stock
-             WHERE id = :id'
-        );
+        try {
+            $stmt = $this->connection->prepare(
+                'UPDATE books
+                 SET title = :title,
+                     author = :author,
+                     category_id = :category_id,
+                     description = :description,
+                     stock = :stock
+                 WHERE id = :id'
+            );
 
-        $stmt->execute([
-            'id' => $id,
-            'title' => $title,
-            'author' => $author,
-            'category_id' => $categoryId,
-            'description' => $description !== '' ? $description : null,
-            'stock' => $stock,
-        ]);
-
-        return $stmt->rowCount() > 0;
+            return $stmt->execute([
+                'id' => $id,
+                'title' => $title,
+                'author' => $author,
+                'category_id' => max(0, $categoryId),
+                'description' => $description !== '' ? $description : null,
+                'stock' => max(0, $stock),
+            ]);
+        } catch (PDOException $exception) {
+            error_log($exception->getMessage());
+            return false;
+        }
     }
 
         public function delete(int $id): bool
@@ -272,10 +285,15 @@ class Book
             return false;
         }
 
-        $stmt = $this->connection->prepare('DELETE FROM books WHERE id = :id');
-        $stmt->execute(['id' => $id]);
+        try {
+            $stmt = $this->connection->prepare('DELETE FROM books WHERE id = :id');
+            $stmt->execute(['id' => $id]);
 
-        return $stmt->rowCount() > 0;
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $exception) {
+            error_log($exception->getMessage());
+            return false;
+        }
     }
 
             // ============================================================
@@ -288,15 +306,19 @@ class Book
             return false;
         }
 
-        $stmt = $this->connection->prepare(
-            'UPDATE books SET cover = :cover WHERE id = :id'
-        );
-        $stmt->execute([
-            'id' => $id,
-            'cover' => $cover,
-        ]);
+        try {
+            $stmt = $this->connection->prepare(
+                'UPDATE books SET cover = :cover WHERE id = :id'
+            );
 
-        return $stmt->rowCount() > 0;
+            return $stmt->execute([
+                'id' => $id,
+                'cover' => $cover,
+            ]);
+        } catch (PDOException $exception) {
+            error_log($exception->getMessage());
+            return false;
+        }
     }
 
         public function getCover(int $id): ?string
