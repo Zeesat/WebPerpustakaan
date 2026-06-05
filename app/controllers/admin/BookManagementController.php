@@ -79,7 +79,7 @@ class BookManagementController extends Controller
         }
 
         if ($errors !== []) {
-            with_old_input($_POST);
+            with_old_input(array_merge($_POST, ['_form_context' => 'book:create']));
             flash('error', implode(' ', $errors));
             $this->redirect('/admin/books/create');
             return;
@@ -94,12 +94,13 @@ class BookManagementController extends Controller
         );
 
         if ($bookId === false) {
-            with_old_input($_POST);
+            with_old_input(array_merge($_POST, ['_form_context' => 'book:create']));
             flash('error', 'Failed to save the book. Please try again.');
             $this->redirect('/admin/books/create');
             return;
         }
 
+        clear_old_input();
         flash('status', 'Book "' . htmlspecialchars($title) . '" has been added successfully.');
         $this->redirect('/admin/books');
     }
@@ -180,7 +181,7 @@ class BookManagementController extends Controller
         }
 
         if ($errors !== []) {
-            with_old_input($_POST);
+            with_old_input(array_merge($_POST, ['_form_context' => 'book:edit:' . $bookId]));
             flash('error', implode(' ', $errors));
             $this->redirect('/admin/books/edit?id=' . $bookId);
             return;
@@ -196,12 +197,13 @@ class BookManagementController extends Controller
         );
 
         if (! $updated) {
-            with_old_input($_POST);
+            with_old_input(array_merge($_POST, ['_form_context' => 'book:edit:' . $bookId]));
             flash('error', 'Failed to update the book. Please try again.');
             $this->redirect('/admin/books/edit?id=' . $bookId);
             return;
         }
 
+        clear_old_input();
         flash('status', 'Book "' . htmlspecialchars($title) . '" has been updated successfully.');
         $this->redirect('/admin/books');
     }

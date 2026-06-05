@@ -1,3 +1,13 @@
+<?php
+$bookFormContext = $mode === 'edit' && $book !== null
+    ? 'book:edit:' . (int) $book['id']
+    : 'book:create';
+$hasBookOldInput = ($error ?? null) !== null && old('_form_context') === $bookFormContext;
+$bookFormValue = static fn (string $key, mixed $default = ''): mixed => $hasBookOldInput
+    ? old($key, $default)
+    : $default;
+?>
+
 <section class="page-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
     <div>
         <h1 class="page-title"><?= $mode === 'create' ? 'Add New Book' : 'Edit Book'; ?></h1>
@@ -30,7 +40,7 @@ $csrfToken = csrf_token();
                 id="title"
                 name="title"
                 type="text"
-                value="<?= htmlspecialchars(old('title', $book['title'] ?? '')); ?>"
+                value="<?= htmlspecialchars((string) $bookFormValue('title', $book['title'] ?? '')); ?>"
                 placeholder="Enter the full book title"
                 required
                 maxlength="255"
@@ -43,7 +53,7 @@ $csrfToken = csrf_token();
                 id="author"
                 name="author"
                 type="text"
-                value="<?= htmlspecialchars(old('author', $book['author'] ?? '')); ?>"
+                value="<?= htmlspecialchars((string) $bookFormValue('author', $book['author'] ?? '')); ?>"
                 placeholder="Author's full name"
                 required
                 maxlength="150"
@@ -57,10 +67,11 @@ $csrfToken = csrf_token();
                 name="category_id"
                 style="width: 100%; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--border); background: #fff; color: var(--text); font: inherit;"
             >
-                <option value="0">Uncategorized</option>
+                <?php $selectedCategoryId = (int) $bookFormValue('category_id', $book['category_id'] ?? 0); ?>
+                <option value="0" <?= $selectedCategoryId === 0 ? 'selected' : ''; ?>>Uncategorized</option>
                 <?php foreach ($categories as $category): ?>
                     <?php
-                        $selected = (int) old('category_id', $book['category_id'] ?? 0) === (int) $category['id'];
+                        $selected = $selectedCategoryId === (int) $category['id'];
                     ?>
                     <option value="<?= htmlspecialchars((string) $category['id']); ?>" <?= $selected ? 'selected' : ''; ?>>
                         <?= htmlspecialchars($category['name']); ?>
@@ -76,7 +87,7 @@ $csrfToken = csrf_token();
                 name="description"
                 placeholder="Brief summary or notes about the book (optional)"
                 style="width: 100%; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--border); background: #fff; color: var(--text); font: inherit; min-height: 120px; resize: vertical;"
-            ><?= htmlspecialchars(old('description', $book['description'] ?? '')); ?></textarea>
+            ><?= htmlspecialchars((string) $bookFormValue('description', $book['description'] ?? '')); ?></textarea>
         </div>
 
         <div class="form-field">
@@ -85,7 +96,7 @@ $csrfToken = csrf_token();
                 id="stock"
                 name="stock"
                 type="number"
-                value="<?= htmlspecialchars((string) old('stock', $book['stock'] ?? '0')); ?>"
+                value="<?= htmlspecialchars((string) $bookFormValue('stock', $book['stock'] ?? '0')); ?>"
                 min="0"
                 max="99999"
                 style="width: 120px;"
