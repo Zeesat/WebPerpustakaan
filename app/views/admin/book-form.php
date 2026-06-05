@@ -108,7 +108,6 @@ $csrfToken = csrf_token();
         <h3 style="margin: 0 0 4px;">Book Cover</h3>
         <p style="margin: 0; color: var(--muted); font-size: 0.92rem;">
             Upload an image to display as the book cover. Recommended: JPG or PNG, max 5MB.
-            Images will be converted to WebP for optimal performance.
         </p>
     </div>
 
@@ -183,9 +182,9 @@ $csrfToken = csrf_token();
                 return;
             }
 
-            // Validate file size (5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                alert('File size must be under 5MB.');
+            // Validate file size (10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File size must be under 10MB.');
                 coverInput.value = '';
                 return;
             }
