@@ -236,8 +236,8 @@ $csrfToken = csrf_token();
                     throw new Error('Canvas 2D context not available.');
                 }
 
-                // Fill white background for transparent images
-                ctx.fillStyle = '#ffffff';
+                // Fill background for transparent images
+                ctx.fillStyle = '#f1f5f9';
                 ctx.fillRect(0, 0, width, height);
                 ctx.drawImage(bitmap, 0, 0, width, height);
 

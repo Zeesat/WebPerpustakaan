@@ -208,7 +208,7 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                     <a class="inline-block px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors" href="<?= htmlspecialchars(url('/books')); ?>">Back to Full Catalog</a>
                 </article>
             <?php else: ?>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
                     <?php foreach ($books as $book): ?>
                         <article class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow group flex flex-col h-full">
                             <div class="w-full aspect-[3/4] p-5 pb-0 bg-white flex items-center justify-center relative overflow-hidden">
