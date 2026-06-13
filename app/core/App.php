@@ -49,6 +49,7 @@ class App
         $router->get('/loans', [LoanController::class, 'myLoans'], [AuthMiddleware::class]);
         $router->get('/loans/my', [LoanController::class, 'myLoans'], [AuthMiddleware::class]);
         $router->get('/loans/request', [LoanController::class, 'requestForm'], [AuthMiddleware::class]);
+        $router->post('/loans/request', [LoanController::class, 'submitRequest'], [AuthMiddleware::class]);
 
         $router->get('/admin', [AdminDashboardController::class, 'index'], [AdminMiddleware::class]);
         $router->get('/admin/books', [BookManagementController::class, 'index'], [AdminMiddleware::class]);

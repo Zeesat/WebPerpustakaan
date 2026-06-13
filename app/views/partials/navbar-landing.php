@@ -2,6 +2,7 @@
     $isHome = is_current_path('/');
     $isCatalog = is_current_path('/books') || is_current_path('/books/show');
     $isMyLoans = is_current_path('/loans') || is_current_path('/loans/my');
+    $isBasket = is_current_path('/loans/request');
     $navLinkBase = 'text-slate-600 hover:text-blue-700 font-medium text-[15px] transition-colors duration-150';
     $navLinkActive = 'text-blue-600 border-b-[3px] border-blue-600 pb-1 font-semibold text-[15px] pt-1';
 ?>
@@ -27,6 +28,20 @@
 
         <div class="flex items-center gap-6">
             <?php if (auth_check()): ?>
+                <?php if (! auth_is_admin()): ?>
+                    <a
+                        class="basket-nav<?= $isBasket ? ' is-active' : ''; ?>"
+                        data-basket-nav
+                        data-empty-label="Basket empty"
+                        data-filled-label="Basket ready"
+                        href="<?= htmlspecialchars(url('/loans/request')); ?>"
+                    >
+                        <span class="material-symbols-outlined basket-nav__icon">shopping_basket</span>
+                        <span class="basket-nav__text">Basket</span>
+                        <span class="basket-nav__badge" data-basket-count hidden>0</span>
+                    </a>
+                <?php endif; ?>
+
                 <!-- Notification bell -->
                 <button class="relative text-slate-500 hover:text-slate-800 transition-colors p-1 border border-slate-200 rounded-lg bg-white shadow-sm">
                     <span class="material-symbols-outlined text-[22px]">notifications</span>

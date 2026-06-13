@@ -184,14 +184,18 @@ class BookService
         );
     }
 
-        private function presentBookCard(array $book): array
+    private function presentBookCard(array $book): array
     {
         $stock = (int) ($book['stock'] ?? 0);
         $categoryName = trim((string) ($book['category_name'] ?? 'General'));
         $theme = $this->resolveTheme($categoryName);
+        $availability = $this->presentAvailability($stock);
         $coverFilename = isset($book['cover']) && is_string($book['cover']) && $book['cover'] !== ''
             ? $book['cover']
             : null;
+        $detailUrl = url('/books/show?id=' . (int) $book['id']);
+        $coverUrl = cover_url($coverFilename);
+        $initials = $this->buildInitials((string) $book['title']);
 
         return [
             'id' => (int) $book['id'],
@@ -204,11 +208,30 @@ class BookService
                 'tone' => $theme['badge'],
             ],
             'stock' => $stock,
-            'availability' => $this->presentAvailability($stock),
+            'availability' => $availability,
+            'available_for_request' => $stock > 0,
+            'stock_label' => $stock === 1 ? '1 copy available' : $stock . ' copies available',
+            'detail_url' => $detailUrl,
             'cover' => [
-                'initials' => $this->buildInitials((string) $book['title']),
+                'initials' => $initials,
                 'tone' => $theme['cover'],
-                'url' => cover_url($coverFilename),
+                'url' => $coverUrl,
+            ],
+            'basket_item' => [
+                'book_id' => (int) $book['id'],
+                'quantity' => 1,
+                'title' => (string) $book['title'],
+                'author' => (string) $book['author'],
+                'category' => $categoryName,
+                'category_tone' => $theme['badge'],
+                'detail_url' => $detailUrl,
+                'stock' => $stock,
+                'availability' => $availability['label'],
+                'cover' => [
+                    'url' => $coverUrl,
+                    'initials' => $initials,
+                    'tone' => $theme['cover'],
+                ],
             ],
         ];
     }

@@ -116,4 +116,29 @@ class Loan
 
         return $statement ? (int) $statement->fetchColumn() : 0;
     }
+
+    public function createPending(int $userId, string $loanDate, string $dueDate): int|false
+    {
+        if (! $this->connection instanceof PDO) {
+            return false;
+        }
+
+        $statement = $this->connection->prepare(
+            'INSERT INTO loans (user_id, loan_date, due_date, status)
+             VALUES (:user_id, :loan_date, :due_date, :status)'
+        );
+
+        $created = $statement->execute([
+            'user_id' => $userId,
+            'loan_date' => $loanDate,
+            'due_date' => $dueDate,
+            'status' => 'pending',
+        ]);
+
+        if (! $created) {
+            return false;
+        }
+
+        return (int) $this->connection->lastInsertId();
+    }
 }

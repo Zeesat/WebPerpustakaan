@@ -37,5 +37,10 @@ class Controller
     {
         redirect($path, $statusCode);
     }
+
+    protected function json(array $payload, int $statusCode = 200): void
+    {
+        json_response($payload, $statusCode);
+    }
 }
 

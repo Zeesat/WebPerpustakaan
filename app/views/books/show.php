@@ -38,10 +38,23 @@
         <?php endif; ?>
 
         <div class="book-detail__cta">
-            <a class="book-card__button" href="<?= htmlspecialchars(url('/books')); ?>">Back to Catalog</a>
-            <?php if (auth_check()): ?>
-                <a class="catalog-chip" href="<?= htmlspecialchars(url('/loans/request')); ?>">Request Loan</a>
-            <?php else: ?>
+            <a class="book-card__button book-card__button--ghost" href="<?= htmlspecialchars(url('/books')); ?>">Back to Catalog</a>
+            <?php if (auth_check() && ! auth_is_admin()): ?>
+                <button
+                    class="catalog-chip catalog-chip--basket"
+                    data-basket-add
+                    data-basket-book="<?= json_attr($book['basket_item']); ?>"
+                    data-default-text="Request Loan"
+                    data-added-text="In Basket"
+                    data-loading-text="Adding..."
+                    data-limit-text="Limit Reached"
+                    data-unavailable-text="Unavailable"
+                    type="button"
+                    <?= ! $book['available_for_request'] ? 'disabled' : ''; ?>
+                >
+                    Request Loan
+                </button>
+            <?php elseif (! auth_check()): ?>
                 <a class="catalog-chip" href="<?= htmlspecialchars(url('/login')); ?>">Login to Borrow</a>
             <?php endif; ?>
         </div>
@@ -93,7 +106,25 @@
 
                     <p class="book-card__description"><?= htmlspecialchars($relatedBook['description']); ?></p>
 
-                    <a class="book-card__button" href="<?= htmlspecialchars(url('/books/show?id=' . $relatedBook['id'])); ?>">View Details</a>
+                    <div class="book-card__actions">
+                        <a class="book-card__button book-card__button--ghost" href="<?= htmlspecialchars(url('/books/show?id=' . $relatedBook['id'])); ?>">View Details</a>
+                        <?php if (auth_check() && ! auth_is_admin()): ?>
+                            <button
+                                class="book-card__button"
+                                data-basket-add
+                                data-basket-book="<?= json_attr($relatedBook['basket_item']); ?>"
+                                data-default-text="Request Loan"
+                                data-added-text="In Basket"
+                                data-loading-text="Adding..."
+                                data-limit-text="Limit Reached"
+                                data-unavailable-text="Unavailable"
+                                type="button"
+                                <?= ! $relatedBook['available_for_request'] ? 'disabled' : ''; ?>
+                            >
+                                Request Loan
+                            </button>
+                        <?php endif; ?>
+                    </div>
                 </article>
             <?php endforeach; ?>
         </div>

@@ -138,7 +138,7 @@ class Book
         ];
     }
 
-        public function findById(int $id): ?array
+    public function findById(int $id): ?array
     {
         if (! $this->connection instanceof PDO) {
             return null;
@@ -164,6 +164,52 @@ class Book
         $result = $stmt->fetch();
 
         return is_array($result) ? $result : null;
+    }
+
+    public function findByIds(array $ids): array
+    {
+        if (! $this->connection instanceof PDO) {
+            return [];
+        }
+
+        $normalizedIds = array_values(array_unique(array_filter(
+            array_map(
+                static fn (mixed $value): int => (int) $value,
+                $ids
+            ),
+            static fn (int $value): bool => $value > 0
+        )));
+
+        if ($normalizedIds === []) {
+            return [];
+        }
+
+        $placeholders = [];
+        $params = [];
+
+        foreach ($normalizedIds as $index => $id) {
+            $placeholder = ':id_' . $index;
+            $placeholders[] = $placeholder;
+            $params['id_' . $index] = $id;
+        }
+
+        $statement = $this->connection->prepare(
+            'SELECT
+                b.id,
+                b.title,
+                b.author,
+                b.stock,
+                b.cover,
+                COALESCE(b.description, \'\') AS description,
+                b.category_id,
+                COALESCE(c.name, \'Uncategorized\') AS category_name
+            FROM books b
+            LEFT JOIN categories c ON c.id = b.category_id
+            WHERE b.id IN (' . implode(', ', $placeholders) . ')'
+        );
+        $statement->execute($params);
+
+        return $statement->fetchAll() ?: [];
     }
 
         public function findRelatedByCategory(

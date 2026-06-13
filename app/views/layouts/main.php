@@ -2,6 +2,27 @@
 <?php $isLandingPage = $isLandingPage ?? false; ?>
 <?php $bodyClass = $bodyClass ?? ($isLandingPage ? 'bg-background font-body-md text-on-surface' : ''); ?>
 <?php $mainClass = $mainClass ?? ($isLandingPage ? '' : 'container'); ?>
+<?php
+$appShellConfig = [
+    'auth' => [
+        'isAuthenticated' => auth_check(),
+        'isAdmin' => auth_is_admin(),
+        'userId' => auth_user()['id'] ?? null,
+    ],
+    'basket' => [
+        'enabled' => auth_check() && ! auth_is_admin(),
+        'storageKey' => \App\Services\BorrowBasketService::STORAGE_KEY,
+        'maxItems' => \App\Services\BorrowBasketService::MAX_ITEMS_PER_REQUEST,
+        'storageTtlHours' => \App\Services\BorrowBasketService::STORAGE_TTL_HOURS,
+        'basketUrl' => url('/loans/request'),
+        'browseUrl' => url('/books'),
+    ],
+    'routes' => [
+        'currentPath' => current_path(),
+        'loginUrl' => url('/login'),
+    ],
+];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -151,6 +172,7 @@
     <link rel="stylesheet" href="<?= htmlspecialchars(asset('css/app.css') . '?v=' . filemtime(BASE_PATH . '/public/assets/css/app.css')); ?>">
 </head>
 <body<?= $bodyClass !== '' ? ' class="' . htmlspecialchars($bodyClass) . '"' : ''; ?>>
+    <script id="app-shell-config" type="application/json"><?= json_encode($appShellConfig, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?></script>
     <?php require BASE_PATH . '/app/views/partials/navbar-landing.php'; ?>
 
     <main<?= $mainClass !== '' ? ' class="' . htmlspecialchars($mainClass) . '"' : ''; ?>>
@@ -184,6 +206,22 @@
 
         <?php require $viewPath; ?>
     </main>
+
+    <?php if (auth_check() && ! auth_is_admin()): ?>
+        <a
+            class="basket-mobile-bar"
+            data-basket-mobile-bar
+            href="<?= htmlspecialchars(url('/loans/request')); ?>"
+            hidden
+        >
+            <span class="basket-mobile-bar__label">
+                <span class="material-symbols-outlined">shopping_basket</span>
+                Basket
+            </span>
+            <span class="basket-mobile-bar__summary" data-basket-mobile-summary>0 items selected</span>
+            <span class="basket-mobile-bar__action">Review</span>
+        </a>
+    <?php endif; ?>
 
     <?php require BASE_PATH . '/app/views/partials/footer-landing.php'; ?>
     <script src="<?= htmlspecialchars(asset('js/app.js') . '?v=' . filemtime(BASE_PATH . '/public/assets/js/app.js')); ?>"></script>

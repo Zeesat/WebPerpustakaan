@@ -147,6 +147,35 @@ function set_intended_path(string $path): void
     }
 }
 
+function request_expects_json(): bool
+{
+    $accept = strtolower((string) ($_SERVER['HTTP_ACCEPT'] ?? ''));
+    $requestedWith = strtolower((string) ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? ''));
+    $contentType = strtolower((string) ($_SERVER['CONTENT_TYPE'] ?? ''));
+
+    return str_contains($accept, 'application/json')
+        || $requestedWith === 'xmlhttprequest'
+        || str_contains($contentType, 'application/json');
+}
+
+function json_response(array $payload, int $statusCode = 200): void
+{
+    http_response_code($statusCode);
+
+    if (! headers_sent()) {
+        header('Content-Type: application/json; charset=UTF-8');
+    }
+
+    echo json_encode($payload, JSON_UNESCAPED_SLASHES);
+}
+
+function json_attr(mixed $value): string
+{
+    $encoded = json_encode($value, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+
+    return htmlspecialchars($encoded !== false ? $encoded : 'null', ENT_QUOTES, 'UTF-8');
+}
+
 function csrf_token(): string
 {
     $token = session_get('csrf.token');
