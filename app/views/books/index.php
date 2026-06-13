@@ -249,30 +249,10 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                                             <?= htmlspecialchars($book['category']['name']); ?>
                                         </span>
                                         <span class="text-[12px] font-medium <?= $book['stock'] > 0 ? 'text-emerald-600' : 'text-rose-500' ?>">
-                                            <?= htmlspecialchars($book['availability']['label']); ?> · <?= htmlspecialchars($book['stock_label']); ?>
+                                            Stock: <?= htmlspecialchars((string) $book['stock']); ?> available
                                         </span>
                                     </div>
-                                    <div class="grid gap-2">
-                                        <a class="block w-full py-2 border border-blue-200 text-blue-600 text-[14px] font-semibold text-center rounded-lg hover:bg-blue-50 transition-colors" href="<?= htmlspecialchars($book['detail_url']); ?>">View Details</a>
-                                        <?php if (auth_check() && ! auth_is_admin()): ?>
-                                            <button
-                                                class="catalog-card-request"
-                                                data-basket-add
-                                                data-basket-book="<?= json_attr($book['basket_item']); ?>"
-                                                data-default-text="Request Loan"
-                                                data-added-text="In Basket"
-                                                data-loading-text="Adding..."
-                                                data-limit-text="Limit Reached"
-                                                data-unavailable-text="Unavailable"
-                                                type="button"
-                                                <?= ! $book['available_for_request'] ? 'disabled' : ''; ?>
-                                            >
-                                                Request Loan
-                                            </button>
-                                        <?php elseif (! auth_check()): ?>
-                                            <a class="catalog-card-request catalog-card-request--link" href="<?= htmlspecialchars(url('/login')); ?>">Login to Borrow</a>
-                                        <?php endif; ?>
-                                    </div>
+                                    <a class="block w-full py-2 border border-blue-200 text-blue-600 text-[14px] font-semibold text-center rounded-lg hover:bg-blue-50 transition-colors" href="<?= htmlspecialchars(url('/books/show?id=' . $book['id'])); ?>">View Details</a>
                                 </div>
                             </div>
                         </article>
