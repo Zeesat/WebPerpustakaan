@@ -106,8 +106,8 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
     </div>
 
     <div class="max-w-[1240px] mx-auto px-6 py-8 flex flex-col md:flex-row gap-8 items-start">
-        <aside class="w-full md:w-[260px] flex-shrink-0 flex flex-col gap-6">
-            <section class="bg-white rounded-xl shadow-sm p-4 border border-slate-100">
+        <aside class="w-full md:w-[260px] flex-shrink-0 flex flex-col gap-6 md:sticky md:top-24 self-start">
+            <section class="bg-white rounded-xl shadow-sm px-4 pt-1 pb-4 border border-slate-100">
                 <h3 class="text-[15px] font-bold text-slate-800 mb-3 px-2">Categories</h3>
                 <div class="flex flex-col gap-1">
                     <a class="flex items-center justify-between px-3 py-2 rounded-lg text-[14px] <?= $activeCategory === null ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-slate-600 hover:bg-slate-50'; ?>" href="<?= htmlspecialchars($buildCatalogUrl(['category' => null])); ?>">
@@ -134,7 +134,7 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                 </div>
             </section>
 
-            <section class="bg-white rounded-xl shadow-sm p-5 border border-slate-100">
+            <section class="bg-white rounded-xl shadow-sm px-4 pt-1 pb-4 border border-slate-100">
                 <h3 class="text-[15px] font-bold text-slate-800 mb-4">Availability</h3>
                 <form action="<?= htmlspecialchars(url('/books')); ?>" class="flex flex-col gap-3.5" method="GET" id="availability-form">
                     <?php if ($filters['search'] !== ''): ?>
@@ -208,7 +208,7 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                     <a class="inline-block px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors" href="<?= htmlspecialchars(url('/books')); ?>">Back to Full Catalog</a>
                 </article>
             <?php else: ?>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
                     <?php foreach ($books as $book): ?>
                         <article class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow group flex flex-col h-full">
                             <div class="w-full aspect-[3/4] p-5 pb-0 bg-white flex items-center justify-center relative overflow-hidden">
