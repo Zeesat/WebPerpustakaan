@@ -60,7 +60,6 @@ class BookService
             'heroStats' => [
                 $this->buildStatCard('Book Titles', $catalogSummary['total_titles'], 'Curated titles in the catalog'),
                 $this->buildStatCard('Available Copies', $catalogSummary['total_copies'], 'Copies currently tracked in stock'),
-                $this->buildStatCard('Categories', count($categoryRows), 'Collections organized by subject'),
                 $this->buildStatCard('My Active Loans', $activeLoans, auth_check() ? 'Loans pending, approved, or late' : 'Login to track your loans'),
             ],
             'catalogTotals' => [

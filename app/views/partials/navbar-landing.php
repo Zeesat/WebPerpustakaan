@@ -37,7 +37,7 @@
                         href="<?= htmlspecialchars(url('/loans/request')); ?>"
                     >
                         <span class="material-symbols-outlined basket-nav__icon">shopping_basket</span>
-                        <span class="basket-nav__text">Basket</span>
+                        <span class="basket-nav__text"></span>
                         <span class="basket-nav__badge" data-basket-count hidden>0</span>
                     </a>
                 <?php endif; ?>
