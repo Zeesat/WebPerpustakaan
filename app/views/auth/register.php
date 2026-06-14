@@ -3,7 +3,7 @@
     <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-primary/10 to-transparent"></div>
     <div class="max-w-[1200px] mx-auto px-6 py-12 md:py-16 relative">
         <div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] items-stretch">
-            <aside class="relative min-h-[620px] overflow-hidden rounded-[32px] bg-primary text-white shadow-2xl">
+            <aside class="relative min-h-0 lg:min-h-[620px] overflow-hidden rounded-[32px] bg-primary text-white shadow-2xl">
                 <img
                     alt="Library shelves and study area"
                     class="absolute inset-0 h-full w-full object-cover"

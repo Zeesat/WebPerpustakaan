@@ -71,39 +71,113 @@
                     <div
                         id="user-dropdown-menu"
                         data-profile-dropdown-menu
-                        class="absolute right-0 top-full mt-2 w-52 rounded-xl border border-slate-200 bg-white py-1.5 shadow-lg z-[9999]"
+                        class="absolute right-0 top-full mt-2 w-64 origin-top-right rounded-2xl border border-slate-100 bg-white p-2 shadow-xl ring-1 ring-black/5 focus:outline-none"
                         role="menu"
                         aria-hidden="true"
                         hidden
                     >
-                        <div class="px-4 py-2.5 border-b border-slate-100">
-                            <p class="text-[13px] font-semibold text-slate-800 truncate"><?= htmlspecialchars(auth_user()['name'] ?? 'User'); ?></p>
-                            <p class="text-[11px] text-slate-500 truncate"><?= htmlspecialchars(auth_user()['email'] ?? ''); ?></p>
+                        <div class="px-3 py-2">
+                            <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Account</p>
+                            <p class="mt-1 truncate text-sm font-medium text-slate-900"><?= htmlspecialchars(auth_user()['email'] ?? ''); ?></p>
                         </div>
-
-                        <?php if (auth_is_admin()): ?>
-                            <a href="<?= htmlspecialchars(url('/admin')); ?>" class="flex items-center gap-3 px-4 py-2.5 text-[13px] text-slate-700 hover:bg-slate-50 transition-colors" role="menuitem">
-                                <span class="material-symbols-outlined text-[18px] text-slate-400">admin_panel_settings</span>
-                                Admin Panel
-                            </a>
+                        <div class="my-1 h-px bg-slate-100"></div>
+                        <a class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900" href="<?= htmlspecialchars(url(auth_is_admin() ? '/admin/dashboard' : '/user/dashboard')); ?>" role="menuitem">
+                            <span class="material-symbols-outlined text-[20px]">dashboard</span>
+                            Dashboard
+                        </a>
+                        <?php if (! auth_is_admin()): ?>
+                        <a class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900" href="<?= htmlspecialchars(url('/loans')); ?>" role="menuitem">
+                            <span class="material-symbols-outlined text-[20px]">book</span>
+                            My Loans
+                        </a>
                         <?php endif; ?>
-
+                        <div class="my-1 h-px bg-slate-100"></div>
                         <form action="<?= htmlspecialchars(url('/logout')); ?>" method="POST" class="m-0">
                             <?= csrf_field(); ?>
-                            <button type="submit" class="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-red-600 hover:bg-red-50 transition-colors border-none bg-transparent cursor-pointer text-left" role="menuitem">
-                                <span class="material-symbols-outlined text-[18px]">logout</span>
-                                Logout
+                            <button class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-red-600 transition hover:bg-red-50 cursor-pointer border-none bg-transparent" type="submit" role="menuitem">
+                                <span class="material-symbols-outlined text-[20px]">logout</span>
+                                Sign Out
                             </button>
                         </form>
                     </div>
                 </div>
             <?php else: ?>
-                <!-- Guest: Login button -->
-                <a href="<?= htmlspecialchars(url('/login')); ?>" class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#002c78] text-white font-semibold text-[14px] shadow-sm hover:bg-[#001849] active:scale-95 transition-all duration-150">
-                    <span class="material-symbols-outlined text-[18px]">login</span>
-                    Login
-                </a>
+                <div class="hidden md:flex items-center gap-3">
+                    <a class="rounded-full px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900" href="<?= htmlspecialchars(url('/login')); ?>">Sign In</a>
+                    <a class="rounded-full bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-600/20 transition hover:bg-blue-700" href="<?= htmlspecialchars(url('/register')); ?>">Create Account</a>
+                </div>
             <?php endif; ?>
+
+            <!-- Mobile menu toggle -->
+            <button class="md:hidden flex h-10 w-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 border-none bg-transparent cursor-pointer" id="mobile-menu-toggle" type="button" aria-label="Toggle menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
         </div>
     </div>
 </header>
+
+<!-- Mobile Menu Drawer -->
+<div class="mobile-menu-backdrop" id="mobile-menu-backdrop" aria-hidden="true"></div>
+<div class="mobile-menu-drawer" id="mobile-menu-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+    <div class="mobile-menu-drawer__header">
+        <span class="font-bold text-slate-900 text-[18px] tracking-tight">LibManage</span>
+        <button class="flex h-10 w-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 border-none bg-transparent cursor-pointer" id="mobile-menu-close" type="button" aria-label="Close menu">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    
+    <div class="mobile-menu-drawer__content">
+        <nav class="mobile-menu-drawer__nav">
+            <a class="mobile-menu-drawer__link <?= $isHome ? 'bg-blue-50 text-blue-700' : ''; ?>" href="<?= htmlspecialchars(url('/')); ?>">
+                <span class="material-symbols-outlined">home</span>
+                Home
+            </a>
+            <a class="mobile-menu-drawer__link <?= $isCatalog ? 'bg-blue-50 text-blue-700' : ''; ?>" href="<?= htmlspecialchars(url('/books')); ?>">
+                <span class="material-symbols-outlined">library_books</span>
+                Catalog
+            </a>
+            <?php if (auth_check() && !auth_is_admin()): ?>
+            <a class="mobile-menu-drawer__link <?= $isMyLoans ? 'bg-blue-50 text-blue-700' : ''; ?>" href="<?= htmlspecialchars(url('/loans')); ?>">
+                <span class="material-symbols-outlined">book</span>
+                My Loans
+            </a>
+            <?php endif; ?>
+        </nav>
+    </div>
+
+    <div class="mobile-menu-drawer__footer">
+        <?php if (auth_check()): ?>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 text-[14px] font-bold text-blue-700">
+                    <?= htmlspecialchars(substr(auth_user()['name'] ?? 'U', 0, 1)); ?>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="text-[14px] font-bold text-slate-700 leading-tight truncate">
+                        <?= htmlspecialchars(auth_user()['name'] ?? 'User'); ?>
+                    </p>
+                    <p class="text-[12px] font-medium text-slate-500 leading-tight mt-0.5 truncate">
+                        <?= htmlspecialchars(auth_user()['email'] ?? ''); ?>
+                    </p>
+                </div>
+            </div>
+            
+            <a class="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-[14px] font-semibold text-slate-700 mb-3 hover:bg-slate-50 transition-colors" href="<?= htmlspecialchars(url(auth_is_admin() ? '/admin/dashboard' : '/user/dashboard')); ?>">
+                <span class="material-symbols-outlined text-[18px]">dashboard</span>
+                Dashboard
+            </a>
+            
+            <form action="<?= htmlspecialchars(url('/logout')); ?>" method="POST" class="m-0">
+                <?= csrf_field(); ?>
+                <button class="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 px-4 py-2.5 text-[14px] font-semibold text-red-600 transition-colors hover:bg-red-50 border-none cursor-pointer" type="submit">
+                    <span class="material-symbols-outlined text-[18px]">logout</span>
+                    Sign Out
+                </button>
+            </form>
+        <?php else: ?>
+            <div class="flex flex-col gap-3">
+                <a class="flex w-full items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-[14px] font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors" href="<?= htmlspecialchars(url('/register')); ?>">Create Account</a>
+                <a class="flex w-full items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-3 text-[14px] font-semibold text-slate-700 hover:bg-slate-50 transition-colors" href="<?= htmlspecialchars(url('/login')); ?>">Sign In</a>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

@@ -102,7 +102,7 @@ $emptyDescription = $activeTab === 'current' && ! $hasActiveLoans && ! $hasActiv
                     <?php endforeach; ?>
                 </nav>
 
-                <form action="<?= htmlspecialchars(url('/loans')); ?>" class="grid grid-cols-1 sm:grid-cols-[minmax(220px,1fr)_160px_190px_auto] gap-3 w-full lg:w-auto" method="GET">
+                <form action="<?= htmlspecialchars(url('/loans')); ?>" class="grid grid-cols-1 lg:grid-cols-[minmax(220px,1fr)_160px_190px_auto] gap-3 w-full lg:w-auto" method="GET">
                     <?php if ($filters['tab'] !== 'current'): ?>
                         <input name="tab" type="hidden" value="<?= htmlspecialchars($filters['tab']); ?>">
                     <?php endif; ?>

@@ -93,7 +93,7 @@
                 </div>
             </section>
 
-            <aside class="relative min-h-[620px] overflow-hidden rounded-[32px] bg-white shadow-2xl order-1 lg:order-2">
+            <aside class="relative min-h-0 lg:min-h-[620px] overflow-hidden rounded-[32px] bg-white shadow-2xl order-1 lg:order-2">
                 <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(17,66,160,0.18),transparent_32%),linear-gradient(180deg,#ffffff_0%,#edf3ff_100%)]"></div>
                 <div class="relative z-10 flex h-full flex-col justify-between p-8 md:p-10">
                     <div class="space-y-8">

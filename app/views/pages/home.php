@@ -1,5 +1,5 @@
 <!-- Hero Section -->
-<section class="relative h-[640px] flex items-center overflow-hidden">
+<section class="relative min-h-[480px] md:h-[640px] flex items-center overflow-hidden py-12 md:py-0">
     <div class="absolute inset-0 z-0">
         <img
             alt="Library Background"
@@ -10,7 +10,7 @@
     </div>
     <div class="relative z-10 max-w-[1200px] mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center">
         <div class="text-white space-y-6">
-            <h1 class="font-display-lg text-display-lg">Smart Library. Better Management.</h1>
+            <h1 class="font-display-lg text-[clamp(2.5rem,6vw,4rem)] leading-[1.1]">Smart Library. Better Management.</h1>
             <p class="font-body-lg text-body-lg text-blue-50/90 max-w-xl">
                 Streamline your academic resources with our high-efficiency library management system.
                 Verify loans, manage collections, and provide students with seamless access to knowledge.

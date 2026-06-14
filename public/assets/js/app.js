@@ -1006,12 +1006,60 @@ const initBasketObservers = () => {
     });
 };
 
+const initMobileMenu = () => {
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const close = document.getElementById('mobile-menu-close');
+    const drawer = document.getElementById('mobile-menu-drawer');
+    const backdrop = document.getElementById('mobile-menu-backdrop');
+
+    if (!toggle || !close || !drawer || !backdrop) {
+        return;
+    }
+
+    if (drawer.dataset.menuBound === 'true') {
+        return;
+    }
+    
+    drawer.dataset.menuBound = 'true';
+
+    const openMenu = () => {
+        drawer.classList.add('is-open');
+        backdrop.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeMenu = () => {
+        drawer.classList.remove('is-open');
+        backdrop.classList.remove('is-open');
+        document.body.style.overflow = '';
+    };
+
+    toggle.addEventListener('click', openMenu);
+    close.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && drawer.classList.contains('is-open')) {
+            closeMenu();
+        }
+    });
+
+    // Close menu when crossing desktop breakpoint
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    mediaQuery.addEventListener('change', (e) => {
+        if (e.matches && drawer.classList.contains('is-open')) {
+            closeMenu();
+        }
+    });
+};
+
 const initApp = () => {
     document.querySelectorAll('[data-year]').forEach((node) => {
         node.textContent = new Date().getFullYear();
     });
 
     initUserDropdown();
+    initMobileMenu();
     initLoadingForms();
     initCoverUpload();
     initBasketObservers();
