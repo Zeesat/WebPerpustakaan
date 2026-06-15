@@ -26,6 +26,7 @@
                                 </a>
                             </p>
                         </div>
+                    </div>
 
                     <?php if (! empty($errors['general'])): ?>
                         <div class="mt-8 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-800" role="alert">
