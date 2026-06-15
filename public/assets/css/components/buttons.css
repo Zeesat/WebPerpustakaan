@@ -1,0 +1,34 @@
+/* ============================================================
+   COMPONENTS: Buttons — .btn, .btn-primary, .btn-secondary
+   ============================================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-weight: 600;
+    transition: all 160ms ease;
+    min-width: 0;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-secondary {
+    background: transparent;
+    border-color: var(--border);
+}

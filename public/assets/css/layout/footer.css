@@ -1,0 +1,59 @@
+/* ============================================================
+   LAYOUT: Footer — .site-footer*
+   ============================================================ */
+
+.site-footer {
+    margin-top: 48px;
+    padding: 8px 0 28px;
+}
+
+.site-footer .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0;
+    height: 80px;
+}
+
+.site-footer p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.site-footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px 0;
+    border-top: 1px solid rgba(203, 213, 225, 0.9);
+}
+
+.site-footer__brand {
+    display: grid;
+    gap: 6px;
+}
+
+.site-footer__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.site-footer__links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+
+.site-footer__links a,
+.site-footer__brand p {
+    color: #64748b;
+}
+
+.site-footer__links a:hover {
+    color: var(--primary-dark);
+}

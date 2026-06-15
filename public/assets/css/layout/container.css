@@ -1,0 +1,18 @@
+/* ============================================================
+   LAYOUT: Container — .container, .section
+   ============================================================ */
+
+.container {
+    width: min(1100px, calc(100% - 32px));
+    margin: 0 auto;
+}
+
+.section {
+    margin: 24px 0 40px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}

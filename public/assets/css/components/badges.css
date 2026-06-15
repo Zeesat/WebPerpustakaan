@@ -1,0 +1,78 @@
+﻿/* ============================================================
+   COMPONENTS: Badges - .badge, .book-card__status, .basket-pill
+   ============================================================ */
+
+.badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    background: #dbeafe;
+    color: #1d40a0;
+}
+
+.book-card__category {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.book-card__category--blue { background: #dbeafe; color: #1d4ed8; }
+.book-card__category--emerald { background: #d1fae5; color: #047857; }
+.book-card__category--cyan { background: #cffafe; color: #0f766e; }
+.book-card__category--amber { background: #fef3c7; color: #b45309; }
+.book-card__category--orange { background: #ffedd5; color: #c2410c; }
+.book-card__category--violet { background: #ede9fe; color: #7c3aed; }
+
+.book-card__status {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.book-card__status--success { background: #dcfce7; color: #166534; }
+.book-card__status--warning { background: #fef3c7; color: #b45309; }
+.book-card__status--danger { background: #fee2e2; color: #b91c1c; }
+
+.basket-count-pill,
+.basket-status,
+.basket-success-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.basket-rule,
+.basket-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.basket-rule--neutral,
+.basket-pill--category { background: #f8fafc; color: #334155; }
+.basket-rule--success,
+.basket-pill--success { background: #dcfce7; color: #166534; }
+.basket-rule--warning,
+.basket-pill--warning { background: #fef3c7; color: #92400e; }
+.basket-rule--info { background: #e0f2fe; color: #0369a1; }
+.basket-pill--danger { background: #fee2e2; color: #b91c1c; }

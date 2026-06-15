@@ -1,0 +1,16 @@
+"/* ============================================================
+   TOKENS — design tokens / custom properties
+   ============================================================ */
+
+:root {
+    --bg: #faf8ff;
+    --surface: #ffffff;
+    --surface-strong: #ffffff;
+    --text: #1a1b21;
+    --muted: #4f627e;
+    --primary: #002c78;
+    --primary-dark: #001849;
+    --accent: #1142a0;
+    --border: #c4c6d4;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}"

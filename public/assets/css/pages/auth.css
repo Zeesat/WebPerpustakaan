@@ -1,0 +1,96 @@
+/* ============================================================
+   PAGES: AUTH — auth-shell, auth-hero, auth-panel, auth-form
+   ============================================================ */
+
+.auth-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(340px, 460px);
+    gap: 24px;
+    align-items: stretch;
+    margin: 36px 0 48px;
+}
+
+.auth-hero,
+.auth-panel {
+    padding: 32px;
+}
+
+.auth-hero {
+    background:
+        linear-gradient(140deg, rgba(29, 78, 216, 0.92), rgba(30, 64, 175, 0.86)),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.18), transparent 30%);
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.auth-hero .page-title,
+.auth-hero .page-subtitle {
+    color: #fff;
+}
+
+.auth-hero-card {
+    margin-top: 28px;
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.auth-feature-list {
+    margin: 12px 0 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 10px;
+}
+
+.auth-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-panel-header h2,
+.auth-placeholder h2 {
+    margin: 0 0 8px;
+    font-size: 1.8rem;
+}
+
+.auth-form {
+    display: grid;
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.auth-switch {
+    margin: 22px 0 0;
+    color: var(--muted);
+}
+
+.auth-switch a,
+.form-label-row a {
+    color: var(--primary-dark);
+}
+
+.auth-page-header {
+    margin-bottom: 20px;
+}
+
+.auth-placeholder {
+    margin-bottom: 40px;
+}
+
+.auth-placeholder-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}

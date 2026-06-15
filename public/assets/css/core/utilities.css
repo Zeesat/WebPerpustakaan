@@ -1,0 +1,32 @@
+/* ============================================================
+   UTILITIES — shared helpers across modules
+   ============================================================ */
+
+.flex-child {
+    min-width: 0;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.meta {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.page-header {
+    margin: 32px 0 20px;
+}
+
+.page-title {
+    margin: 0 0 12px;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.05;
+}
+
+.page-subtitle {
+    margin: 0;
+    color: var(--muted);
+    max-width: 720px;
+}

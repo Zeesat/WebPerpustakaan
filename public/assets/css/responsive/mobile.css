@@ -1,0 +1,142 @@
+/* ============================================================
+   RESPONSIVE: Mobile (<=767px) + small (<=479px)
+   ============================================================ */
+
+@media (max-width: 767px) {
+    .site-header .container,
+    .site-footer .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero {
+        padding: 28px;
+    }
+
+    .auth-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-hero,
+    .auth-panel {
+        padding: 24px;
+    }
+
+    .form-label-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .site-nav__inner,
+    .site-footer__inner,
+    .catalog-hero__layout,
+    .catalog-layout,
+    .book-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .site-nav__inner,
+    .site-footer__inner {
+        align-items: flex-start;
+    }
+
+    .catalog-page {
+        width: min(1240px, calc(100% - 24px));
+    }
+
+    .catalog-hero,
+    .catalog-filter-card,
+    .book-detail__card,
+    .book-detail__sidebar,
+    .empty-state {
+        padding: 24px;
+    }
+
+    .catalog-search,
+    .catalog-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .basket-page {
+        width: min(1240px, calc(100% - 24px));
+        padding-bottom: 104px;
+    }
+
+    .basket-hero,
+    .basket-layout,
+    .basket-success-state {
+        grid-template-columns: 1fr;
+    }
+
+    .basket-hero,
+    .basket-success-state {
+        display: grid;
+    }
+
+    .basket-hero__actions {
+        justify-content: stretch;
+    }
+
+    .basket-highlights,
+    .basket-summary-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .basket-layout {
+        gap: 16px;
+    }
+
+    .basket-panel,
+    .basket-highlight,
+    .basket-banner,
+    .basket-feedback {
+        padding: 20px;
+    }
+
+    .basket-panel--summary {
+        position: static;
+    }
+
+    .basket-item {
+        grid-template-columns: 1fr;
+    }
+
+    .basket-item__cover {
+        min-height: 180px;
+    }
+
+    .basket-mobile-bar {
+        display: flex;
+    }
+
+    .catalog-toolbar__controls {
+        width: 100%;
+    }
+
+    .catalog-toolbar__select,
+    .catalog-search__button,
+    .catalog-chip,
+    .book-card__button,
+    .empty-state__button,
+    .basket-button {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .btn,
+    .site-nav__button,
+    .catalog-card-request {
+        min-height: 44px;
+    }
+
+    table {
+        min-width: 600px;
+    }
+}
+
+@media (max-width: 479px) {
+    .basket-highlights,
+    .basket-summary-grid {
+        grid-template-columns: 1fr;
+    }
+}

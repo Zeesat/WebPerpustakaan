@@ -1,0 +1,42 @@
+/* ============================================================
+   RESET — scrollbar uniformity, overflow lock, media protection
+   ============================================================ */
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+html::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+html {
+    scrollbar-width: none;
+}
+
+html {
+    -ms-overflow-style: none;
+}
+
+img,
+video,
+canvas,
+svg,
+iframe {
+    max-width: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}

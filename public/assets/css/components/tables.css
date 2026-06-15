@@ -1,0 +1,19 @@
+﻿/* ============================================================
+   COMPONENTS: Tables
+   ============================================================ */
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+}

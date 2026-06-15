@@ -1,0 +1,115 @@
+/* ============================================================
+   COMPONENTS: Alerts — flash, form-alert, basket-banner, toast
+   ============================================================ */
+
+.flash-message,
+.form-alert {
+    margin: 20px 0 0;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.flash-message-success,
+.form-alert-success {
+    background: #ecfdf5;
+    color: #065f46;
+    border-color: #a7f3d0;
+}
+
+.flash-message-error,
+.form-alert-error {
+    background: #fff1f2;
+    color: #9f1239;
+    border-color: #fecdd3;
+}
+
+/* ── Basket Banner & Feedback ── */
+.basket-banner,
+.basket-feedback {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    color: #0f172a;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(203, 213, 225, 0.88);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06);
+}
+
+.basket-banner--warning,
+.basket-feedback--warning {
+    border-color: rgba(245, 158, 11, 0.24);
+    background: linear-gradient(180deg, #fffaf0, #ffffff);
+    color: #92400e;
+}
+
+.basket-feedback--danger {
+    border-color: rgba(239, 68, 68, 0.18);
+    background: linear-gradient(180deg, #fff5f5, #ffffff);
+    color: #b91c1c;
+}
+
+.basket-feedback--info {
+    border-color: rgba(14, 165, 233, 0.18);
+    background: linear-gradient(180deg, #f0f9ff, #ffffff);
+    color: #0369a1;
+}
+
+/* ── Basket Toast ── */
+.basket-toast-host {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 1300;
+    display: grid;
+    gap: 10px;
+    justify-items: end;
+}
+
+.basket-toast {
+    min-width: 280px;
+    max-width: min(380px, calc(100vw - 32px));
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(203, 213, 225, 0.92);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 20px 36px rgba(15, 23, 42, 0.16);
+    color: #0f172a;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.basket-toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.basket-toast--success {
+    border-color: rgba(34, 197, 94, 0.18);
+    background: linear-gradient(180deg, #f0fdf4, #ffffff);
+    color: #166534;
+}
+
+.basket-toast--warning {
+    border-color: rgba(245, 158, 11, 0.18);
+    background: linear-gradient(180deg, #fff7ed, #ffffff);
+    color: #9a3412;
+}
+
+.basket-toast--danger {
+    border-color: rgba(239, 68, 68, 0.18);
+    background: linear-gradient(180deg, #fff5f5, #ffffff);
+    color: #b91c1c;
+}
+
+.basket-toast--info {
+    border-color: rgba(14, 165, 233, 0.18);
+    background: linear-gradient(180deg, #f0f9ff, #ffffff);
+    color: #0369a1;
+}
