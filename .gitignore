@@ -9,5 +9,3 @@ local_docs/
 uploads/
 .webp
 
-
-app/config/database.php
