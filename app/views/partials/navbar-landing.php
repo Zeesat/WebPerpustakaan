@@ -81,7 +81,7 @@
                             <p class="mt-1 truncate text-sm font-medium text-slate-900"><?= htmlspecialchars(auth_user()['email'] ?? ''); ?></p>
                         </div>
                         <div class="my-1 h-px bg-slate-100"></div>
-                        <a class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900" href="<?= htmlspecialchars(url(auth_is_admin() ? '/admin/dashboard' : '/books')); ?>" role="menuitem">
+                        <a class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900" href="<?= htmlspecialchars(url(auth_is_admin() ? '/admin' : '/books')); ?>" role="menuitem">
                             <span class="material-symbols-outlined text-[20px]">grid_view</span>
                             <?= htmlspecialchars(auth_is_admin() ? 'Admin Dashboard' : 'Books'); ?>
                         </a>
@@ -162,7 +162,7 @@
             </div>
             
             <!-- Dashboard/Admin Link -->
-            <a class="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-[14px] font-semibold text-slate-700 mb-3 hover:bg-slate-50 transition-colors" href="<?= htmlspecialchars(url(auth_is_admin() ? '/admin/dashboard' : '/books')); ?>">
+            <a class="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-[14px] font-semibold text-slate-700 mb-3 hover:bg-slate-50 transition-colors" href="<?= htmlspecialchars(url(auth_is_admin() ? '/admin' : '/books')); ?>">
                 <span class="material-symbols-outlined text-[20px]">grid_view</span>
                 <?= htmlspecialchars(auth_is_admin() ? 'Admin Dashboard' : 'Books'); ?>
             </a>
