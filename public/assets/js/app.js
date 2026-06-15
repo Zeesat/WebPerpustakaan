@@ -334,7 +334,7 @@ const renderBasketChrome = () => {
         link.classList.toggle('is-empty', count === 0);
         link.classList.toggle('is-filled', count > 0);
         link.classList.toggle('is-warning', count >= maxItems);
-        link.setAttribute('aria-label', count === 0 ? 'Basket empty' : `${countLabel} in basket`);
+        link.setAttribute('aria-label', count === 0 ? 'Borrowing List empty' : `${countLabel} in list`);
     });
 
     document.querySelectorAll('[data-basket-mobile-bar]').forEach((bar) => {
@@ -382,7 +382,7 @@ const syncBasketAddButton = (button) => {
     if (inBasket) {
         button.disabled = false;
         button.classList.add('is-in-basket');
-        button.textContent = button.dataset.addedText || 'In Basket';
+        button.textContent = button.dataset.addedText || 'In List';
         return;
     }
 
@@ -427,7 +427,7 @@ const initBasketAddButtons = () => {
 
             if (result.status === 'duplicate') {
                 pulseBasketControls();
-                showToast('This title is already in your basket.', 'info');
+                showToast('This title is already in your borrowing list.', 'info');
                 syncBasketAddButtons();
                 return;
             }
@@ -447,7 +447,7 @@ const initBasketAddButtons = () => {
             syncBasketAddButton(button);
             renderBasketChrome();
             pulseBasketControls();
-            showToast(`Added "${book.title}" to your basket.`, 'success');
+            showToast(`Added "${book.title}" to your borrowing list.`, 'success');
 
             window.setTimeout(() => {
                 delete button.dataset.flashState;
@@ -518,11 +518,11 @@ const renderBasketPage = () => {
     const notice = basketStore.consumeNotice();
 
     if (notice === 'expired' && !basketPageState.feedback) {
-        setFeedbackBanner('Your basket expired after being idle for a while. Start a fresh request when you are ready.', 'warning');
+        setFeedbackBanner('Your borrowing list expired after being idle for a while. Start a fresh request when you are ready.', 'warning');
     }
 
     if (notice === 'switched' && !basketPageState.feedback) {
-        setFeedbackBanner('Your basket was cleared because a different account is now active in this browser.', 'info');
+        setFeedbackBanner('Your borrowing list was cleared because a different account is now active in this browser.', 'info');
     }
 
     page.querySelectorAll('[data-basket-selected-count]').forEach((element) => {
@@ -642,7 +642,7 @@ const renderBasketPage = () => {
         if (basketPageState.loading) {
             submitState.textContent = 'Submitting...';
         } else if (selectedCount === 0) {
-            submitState.textContent = 'Basket empty';
+            submitState.textContent = 'Borrowing list empty';
         } else if (activeLoanBlocked) {
             submitState.textContent = 'Submission locked';
         } else if (!withinLimit) {
@@ -719,12 +719,12 @@ const clearBasketWithConfirmation = () => {
     const basket = basketStore.load();
 
     if (basket.items.length === 0) {
-        setFeedbackBanner('Your basket is already empty.', 'info');
+        setFeedbackBanner('Your borrowing list is already empty.', 'info');
         renderBasketPage();
         return;
     }
 
-    if (!window.confirm('Clear all titles from your borrow basket?')) {
+    if (!window.confirm('Clear all titles from your borrowing list?')) {
         return;
     }
 
@@ -733,7 +733,7 @@ const clearBasketWithConfirmation = () => {
     basketPageState.completedMessage = '';
     setFeedbackBanner('Basket cleared.', 'info');
     basketStore.clear();
-    showToast('Borrow basket cleared.', 'info');
+    showToast('Borrowing list cleared.', 'info');
 };
 
 const submitBasketRequest = async () => {
@@ -746,7 +746,7 @@ const submitBasketRequest = async () => {
     const basket = basketStore.load();
 
     if (basket.items.length === 0) {
-        setFeedbackBanner('Your basket is empty. Add at least one title before submitting.', 'warning');
+        setFeedbackBanner('Your borrowing list is empty. Add at least one title before submitting.', 'warning');
         renderBasketPage();
         return;
     }

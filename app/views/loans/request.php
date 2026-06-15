@@ -3,7 +3,7 @@
 
     <div class="cart-header">
         <div class="cart-header__title-group">
-            <h1 class="cart-header__title">My Cart</h1>
+            <h1 class="cart-header__title">Borrowing List</h1>
             <span class="cart-header__count" data-basket-list-count>0 items</span>
         </div>
         <div class="cart-header__actions">
@@ -13,7 +13,7 @@
             </a>
             <button class="cart-btn cart-btn--danger-text" data-basket-clear-button type="button">
                 <span class="material-symbols-outlined">delete_outline</span>
-                Clear Cart
+                Clear List
             </button>
         </div>
     </div>
@@ -39,8 +39,8 @@
             </div>
 
             <div class="cart-empty-state" data-basket-empty-state hidden>
-                <span class="material-symbols-outlined cart-empty-state__icon">shopping_cart</span>
-                <h3 class="cart-empty-state__title">Your cart is empty</h3>
+                <span class="material-symbols-outlined cart-empty-state__icon">book</span>
+                <h3 class="cart-empty-state__title">Your borrowing list is empty</h3>
                 <a class="cart-btn cart-btn--primary" href="<?= htmlspecialchars(url('/books')); ?>">Browse Catalog</a>
             </div>
 

@@ -98,11 +98,6 @@ class BorrowBasketService
                     'tone' => 'info',
                     'icon' => 'admin_panel_settings',
                 ],
-                [
-                    'label' => 'Stock checked again on approval',
-                    'tone' => 'info',
-                    'icon' => 'inventory_2',
-                ],
             ],
             'blockingNotice' => $activeLoanCount > 0
                 ? 'You already have an active loan or pending request. Review your basket, but submission is currently locked.'
