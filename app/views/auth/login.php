@@ -26,8 +26,10 @@
                             </p>
                         </div>
 
+    <!-- Error -->
                     <?php if (! empty($errors['general'])): ?>
-                        <div class="mt-8 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-800" role="alert">
+      <div class="auth-alert auth-alert--error" role="alert">
+        <span class="material-symbols-outlined">error</span>
                             <?= htmlspecialchars((string) $errors['general']); ?>
                         </div>
                                 <?php endif; ?>
@@ -46,13 +48,11 @@
                                         name="email"
                                         type="email"
                                         value="<?= htmlspecialchars((string) old('email')); ?>"
-                                        autocomplete="email"
-                                        placeholder="you@campus.ac.id"
-                                        required
+            autocomplete="email" placeholder="you@campus.ac.id" required
+            class="auth-form__input<?= ! empty($errors['email']) ? ' auth-form__input--error' : ''; ?>"
                                     >
-                                </div>
                                 <?php if (! empty($errors['email'])): ?>
-                                    <p class="mt-2 text-sm font-medium text-error"><?= htmlspecialchars((string) $errors['email']); ?></p>
+            <p class="auth-form__error"><?= htmlspecialchars((string) $errors['email']); ?></p>
                                 <?php endif; ?>
                         </div>
 
@@ -74,9 +74,8 @@
                                         placeholder="Enter your password"
                                         required
                                     >
-                                </div>
                                 <?php if (! empty($errors['password'])): ?>
-                                    <p class="mt-2 text-sm font-medium text-error"><?= htmlspecialchars((string) $errors['password']); ?></p>
+            <p class="auth-form__error"><?= htmlspecialchars((string) $errors['password']); ?></p>
                                 <?php endif; ?>
                 </div>
                         </div>
@@ -85,9 +84,8 @@
                             One account works across the student dashboard and admin area, with access controlled by your assigned role.
                         </div>
                         <button
-                            class="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition hover:bg-primary-container"
-                            data-loading-text="Signing in..."
-                            type="submit"
+          type="submit" data-loading-text="Signing in..."
+          class="auth-form__submit"
                         >
                             Sign In
                             <span class="material-symbols-outlined text-sm">login</span>

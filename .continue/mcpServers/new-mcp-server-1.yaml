@@ -1,0 +1,10 @@
+name: Local MCP
+version: 0.0.1
+schema: v1
+
+mcpServers:
+  - name: playwright
+    command: npx
+    args:
+      - -y
+      - "@playwright/mcp"
