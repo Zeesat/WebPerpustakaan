@@ -15,7 +15,7 @@ function app_config(string $key, mixed $default = null): mixed
 
 function asset(string $path): string
 {
-    return rtrim(app_config('base_url', '/'), '/') . '/assets/' . ltrim($path, '/');
+    return rtrim(app_config('base_url', '/'), '/') . '/public/assets/' . ltrim($path, '/');
 }
 
 function url(string $path = '/'): string
@@ -218,7 +218,7 @@ function cover_url(?string $cover): ?string
         return null;
     }
 
-    return url('/uploads/covers/' . ltrim($cover, '/'));
+    return url('/public/uploads/covers/' . ltrim($cover, '/'));
 }
 
 /**
