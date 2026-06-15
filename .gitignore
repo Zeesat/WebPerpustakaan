@@ -10,3 +10,4 @@ uploads/
 .webp
 
 
+app/config/database.php
