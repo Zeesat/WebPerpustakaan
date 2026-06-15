@@ -52,7 +52,7 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
         <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-[#0a1e42] via-[#0a1e42]/90 to-[#0a1e42]/40"></div>
         
-        <div class="max-w-[1240px] mx-auto px-6 py-12 relative z-10 flex flex-col lg:flex-row justify-between items-center gap-10">
+        <div class="max-w-[1240px] mx-auto px-6 py-4 relative z-10 flex flex-col lg:flex-row justify-between items-start gap-10">
             <div class="w-full lg:w-[55%]">
                 <h1 class="text-[28px] md:text-[34px] font-bold mb-3 tracking-tight">Welcome, <?= htmlspecialchars($welcomeName); ?>! 👋</h1>
                 <p class="text-[14px] md:text-[16px] text-blue-100 mb-8 max-w-xl">
@@ -94,7 +94,7 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                         if ($index === 2) { $icon = 'bookmark'; $colorClass = 'text-purple-500 bg-purple-50'; }
                     ?>
                     <article class="bg-white rounded-xl p-5 w-[140px] shadow-sm flex flex-col items-center text-center">
-                        <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3 <?= $colorClass ?>">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-1 <?= $colorClass ?>">
                             <span class="material-symbols-outlined text-[20px]"><?= $icon ?></span>
                         </div>
                         <h2 class="text-xl font-bold text-slate-800 leading-none mb-1.5"><?= htmlspecialchars($stat['value']); ?></h2>
@@ -214,7 +214,7 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                     <a class="inline-block px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors" href="<?= htmlspecialchars(url('/books')); ?>">Back to Full Catalog</a>
                 </article>
             <?php else: ?>
-                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-5">
                     <?php foreach ($books as $book): ?>
                         <article class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow group flex flex-col h-full">
                             <div class="w-full aspect-[3/4] p-5 pb-0 bg-white flex items-center justify-center relative overflow-hidden">
@@ -236,9 +236,9 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                                 <?php endif; ?>
                             </div>
 
-                            <div class="p-5 flex flex-col flex-1">
-                                <h3 class="text-[15px] font-bold text-slate-800 leading-tight mb-1 truncate"><?= htmlspecialchars($book['title']); ?></h3>
-                                <p class="text-[13px] text-slate-500 mb-3 truncate"><?= htmlspecialchars($book['author']); ?></p>
+                            <div class="px-5 pt-0 pb-1.5 flex flex-col flex-1">
+                                <h3 class="text-[15px] font-bold text-slate-800 leading-tight mb-0 truncate"><?= htmlspecialchars($book['title']); ?></h3>
+                                <p class="text-[13px] text-slate-500 mb-1 truncate"><?= htmlspecialchars($book['author']); ?></p>
 
                                 <div class="mt-auto flex flex-col gap-3">
                                     <div class="flex flex-col items-start gap-1">
