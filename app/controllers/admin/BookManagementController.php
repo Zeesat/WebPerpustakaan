@@ -100,6 +100,16 @@ class BookManagementController extends Controller
             return;
         }
 
+        $file = $_FILES['cover'] ?? null;
+        if (is_array($file) && $file['error'] === UPLOAD_ERR_OK) {
+            $cover = save_cover_file($file, $bookId);
+            if ($cover !== null) {
+                $this->bookModel->updateCover($bookId, $cover);
+            } else {
+                flash('error', 'Book added, but failed to upload cover image.');
+            }
+        }
+
         clear_old_input();
         flash('status', 'Book "' . htmlspecialchars($title) . '" has been added successfully.');
         $this->redirect('/admin/books');
@@ -215,38 +225,38 @@ class BookManagementController extends Controller
         ]);
 
         if ($bookId === false || $bookId === null) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Invalid book ID.']);
+            flash('error', 'Invalid book ID.');
+            $this->redirect('/admin/books');
             return;
         }
 
         if (! verify_csrf_token($_POST['_token'] ?? null)) {
-            http_response_code(403);
-            echo json_encode(['success' => false, 'message' => 'Invalid security token.']);
+            flash('error', 'Invalid security token.');
+            $this->redirect('/admin/books/edit?id=' . $bookId);
             return;
         }
 
         $book = $this->bookModel->findById($bookId);
 
         if ($book === null) {
-            http_response_code(404);
-            echo json_encode(['success' => false, 'message' => 'Book not found.']);
+            flash('error', 'Book not found.');
+            $this->redirect('/admin/books');
             return;
         }
 
         $file = $_FILES['cover'] ?? null;
 
-        if (! is_array($file)) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'No cover file uploaded.']);
+        if (! is_array($file) || $file['error'] !== UPLOAD_ERR_OK) {
+            flash('error', 'No cover file uploaded or upload error.');
+            $this->redirect('/admin/books/edit?id=' . $bookId);
             return;
         }
 
         $cover = save_cover_file($file, $bookId);
 
         if ($cover === null) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Failed to process cover image. Ensure it is a valid image (JPG, PNG, WebP) under 5MB.']);
+            flash('error', 'Failed to process cover image. Ensure it is a valid image (JPG, PNG, WebP) under 5MB.');
+            $this->redirect('/admin/books/edit?id=' . $bookId);
             return;
         }
 
@@ -259,17 +269,13 @@ class BookManagementController extends Controller
         if (! $updated) {
             // Rollback: remove the uploaded file
             delete_cover_file($cover);
-            http_response_code(500);
-            echo json_encode(['success' => false, 'message' => 'Failed to save cover to database.']);
+            flash('error', 'Failed to save cover to database.');
+            $this->redirect('/admin/books/edit?id=' . $bookId);
             return;
         }
 
-        header('Content-Type: application/json');
-        echo json_encode([
-            'success' => true,
-            'message' => 'Cover updated successfully.',
-            'cover_url' => cover_url($cover),
-        ]);
+        flash('status', 'Cover updated successfully.');
+        $this->redirect('/admin/books/edit?id=' . $bookId);
     }
 
     public function deleteCover(): void
@@ -279,22 +285,22 @@ class BookManagementController extends Controller
         ]);
 
         if ($bookId === false || $bookId === null) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Invalid book ID.']);
+            flash('error', 'Invalid book ID.');
+            $this->redirect('/admin/books');
             return;
         }
 
         if (! verify_csrf_token($_POST['_token'] ?? null)) {
-            http_response_code(403);
-            echo json_encode(['success' => false, 'message' => 'Invalid security token.']);
+            flash('error', 'Invalid security token.');
+            $this->redirect('/admin/books/edit?id=' . $bookId);
             return;
         }
 
         $book = $this->bookModel->findById($bookId);
 
         if ($book === null) {
-            http_response_code(404);
-            echo json_encode(['success' => false, 'message' => 'Book not found.']);
+            flash('error', 'Book not found.');
+            $this->redirect('/admin/books');
             return;
         }
 
@@ -303,8 +309,8 @@ class BookManagementController extends Controller
 
         $this->bookModel->updateCover($bookId, null);
 
-        header('Content-Type: application/json');
-        echo json_encode(['success' => true, 'message' => 'Cover removed successfully.']);
+        flash('status', 'Cover removed successfully.');
+        $this->redirect('/admin/books/edit?id=' . $bookId);
     }
 
     public function destroy(): void

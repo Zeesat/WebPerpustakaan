@@ -23,7 +23,7 @@ return [
         '/loans/my' => 'LoanController@myLoans',
         '/loans/request' => 'LoanController@requestForm',
     ],
-        'admin' => [
+    'admin' => [
         '/admin' => 'AdminDashboardController@index',
         '/admin/books' => 'BookManagementController@index',
         '/admin/books/create' => 'BookManagementController@createForm',
@@ -31,6 +31,8 @@ return [
         '/admin/books/edit' => 'BookManagementController@editForm',
         'POST /admin/books/update' => 'BookManagementController@update',
         'POST /admin/books/delete' => 'BookManagementController@destroy',
+        'POST /admin/books/update-cover' => 'BookManagementController@updateCover',
+        'POST /admin/books/delete-cover' => 'BookManagementController@deleteCover',
         '/admin/categories' => 'CategoryManagementController@index',
         'POST /admin/categories/store' => 'CategoryManagementController@store',
         'POST /admin/categories/update' => 'CategoryManagementController@update',
@@ -39,4 +41,3 @@ return [
         '/admin/loans' => 'LoanVerificationController@index',
     ],
 ];
-
