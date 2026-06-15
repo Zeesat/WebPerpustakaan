@@ -82,9 +82,6 @@
                 </div>
                         </div>
 
-                        <div class="rounded-2xl bg-surface-container-low px-5 py-4 text-xs leading-6 text-on-surface-variant">
-                            One account works across the student dashboard and admin area, with access controlled by your assigned role.
-                        </div>
                         <button
                             class="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition hover:bg-primary-container"
                             data-loading-text="Signing in..."
