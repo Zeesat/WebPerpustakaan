@@ -167,10 +167,4 @@ ADMIN:
 * Manage Users
 * Loan Verification Panel
 
-NOTES:
-
-* The system emphasizes realistic workflows instead of instant transactions.
-* Verification ensures control over inventory and user behavior.
-* Designed to simulate real-world library operations.
-
 END SYSTEM
