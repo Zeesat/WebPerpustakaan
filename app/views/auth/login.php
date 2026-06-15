@@ -28,8 +28,10 @@
                                                 </div>
                     </div>
 
+    <!-- Error -->
                     <?php if (! empty($errors['general'])): ?>
-                        <div class="mt-8 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-800" role="alert">
+      <div class="auth-alert auth-alert--error" role="alert">
+        <span class="material-symbols-outlined">error</span>
                             <?= htmlspecialchars((string) $errors['general']); ?>
                         </div>
                                 <?php endif; ?>
@@ -48,13 +50,11 @@
                                         name="email"
                                         type="email"
                                         value="<?= htmlspecialchars((string) old('email')); ?>"
-                                        autocomplete="email"
-                                        placeholder="you@campus.ac.id"
-                                        required
+            autocomplete="email" placeholder="you@campus.ac.id" required
+            class="auth-form__input<?= ! empty($errors['email']) ? ' auth-form__input--error' : ''; ?>"
                                     >
-                                </div>
                                 <?php if (! empty($errors['email'])): ?>
-                                    <p class="mt-2 text-sm font-medium text-error"><?= htmlspecialchars((string) $errors['email']); ?></p>
+            <p class="auth-form__error"><?= htmlspecialchars((string) $errors['email']); ?></p>
                                 <?php endif; ?>
                         </div>
 
@@ -76,9 +76,8 @@
                                         placeholder="Enter your password"
                                         required
                                     >
-                                </div>
                                 <?php if (! empty($errors['password'])): ?>
-                                    <p class="mt-2 text-sm font-medium text-error"><?= htmlspecialchars((string) $errors['password']); ?></p>
+            <p class="auth-form__error"><?= htmlspecialchars((string) $errors['password']); ?></p>
                                 <?php endif; ?>
                 </div>
                         </div>

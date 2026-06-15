@@ -30,7 +30,8 @@
                     </div>
 
                     <?php if (! empty($errors['general'])): ?>
-                        <div class="mt-8 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-800" role="alert">
+      <div class="auth-alert auth-alert--error" role="alert">
+        <span class="material-symbols-outlined">error</span>
                             <?= htmlspecialchars((string) $errors['general']); ?>
                         </div>
                     <?php endif; ?>
@@ -49,14 +50,11 @@
                                         name="name"
                                         type="text"
                                         value="<?= htmlspecialchars((string) old('name')); ?>"
-                                        autocomplete="name"
-                                        maxlength="100"
-                                        placeholder="Enter your full name"
-                                        required
+            autocomplete="name" maxlength="100" placeholder="Enter your full name" required
+            class="auth-form__input<?= ! empty($errors['name']) ? ' auth-form__input--error' : ''; ?>"
                                     >
-                                </div>
                                 <?php if (! empty($errors['name'])): ?>
-                                    <p class="mt-2 text-sm font-medium text-error"><?= htmlspecialchars((string) $errors['name']); ?></p>
+            <p class="auth-form__error"><?= htmlspecialchars((string) $errors['name']); ?></p>
                                 <?php endif; ?>
                             </div>
 
@@ -70,13 +68,11 @@
                                         name="email"
                                         type="email"
                                         value="<?= htmlspecialchars((string) old('email')); ?>"
-                                        autocomplete="email"
-                                        placeholder="you@campus.ac.id"
-                                        required
+            autocomplete="email" placeholder="you@campus.ac.id" required
+            class="auth-form__input<?= ! empty($errors['email']) ? ' auth-form__input--error' : ''; ?>"
                                     >
-                                </div>
                                 <?php if (! empty($errors['email'])): ?>
-                                    <p class="mt-2 text-sm font-medium text-error"><?= htmlspecialchars((string) $errors['email']); ?></p>
+            <p class="auth-form__error"><?= htmlspecialchars((string) $errors['email']); ?></p>
                                 <?php endif; ?>
                             </div>
 
@@ -94,9 +90,8 @@
                                             placeholder="Minimum 8 characters"
                                             required
                                         >
-                                    </div>
                                     <?php if (! empty($errors['password'])): ?>
-                                        <p class="mt-2 text-sm font-medium text-error"><?= htmlspecialchars((string) $errors['password']); ?></p>
+              <p class="auth-form__error"><?= htmlspecialchars((string) $errors['password']); ?></p>
                                     <?php endif; ?>
                                 </div>
 
@@ -113,25 +108,31 @@
                                             placeholder="Repeat your password"
                                             required
                                         >
-                                    </div>
                                     <?php if (! empty($errors['password_confirmation'])): ?>
-                                        <p class="mt-2 text-sm font-medium text-error"><?= htmlspecialchars((string) $errors['password_confirmation']); ?></p>
+              <p class="auth-form__error"><?= htmlspecialchars((string) $errors['password_confirmation']); ?></p>
                                     <?php endif; ?>
                                 </div>
                             </div>
                         </div>
 
                         <button
-                            class="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition hover:bg-primary-container"
-                            data-loading-text="Creating account..."
-                            type="submit"
+          type="submit" data-loading-text="Creating account..."
+          class="auth-form__submit"
                         >
                             Create My Account
                             <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </button>
                     </form>
-                </div>
-            </section>
-        </div>
+
+      <div class="auth-divider"><span>or</span></div>
+
+      <p class="auth-switch">
+        Already have an account?
+        <a href="/login">Sign in</a>
+      </p>
     </div>
-</section>
+
+    <p class="auth-footer">&copy; <span data-year></span> <?= htmlspecialchars(app_config('name')); ?></p>
+  </div>
+</div>
+
