@@ -106,7 +106,7 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
     </div>
 
     <div class="max-w-[1240px] mx-auto px-6 py-8 flex flex-col md:flex-row gap-8 items-start">
-        <aside id="catalog-filters-sidebar" class="w-full md:w-[260px] flex-shrink-0 flex flex-col gap-6 md:sticky md:top-24 self-start">
+        <aside id="catalog-filters-sidebar" class="hidden md:flex w-[260px] flex-shrink-0 flex-col gap-6 sticky top-24 self-start">
             <section class="bg-white rounded-xl shadow-sm px-4 pt-1 pb-4 border border-slate-100">
                 <h3 class="text-[15px] font-bold text-slate-800 mb-3 px-2">Categories</h3>
                 <div class="flex flex-col gap-1">
@@ -171,7 +171,12 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                     <p class="text-[14px] text-slate-500"><?= htmlspecialchars($resultSummary); ?></p>
                 </div>
 
-                <form action="<?= htmlspecialchars(url('/books')); ?>" class="flex items-center gap-2 bg-white rounded-lg border border-slate-200 px-3 py-1.5 shadow-sm" method="GET">
+                <div class="flex items-center gap-2">
+                    <button class="md:hidden flex items-center gap-1.5 bg-white rounded-lg border border-slate-200 px-3 py-1.5 shadow-sm hover:bg-slate-50 transition-colors" id="mobile-filter-toggle" type="button">
+                        <span class="material-symbols-outlined text-[18px] text-slate-500">tune</span>
+                        <span class="text-[13px] font-medium text-slate-600">Filters</span>
+                    </button>
+                    <form action="<?= htmlspecialchars(url('/books')); ?>" class="flex items-center gap-2 bg-white rounded-lg border border-slate-200 px-3 py-1.5 shadow-sm" method="GET">
                     <?php if ($filters['search'] !== ''): ?>
                         <input name="search" type="hidden" value="<?= htmlspecialchars($filters['search']); ?>">
                     <?php endif; ?>
@@ -191,6 +196,7 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                         <?php endforeach; ?>
                     </select>
                 </form>
+            </div>
             </div>
 
             <?php if ($hasActiveFilters): ?>
@@ -261,4 +267,96 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
             <?php endif; ?>
         </section>
     </div>
+
+    <!-- Mobile Filter Drawer -->
+    <div class="mobile-menu-backdrop md:hidden" id="mobile-filter-backdrop" aria-hidden="true"></div>
+    <div class="mobile-menu-drawer md:hidden" id="mobile-filter-drawer" role="dialog" aria-modal="true" aria-label="Filters">
+        <div class="mobile-menu-drawer__header">
+            <span class="font-bold text-slate-900 text-[18px] tracking-tight">Filters</span>
+            <button class="flex h-10 w-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 border-none bg-transparent cursor-pointer" id="mobile-filter-close" type="button" aria-label="Close filters">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        
+        <div class="mobile-menu-drawer__content p-5 overflow-y-auto">
+            <h3 class="text-[15px] font-bold text-slate-800 mb-3">Categories</h3>
+            <div class="flex flex-col gap-1 mb-8">
+                <a class="flex items-center justify-between px-3 py-2.5 rounded-lg text-[14px] <?= $activeCategory === null ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-slate-600 hover:bg-slate-50'; ?>" href="<?= htmlspecialchars($buildCatalogUrl(['category' => null])); ?>">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-[18px] <?= $activeCategory === null ? 'text-blue-600' : 'text-slate-400' ?>">menu_book</span>
+                        <span>All Categories</span>
+                    </div>
+                    <span class="<?= $activeCategory === null ? 'text-blue-600 bg-blue-100' : 'text-slate-400 bg-slate-100' ?> text-[11px] font-bold px-2 py-0.5 rounded-md"><?= htmlspecialchars((string) $catalogTotals['total_titles']); ?></span>
+                </a>
+
+                <?php foreach ($categories as $index => $category): ?>
+                    <?php
+                        $catIcons = ['book', 'science', 'computer', 'history', 'business_center', 'self_improvement', 'category'];
+                        $icon = $catIcons[$index % count($catIcons)];
+                    ?>
+                    <a class="flex items-center justify-between px-3 py-2.5 rounded-lg text-[14px] <?= $category['active'] ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-slate-600 hover:bg-slate-50'; ?>" href="<?= htmlspecialchars($buildCatalogUrl(['category' => $category['id']])); ?>">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[18px] <?= $category['active'] ? 'text-blue-600' : 'text-slate-400' ?>"><?= $icon ?></span>
+                            <span><?= htmlspecialchars($category['name']); ?></span>
+                        </div>
+                        <span class="<?= $category['active'] ? 'text-blue-600 bg-blue-100' : 'text-slate-400 bg-slate-100' ?> text-[11px] font-bold px-2 py-0.5 rounded-md"><?= htmlspecialchars((string) $category['book_count']); ?></span>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+
+            <h3 class="text-[15px] font-bold text-slate-800 mb-4">Availability</h3>
+            <form action="<?= htmlspecialchars(url('/books')); ?>" class="flex flex-col gap-3.5 mb-6" method="GET" id="mobile-availability-form">
+                <?php if ($filters['search'] !== ''): ?>
+                    <input name="search" type="hidden" value="<?= htmlspecialchars($filters['search']); ?>">
+                <?php endif; ?>
+                <?php if ($filters['category_id'] !== null): ?>
+                    <input name="category" type="hidden" value="<?= htmlspecialchars((string) $filters['category_id']); ?>">
+                <?php endif; ?>
+                <?php if ($filters['sort'] !== 'latest'): ?>
+                    <input name="sort" type="hidden" value="<?= htmlspecialchars($filters['sort']); ?>">
+                <?php endif; ?>
+
+                <?php foreach ($availabilityOptions as $option): ?>
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                        <input
+                            name="availability"
+                            type="radio"
+                            value="<?= htmlspecialchars($option['value']); ?>"
+                            <?= $option['selected'] ? 'checked' : ''; ?>
+                            class="w-4 h-4 text-blue-600 border-slate-300 focus:ring-blue-500"
+                            onchange="document.getElementById('mobile-availability-form').submit()"
+                        >
+                        <span class="text-[14px] <?= $option['selected'] ? 'text-slate-800 font-medium' : 'text-slate-600 group-hover:text-slate-800' ?>"><?= htmlspecialchars($option['label']); ?></span>
+                    </label>
+                <?php endforeach; ?>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobile-filter-toggle');
+            const close = document.getElementById('mobile-filter-close');
+            const drawer = document.getElementById('mobile-filter-drawer');
+            const backdrop = document.getElementById('mobile-filter-backdrop');
+
+            if (toggle && close && drawer && backdrop) {
+                const openFilter = () => {
+                    drawer.classList.add('is-open');
+                    backdrop.classList.add('is-open');
+                    document.body.style.overflow = 'hidden';
+                };
+
+                const closeFilter = () => {
+                    drawer.classList.remove('is-open');
+                    backdrop.classList.remove('is-open');
+                    document.body.style.overflow = '';
+                };
+
+                toggle.addEventListener('click', openFilter);
+                close.addEventListener('click', closeFilter);
+                backdrop.addEventListener('click', closeFilter);
+            }
+        });
+    </script>
 </div>
