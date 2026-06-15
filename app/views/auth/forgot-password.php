@@ -1,5 +1,9 @@
 <?php $errors = is_array($errors ?? null) ? $errors : []; ?>
-<section class="relative flex h-[100dvh] items-center justify-center overflow-hidden bg-surface">
+<style>
+    body { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
+    main { display: flex; flex: 1; overflow-y: auto; }
+</style>
+<section class="relative flex w-full flex-1 items-center justify-center bg-surface py-6">
     <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-primary/10 to-transparent"></div>
     <div class="w-full max-w-lg px-4 py-4">
         <div class="w-full">

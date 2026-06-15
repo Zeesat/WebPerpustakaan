@@ -72,6 +72,7 @@ class AuthController extends Controller
     {
         $this->view('auth/forgot-password', [
             'title' => 'Forgot Password',
+            'isLandingPage' => true,
             'status' => flash_get('status'),
         ]);
     }
@@ -80,6 +81,7 @@ class AuthController extends Controller
     {
         $this->view('auth/reset-password', [
             'title' => 'Reset Password',
+            'isLandingPage' => true,
             'status' => flash_get('status'),
         ]);
     }
