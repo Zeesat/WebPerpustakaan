@@ -67,27 +67,7 @@ $emptyDescription = $activeTab === 'current' && ! $hasActiveLoans && ! $hasActiv
 ?>
 
 <div class="bg-[#f4f7fb] min-h-screen">
-    <div class="max-w-[1240px] mx-auto px-6 py-10">
-        <section class="mb-8">
-            <h1 class="text-[34px] font-bold text-slate-900 tracking-tight mb-2">My Loans</h1>
-            <p class="text-[16px] text-slate-500">Track your borrowed books, due dates, and loan history.</p>
-        </section>
-
-        <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
-            <?php foreach ($summaryCards as $card): ?>
-                <?php [$iconClasses, $unitClasses] = $summaryToneClasses($card['tone']); ?>
-                <article class="bg-white rounded-xl border border-slate-100 shadow-sm p-6 flex items-center gap-5">
-                    <div class="w-14 h-14 rounded-xl flex items-center justify-center <?= htmlspecialchars($iconClasses); ?>">
-                        <span class="material-symbols-outlined text-[30px]"><?= htmlspecialchars($card['icon']); ?></span>
-                    </div>
-                    <div>
-                        <p class="text-[14px] font-semibold text-slate-600 mb-1"><?= htmlspecialchars($card['label']); ?></p>
-                        <p class="text-[28px] font-bold leading-none text-slate-900 mb-1.5"><?= htmlspecialchars((string) $card['value']); ?></p>
-                        <p class="text-[13px] font-semibold <?= htmlspecialchars($unitClasses); ?>"><?= htmlspecialchars($card['unit']); ?></p>
-                    </div>
-                </article>
-            <?php endforeach; ?>
-        </section>
+    <div class="max-w-[1240px] mx-auto px-6 py-6">
 
         <section class="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden mb-6">
             <div class="px-5 sm:px-6 pt-5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
