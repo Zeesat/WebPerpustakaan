@@ -1,8 +1,8 @@
 <?php $errors = is_array($errors ?? null) ? $errors : []; ?>
-<section class="relative overflow-hidden bg-surface">
+<section class="relative flex h-[100dvh] items-center justify-center overflow-hidden bg-surface">
     <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-primary/10 to-transparent"></div>
-    <div class="max-w-lg mx-auto px-4 py-4">
-        <div class="max-w-lg mx-auto">
+    <div class="w-full max-w-lg px-4 py-4">
+        <div class="w-full">
     
 
             <section class="relative flex items-center">
