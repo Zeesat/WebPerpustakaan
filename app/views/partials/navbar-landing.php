@@ -32,11 +32,11 @@
                     <a
                         class="basket-nav<?= $isBasket ? ' is-active' : ''; ?>"
                         data-basket-nav
-                        data-empty-label="Basket empty"
-                        data-filled-label="Basket ready"
+                        data-empty-label="Cart empty"
+                        data-filled-label="Cart ready"
                         href="<?= htmlspecialchars(url('/loans/request')); ?>"
                     >
-                        <span class="material-symbols-outlined basket-nav__icon">shopping_basket</span>
+                        <span class="material-symbols-outlined basket-nav__icon">shopping_cart</span>
                         <span class="basket-nav__text hidden sm:block"></span>
                         <span class="basket-nav__badge" data-basket-count hidden>0</span>
                     </a>
