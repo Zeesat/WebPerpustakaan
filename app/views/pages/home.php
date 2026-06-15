@@ -19,7 +19,7 @@
                 <a class="px-8 py-4 bg-white text-blue-900 font-bold rounded-lg shadow-lg hover:bg-blue-50 transition-colors" href="/books">
                     Browse Books
                 </a>
-                <a class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors flex items-center gap-2" href="/dashboard">
+                <a class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors flex items-center gap-2" href="/books">
                     How It Works <span class="material-symbols-outlined">play_circle</span>
                 </a>
             </div>
@@ -32,7 +32,7 @@
                     <p class="text-on-surface-variant font-body-md">Select your portal to continue with your library tasks.</p>
                 </div>
                 <div class="grid gap-4">
-                    <a class="group p-5 rounded-lg border border-slate-200 hover:border-primary-container hover:bg-surface-container-low transition-all cursor-pointer flex items-center gap-4" href="/dashboard">
+                    <a class="group p-5 rounded-lg border border-slate-200 hover:border-primary-container hover:bg-surface-container-low transition-all cursor-pointer flex items-center gap-4" href="/books">
                         <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-primary">
                             <span class="material-symbols-outlined">person</span>
                         </div>

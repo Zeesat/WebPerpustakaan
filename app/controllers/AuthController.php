@@ -65,7 +65,7 @@ class AuthController extends Controller
         }
 
         flash('status', 'Your account is ready. You are now signed in.');
-        $this->redirect('/dashboard');
+        $this->redirect('/books');
     }
 
     public function forgotPassword(): void

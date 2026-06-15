@@ -22,8 +22,8 @@
 
         <div class="site-nav__actions">
             <?php if (auth_check()): ?>
-                <a class="site-nav__button site-nav__button--ghost" href="<?= htmlspecialchars(url(auth_is_admin() ? '/admin' : '/dashboard')); ?>">
-                    <?= htmlspecialchars(auth_is_admin() ? 'Admin Panel' : 'Dashboard'); ?>
+                <a class="site-nav__button site-nav__button--ghost" href="<?= htmlspecialchars(url(auth_is_admin() ? '/admin' : '/books')); ?>">
+                    <?= htmlspecialchars(auth_is_admin() ? 'Admin Panel' : 'Books'); ?>
                 </a>
                 <form action="<?= htmlspecialchars(url('/logout')); ?>" class="inline-form" method="POST">
                     <?= csrf_field(); ?>

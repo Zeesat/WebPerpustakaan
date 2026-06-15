@@ -129,15 +129,15 @@ function guest_only_redirect_path(): string
         return '/login';
     }
 
-    return auth_is_admin() ? '/admin' : '/dashboard';
+    return auth_is_admin() ? '/admin' : '/books';
 }
 
 function consume_intended_path(): string
 {
-    $path = session_get('url.intended', auth_is_admin() ? '/admin' : '/dashboard');
+    $path = session_get('url.intended', auth_is_admin() ? '/admin' : '/books');
     session_forget('url.intended');
 
-    return is_string($path) ? $path : '/dashboard';
+    return is_string($path) ? $path : '/books';
 }
 
 function set_intended_path(string $path): void

@@ -19,6 +19,6 @@ class AdminMiddleware
         }
 
         flash('error', 'You do not have permission to access that page.');
-        redirect('/dashboard');
+        redirect('/books');
     }
 }
