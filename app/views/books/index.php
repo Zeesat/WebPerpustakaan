@@ -54,8 +54,8 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
         
         <div class="max-w-[1240px] mx-auto px-6 py-12 relative z-10 flex flex-col lg:flex-row justify-between items-center gap-10">
             <div class="w-full lg:w-[55%]">
-                <h1 class="text-[34px] font-bold mb-3 tracking-tight">Welcome, <?= htmlspecialchars($welcomeName); ?>! 👋</h1>
-                <p class="text-[16px] text-blue-100 mb-8 max-w-xl">
+                <h1 class="text-[28px] md:text-[34px] font-bold mb-3 tracking-tight">Welcome, <?= htmlspecialchars($welcomeName); ?>! 👋</h1>
+                <p class="text-[14px] md:text-[16px] text-blue-100 mb-8 max-w-xl">
                     Discover books, request loans, and expand your knowledge.
                 </p>
 
@@ -64,7 +64,7 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                         <span class="material-symbols-outlined text-[22px]">search</span>
                     </div>
                     <input
-                        class="flex-1 bg-transparent border-none outline-none text-slate-700 px-3 py-3 text-[15px] placeholder:text-slate-400"
+                        class="flex-1 bg-transparent border-none outline-none text-slate-700 px-3 py-3 text-[14px] md:text-[15px] placeholder:text-slate-400"
                         name="search"
                         type="search"
                         value="<?= htmlspecialchars($filters['search']); ?>"
@@ -80,12 +80,12 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                         <input name="sort" type="hidden" value="<?= htmlspecialchars($filters['sort']); ?>">
                     <?php endif; ?>
                     <div class="pr-2">
-                        <button class="bg-[#1e4ed8] hover:bg-blue-800 text-white font-medium px-7 py-2.5 rounded-md transition-colors" type="submit">Search</button>
+                        <button class="bg-[#1e4ed8] hover:bg-blue-800 text-white font-medium px-5 md:px-7 py-2 md:py-2.5 text-[14px] md:text-[15px] rounded-md transition-colors" type="submit">Search</button>
                     </div>
                 </form>
             </div>
 
-            <div class="w-full lg:w-[45%] flex gap-4 justify-end">
+            <div class="w-full lg:w-[45%] hidden md:flex gap-4 justify-end">
                 <?php foreach ($heroStats as $index => $stat): ?>
                     <?php 
                         $icon = 'menu_book';
@@ -106,7 +106,7 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
     </div>
 
     <div class="max-w-[1240px] mx-auto px-6 py-8 flex flex-col md:flex-row gap-8 items-start">
-        <aside class="w-full md:w-[260px] flex-shrink-0 flex flex-col gap-6 md:sticky md:top-24 self-start">
+        <aside id="catalog-filters-sidebar" class="w-full md:w-[260px] flex-shrink-0 flex flex-col gap-6 md:sticky md:top-24 self-start">
             <section class="bg-white rounded-xl shadow-sm px-4 pt-1 pb-4 border border-slate-100">
                 <h3 class="text-[15px] font-bold text-slate-800 mb-3 px-2">Categories</h3>
                 <div class="flex flex-col gap-1">

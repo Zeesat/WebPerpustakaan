@@ -26,7 +26,7 @@
             <a class="<?= $isCatalog ? $navLinkActive : $navLinkBase; ?>" href="<?= htmlspecialchars(url('/books')); ?>">Browse Books</a>
         </nav>
 
-        <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2 sm:gap-4 md:gap-6">
             <?php if (auth_check()): ?>
                 <?php if (! auth_is_admin()): ?>
                     <a
@@ -37,18 +37,18 @@
                         href="<?= htmlspecialchars(url('/loans/request')); ?>"
                     >
                         <span class="material-symbols-outlined basket-nav__icon">shopping_basket</span>
-                        <span class="basket-nav__text"></span>
+                        <span class="basket-nav__text hidden sm:block"></span>
                         <span class="basket-nav__badge" data-basket-count hidden>0</span>
                     </a>
                 <?php endif; ?>
 
                 <!-- Notification bell -->
-                <button class="relative text-slate-500 hover:text-slate-800 transition-colors p-1 border border-slate-200 rounded-lg bg-white shadow-sm">
+                <button class="hidden md:flex relative text-slate-500 hover:text-slate-800 transition-colors p-1 border border-slate-200 rounded-lg bg-white shadow-sm">
                     <span class="material-symbols-outlined text-[22px]">notifications</span>
                 </button>
 
                 <!-- User dropdown trigger -->
-                <div class="relative isolate overflow-visible" id="user-dropdown-wrapper" data-profile-dropdown>
+                <div class="hidden md:block relative isolate overflow-visible" id="user-dropdown-wrapper" data-profile-dropdown>
                     <button
                         id="user-dropdown-trigger"
                         data-profile-dropdown-trigger
