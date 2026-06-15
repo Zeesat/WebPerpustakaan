@@ -3,6 +3,7 @@
     <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-primary/10 to-transparent"></div>
     <div class="max-w-lg mx-auto px-4 py-4">
         <div class="max-w-lg mx-auto">
+
             <section class="relative flex items-center">
                 <div class="absolute inset-0 -z-10 rounded-[32px] bg-gradient-to-br from-white via-surface-container-lowest to-surface-container-low shadow-xl"></div>
                 <div class="w-full rounded-[32px] border border-white/70 bg-white/90 p-6 shadow-[0_30px_80px_rgba(0,44,120,0.12)] backdrop-blur md:p-10">
@@ -24,7 +25,8 @@
                                     Register here
                         </a>
                             </p>
-                        </div>
+                                                </div>
+                    </div>
 
                     <?php if (! empty($errors['general'])): ?>
                         <div class="mt-8 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-800" role="alert">
@@ -81,11 +83,18 @@
                 </div>
                         </div>
 
-                        <div class="rounded-2xl bg-surface-container-low px-5 py-4 text-xs leading-6 text-on-surface-variant">
-                            One account works across the student dashboard and admin area, with access controlled by your assigned role.
-                        </div>
+                        <label class="flex items-center gap-3 py-4 cursor-pointer select-none">
+                            <input
+                                                        class="h-4 w-4 rounded border-outline-variant text-primary focus:ring-primary/25"
+                                                        name="remember"
+                                                        type="checkbox"
+                                                        <?= old('remember') ? 'checked' : ''; ?>
+                                                    >
+                                                    <span class="text-xs text-on-surface-variant leading-6">Keep me signed in on this device</span>
+                                                </label>
+
                         <button
-                            class="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition hover:bg-primary-container"
+                            class="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition hover:bg-primary-container"
                             data-loading-text="Signing in..."
                             type="submit"
                         >

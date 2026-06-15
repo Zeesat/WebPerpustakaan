@@ -3,7 +3,7 @@
     <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-primary/10 to-transparent"></div>
     <div class="max-w-lg mx-auto px-4 py-4">
         <div class="max-w-lg mx-auto">
-
+    
             <section class="relative flex items-center">
                 <div class="absolute inset-0 -z-10 rounded-[32px] bg-gradient-to-br from-white via-surface-container-lowest to-surface-container-low shadow-xl"></div>
                 <div class="w-full rounded-[32px] border border-white/70 bg-white/90 p-6 shadow-[0_30px_80px_rgba(0,44,120,0.12)] backdrop-blur md:p-10">
@@ -26,12 +26,13 @@
                                 </a>
                             </p>
                         </div>
+                    </div>
 
                     <?php if (! empty($errors['general'])): ?>
                         <div class="mt-8 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-800" role="alert">
                             <?= htmlspecialchars((string) $errors['general']); ?>
                         </div>
-                    <?php endif; ?>
+                                <?php endif; ?>
 
                     <form action="/forgot-password" class="mt-4 space-y-4" data-loading-form method="POST">
                         <?= csrf_field(); ?>
@@ -42,28 +43,27 @@
                                 <div class="relative">
                                     <span class="material-symbols-outlined pointer-events-none absolute left-3 text-sm top-1/2 -translate-y-1/2 text-slate-400">mail</span>
                                     <input
-                                        class="block w-full rounded-xl border border-outline-variant bg-white px-3 py-2 pl-9 text-xs text-on-surface placeholder:text-xs placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/15"
+                                            class="block w-full rounded-xl border border-outline-variant bg-white px-3 py-2 pl-9 text-xs text-on-surface placeholder:text-xs placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/15"
                                         id="email"
                                         name="email"
                                         type="email"
                                         value="<?= htmlspecialchars((string) old('email')); ?>"
                                         autocomplete="email"
                                         placeholder="you@campus.ac.id"
-                                        required
-                                    >
-                                </div>
+                                            required
+                                        >
+                                    </div>
                                 <?php if (! empty($errors['email'])): ?>
                                     <p class="mt-2 text-sm font-medium text-error"><?= htmlspecialchars((string) $errors['email']); ?></p>
-                                <?php endif; ?>
-                            </div>
+                                    <?php endif; ?>
+                                </div>
                         </div>
 
                         <div class="rounded-2xl bg-surface-container-low px-5 py-4 text-xs leading-6 text-on-surface-variant">
                             Enter your registered email address and we'll send you a link to reset your password.
-                        </div>
-
+                                    </div>
                         <button
-                            class="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition hover:bg-primary-container"
+                            class="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition hover:bg-primary-container"
                             data-loading-text="Sending reset link..."
                             type="submit"
                         >
