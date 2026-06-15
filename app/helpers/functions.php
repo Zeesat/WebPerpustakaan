@@ -218,7 +218,15 @@ function cover_url(?string $cover): ?string
         return null;
     }
 
-    return url('/public/uploads/covers/' . ltrim($cover, '/'));
+    $url = url('/public/uploads/covers/' . ltrim($cover, '/'));
+    $filePath = BASE_PATH . '/public/uploads/covers/' . ltrim($cover, '/');
+
+    if (file_exists($filePath)) {
+        $mtime = filemtime($filePath);
+        $url .= '?v=' . $mtime;
+    }
+
+    return $url;
 }
 
 /**
