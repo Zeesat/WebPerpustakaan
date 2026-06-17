@@ -13,7 +13,6 @@ $appShellConfig = [
         'enabled' => auth_check() && ! auth_is_admin(),
         'storageKey' => \App\Services\BorrowBasketService::STORAGE_KEY,
         'maxItems' => \App\Services\BorrowBasketService::MAX_ITEMS_PER_REQUEST,
-        'storageTtlHours' => \App\Services\BorrowBasketService::STORAGE_TTL_HOURS,
         'basketUrl' => url('/loans/request'),
         'browseUrl' => url('/books'),
     ],

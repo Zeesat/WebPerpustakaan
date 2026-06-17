@@ -22,7 +22,6 @@ const readAppShellConfig = () => parseJsonScript('app-shell-config', {
         enabled: false,
         storageKey: 'library.loan-basket.v1',
         maxItems: 3,
-        storageTtlHours: 12,
         basketUrl: '/loans/request',
         browseUrl: '/books',
     },
@@ -105,10 +104,6 @@ const createBasketStore = () => {
         const userId = getConfig().auth?.userId;
         return Number.isInteger(userId) ? userId : null;
     };
-    const getTtlMs = () => {
-        const hours = Number(getConfig().basket?.storageTtlHours || 12);
-        return Math.max(1, hours) * 60 * 60 * 1000;
-    };
     const nowIso = () => new Date().toISOString();
 
     const writeNotice = (suffix) => {
@@ -119,7 +114,7 @@ const createBasketStore = () => {
     };
 
     const consumeNotice = () => {
-        const suffixes = ['expired', 'switched'];
+        const suffixes = ['switched'];
 
         for (const suffix of suffixes) {
             try {
@@ -140,7 +135,6 @@ const createBasketStore = () => {
         userId: getCurrentUserId(),
         items: [],
         updatedAt: nowIso(),
-        expiresAt: new Date(Date.now() + getTtlMs()).toISOString(),
     });
 
     const normalizeItem = (item) => {
@@ -184,7 +178,6 @@ const createBasketStore = () => {
         normalized.userId = basket.userId ?? normalized.userId;
         normalized.items = items;
         normalized.updatedAt = typeof basket.updatedAt === 'string' ? basket.updatedAt : normalized.updatedAt;
-        normalized.expiresAt = typeof basket.expiresAt === 'string' ? basket.expiresAt : normalized.expiresAt;
 
         return normalized;
     };
@@ -194,7 +187,6 @@ const createBasketStore = () => {
             ...basket,
             userId: getCurrentUserId(),
             updatedAt: nowIso(),
-            expiresAt: new Date(Date.now() + getTtlMs()).toISOString(),
         });
 
         try {
@@ -241,13 +233,6 @@ const createBasketStore = () => {
         }
 
         const currentUserId = getCurrentUserId();
-        const expiresAt = Date.parse(basket.expiresAt);
-
-        if (Number.isFinite(expiresAt) && expiresAt <= Date.now()) {
-            clear({ silent: true });
-            writeNotice('expired');
-            return blankBasket();
-        }
 
         if (currentUserId !== null && basket.userId !== null && Number(basket.userId) !== currentUserId) {
             clear({ silent: true });
@@ -516,10 +501,6 @@ const renderBasketPage = () => {
     const maxItems = Number(pageConfig.maxItems || 3);
     const remaining = Math.max(maxItems - selectedCount, 0);
     const notice = basketStore.consumeNotice();
-
-    if (notice === 'expired' && !basketPageState.feedback) {
-        setFeedbackBanner('Your borrowing list expired after being idle for a while. Start a fresh request when you are ready.', 'warning');
-    }
 
     if (notice === 'switched' && !basketPageState.feedback) {
         setFeedbackBanner('Your borrowing list was cleared because a different account is now active in this browser.', 'info');

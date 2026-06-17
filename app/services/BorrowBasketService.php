@@ -16,7 +16,6 @@ class BorrowBasketService
 {
     public const STORAGE_KEY = 'library.loan-basket.v1';
     public const MAX_ITEMS_PER_REQUEST = 3;
-    public const STORAGE_TTL_HOURS = 12;
     private const LOAN_PERIOD_DAYS = 7;
 
     public function __construct(
@@ -43,7 +42,6 @@ class BorrowBasketService
             'basketConfig' => [
                 'storageKey' => self::STORAGE_KEY,
                 'maxItems' => self::MAX_ITEMS_PER_REQUEST,
-                'storageTtlHours' => self::STORAGE_TTL_HOURS,
                 'loanDurationDays' => self::LOAN_PERIOD_DAYS,
                 'submitUrl' => url('/loans/request'),
                 'browseUrl' => url('/books'),
