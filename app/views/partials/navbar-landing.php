@@ -43,8 +43,8 @@
                 <?php endif; ?>
 
                 <!-- Notification bell -->
-                <button class="hidden md:flex relative text-slate-500 hover:text-slate-800 transition-colors p-1 border border-slate-200 rounded-lg bg-white shadow-sm">
-                    <span class="material-symbols-outlined text-[22px]">notifications</span>
+                <button class="basket-nav" aria-label="Notifications">
+                    <span class="material-symbols-outlined basket-nav__icon">notifications</span>
                 </button>
 
                 <!-- User dropdown trigger -->
@@ -53,7 +53,7 @@
                         id="user-dropdown-trigger"
                         data-profile-dropdown-trigger
                         type="button"
-                        class="flex items-center gap-3 border-l border-slate-200 pl-6 cursor-pointer hover:bg-slate-50 p-1.5 -m-1.5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+                        class="basket-nav cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                         aria-haspopup="true"
                         aria-expanded="false"
                         aria-controls="user-dropdown-menu"
