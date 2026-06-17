@@ -17,6 +17,15 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
+          script_stop: false
+          debug: true
+          command_timeout: 10m
           script: |
-            cd domains/trpl25.com/public_html/ale-libmanage
+            whoami
+            pwd
+            ls -la
+            cd /home/u169077025/domains/trpl25.com/public_html/ale-libmanage
+            pwd
+            git status
+            git remote -v
             git pull origin main
