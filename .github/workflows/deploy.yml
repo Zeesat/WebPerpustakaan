@@ -10,22 +10,55 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Pull latest code on server
-        uses: appleboy/ssh-action@v1.2.0
+      - name: Check connectivity
+        run: |
+          echo "Testing connection to SSH server..."
+          nc -vz ${{ secrets.HOST }} ${{ secrets.PORT }}
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
-          script_stop: false
+
           debug: true
-          command_timeout: 10m
+          script_stop: true
+
+          timeout: 60s
+          command_timeout: 15m
+
           script: |
+            set -x
+
+            echo "=== USER ==="
             whoami
+
+            echo "=== LOCATION ==="
             pwd
+
+            echo "=== DIRECTORY CONTENT ==="
             ls -la
+
+            echo "=== PROJECT ==="
             cd /home/u169077025/domains/trpl25.com/public_html/ale-libmanage
+
             pwd
+
+            echo "=== GIT STATUS ==="
             git status
+
+            echo "=== REMOTE ==="
             git remote -v
+
+            echo "=== CURRENT COMMIT ==="
+            git rev-parse HEAD
+
+            echo "=== PULL ==="
             git pull origin main
+
+            echo "=== NEW COMMIT ==="
+            git rev-parse HEAD
+
+            echo "=== DONE ==="
