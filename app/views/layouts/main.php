@@ -189,21 +189,6 @@ $appShellConfig = [
         <?php require $viewPath; ?>
     </main>
 
-    <?php if (auth_check() && ! auth_is_admin()): ?>
-        <a
-            class="basket-mobile-bar"
-            data-basket-mobile-bar
-            href="<?= htmlspecialchars(url('/loans/request')); ?>"
-            hidden
-        >
-            <span class="basket-mobile-bar__label">
-                <span class="material-symbols-outlined">shopping_basket</span>
-                Basket
-            </span>
-            <span class="basket-mobile-bar__summary" data-basket-mobile-summary>0 items selected</span>
-            <span class="basket-mobile-bar__action">Review</span>
-        </a>
-    <?php endif; ?>
 
     <?php require BASE_PATH . '/app/views/partials/footer-landing.php'; ?>
     <script src="<?= htmlspecialchars(asset('js/app.js') . '?v=' . filemtime(BASE_PATH . '/public/assets/js/app.js')); ?>"></script>
