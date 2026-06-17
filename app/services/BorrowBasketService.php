@@ -98,7 +98,7 @@ class BorrowBasketService
                 ],
             ],
             'blockingNotice' => $activeLoanCount > 0
-                ? 'You already have an active loan or pending request. Review your borrowing list, but submission is currently locked.'
+                ? 'Submission is currently locked. You already have an active loan or pending request.'
                 : null,
         ];
     }
