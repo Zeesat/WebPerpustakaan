@@ -71,18 +71,20 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
             <span class="material-symbols-outlined text-[22px] leading-none">search</span>
         </div>
 
-        <input
-            id="book-search"
-            name="search"
-            type="search"
-            value="<?= htmlspecialchars($filters['search']); ?>"
-            placeholder="Search books by title, author, or keyword..."
-            autocomplete="off"
-            class="h-full w-full min-w-0 flex-1 bg-transparent px-3 text-[15px] text-slate-800 placeholder:text-slate-400
-                   border-0 outline-none ring-0
-                   focus:outline-none focus:ring-0 focus:border-0
-                   focus-visible:outline-none focus-visible:ring-0"
-        >
+                <input
+                    id="book-search"
+                    name="search"
+                    type="search"
+                    value="<?= htmlspecialchars($filters['search']); ?>"
+                    placeholder="Search books by title, author, or keyword..."
+                    autocomplete="off"
+                    class="h-full w-full min-w-0 flex-1 bg-transparent px-3 text-[15px] text-slate-800 placeholder:text-slate-400
+                           border-0 outline-none ring-0
+                           focus:outline-none focus:ring-0 focus:border-0
+                           focus-visible:outline-none focus-visible:ring-0"
+                    data-plh-desktop="Search books by title, author, or keyword..."
+                    data-plh-mobile="Search books..."
+                >
 
         <?php if ($filters['category_id'] !== null): ?>
             <input name="category" type="hidden" value="<?= htmlspecialchars((string) $filters['category_id']); ?>">
@@ -354,7 +356,7 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
         </div>
     </div>
 
-    <script>
+        <script>
         document.addEventListener('DOMContentLoaded', () => {
             const toggle = document.getElementById('mobile-filter-toggle');
             const close = document.getElementById('mobile-filter-close');
@@ -377,6 +379,18 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                 toggle.addEventListener('click', openFilter);
                 close.addEventListener('click', closeFilter);
                 backdrop.addEventListener('click', closeFilter);
+            }
+
+            // Responsive placeholder: desktop vs mobile
+            const searchInput = document.getElementById('book-search');
+            if (searchInput) {
+                const updatePlaceholder = () => {
+                    searchInput.placeholder = window.innerWidth >= 768
+                        ? searchInput.dataset.plhDesktop
+                        : searchInput.dataset.plhMobile;
+                };
+                updatePlaceholder();
+                window.addEventListener('resize', updatePlaceholder);
             }
         });
     </script>
