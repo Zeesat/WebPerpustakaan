@@ -22,43 +22,14 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
-
           debug: true
-          script_stop: true
-
           timeout: 60s
           command_timeout: 15m
-
           script: |
-            set -x
+            set -e
 
-            echo "=== USER ==="
-            whoami
-
-            echo "=== LOCATION ==="
-            pwd
-
-            echo "=== DIRECTORY CONTENT ==="
-            ls -la
-
-            echo "=== PROJECT ==="
             cd /home/u169077025/domains/trpl25.com/public_html/ale-libmanage
 
-            pwd
-
-            echo "=== GIT STATUS ==="
-            git status
-
-            echo "=== REMOTE ==="
-            git remote -v
-
-            echo "=== CURRENT COMMIT ==="
-            git rev-parse HEAD
-
-            echo "=== PULL ==="
             git pull origin main
 
-            echo "=== NEW COMMIT ==="
             git rev-parse HEAD
-
-            echo "=== DONE ==="
