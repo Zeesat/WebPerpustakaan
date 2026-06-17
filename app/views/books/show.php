@@ -45,7 +45,7 @@
                     data-basket-add
                     data-basket-book="<?= json_attr($book['basket_item']); ?>"
                     data-default-text="Request Loan"
-                    data-added-text="In Basket"
+                    data-added-text="In Borrowing List"
                     data-loading-text="Adding..."
                     data-limit-text="Limit Reached"
                     data-unavailable-text="Unavailable"
@@ -114,7 +114,7 @@
                                 data-basket-add
                                 data-basket-book="<?= json_attr($relatedBook['basket_item']); ?>"
                                 data-default-text="Request Loan"
-                                data-added-text="In Basket"
+                                data-added-text="In Borrowing List"
                                 data-loading-text="Adding..."
                                 data-limit-text="Limit Reached"
                                 data-unavailable-text="Unavailable"

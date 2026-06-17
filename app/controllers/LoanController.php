@@ -43,7 +43,7 @@ class LoanController extends Controller
             $this->json([
                 'success' => false,
                 'code' => 'invalid_payload',
-                'message' => 'The submitted basket payload is invalid.',
+                'message' => 'The submitted borrowing list payload is invalid.',
                 'issues' => [],
             ], 422);
             return;

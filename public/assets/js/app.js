@@ -712,7 +712,7 @@ const clearBasketWithConfirmation = () => {
     basketPageState.issues = [];
     basketPageState.completedLoan = null;
     basketPageState.completedMessage = '';
-    setFeedbackBanner('Basket cleared.', 'info');
+    setFeedbackBanner('Borrowing list cleared.', 'info');
     basketStore.clear();
     showToast('Borrowing list cleared.', 'info');
 };
@@ -787,7 +787,7 @@ const submitBasketRequest = async () => {
         basketStore.clear();
         showToast('Loan request submitted successfully.', 'success');
     } catch (error) {
-        setFeedbackBanner('Network issue detected. Your basket is still safe. Please retry when the connection stabilizes.', 'danger');
+        setFeedbackBanner('Network issue detected. Your borrowing list is still safe. Please retry when the connection stabilizes.', 'danger');
     } finally {
         basketPageState.loading = false;
         renderBasketPage();
@@ -816,7 +816,7 @@ const initBasketPage = () => {
             const bookId = Number(removeButton.dataset.basketRemove || 0);
             basketPageState.issues = basketPageState.issues.filter((issue) => Number(issue.book_id || 0) !== bookId);
             basketStore.remove(bookId);
-            showToast('Title removed from your basket.', 'info');
+            showToast('Title removed from your borrowing list.', 'info');
             return;
         }
 

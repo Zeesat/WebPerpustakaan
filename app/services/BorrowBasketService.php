@@ -36,7 +36,7 @@ class BorrowBasketService
         $activeLoanCount = $userId !== null ? $this->loans->countActiveByUser($userId) : 0;
 
         return [
-            'title' => 'Borrow Basket',
+            'title' => 'Borrowing List',
             'mainClass' => 'basket-main',
             'bodyClass' => 'basket-page-body',
             'basketConfig' => [
@@ -98,7 +98,7 @@ class BorrowBasketService
                 ],
             ],
             'blockingNotice' => $activeLoanCount > 0
-                ? 'You already have an active loan or pending request. Review your basket, but submission is currently locked.'
+                ? 'You already have an active loan or pending request. Review your borrowing list, but submission is currently locked.'
                 : null,
         ];
     }
@@ -122,7 +122,7 @@ class BorrowBasketService
         if ($items === [] && $issues === []) {
             return $this->buildFailureResponse(
                 'empty_basket',
-                'Your basket is empty. Add at least one title before submitting.',
+                'Your borrowing list is empty. Add at least one title before submitting.',
                 422
             );
         }
@@ -275,7 +275,7 @@ class BorrowBasketService
                 'issues' => [[
                     'scope' => 'basket',
                     'code' => 'invalid_payload',
-                    'message' => 'The submitted basket format is invalid.',
+                    'message' => 'The submitted borrowing list format is invalid.',
                 ]],
             ];
         }
@@ -289,7 +289,7 @@ class BorrowBasketService
                 $issues[] = [
                     'scope' => 'basket',
                     'code' => 'invalid_item',
-                    'message' => 'One of the basket items could not be processed.',
+                    'message' => 'One of the borrowing list items could not be processed.',
                 ];
                 continue;
             }
