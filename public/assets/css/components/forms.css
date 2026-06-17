@@ -2,6 +2,32 @@
    COMPONENTS: Forms — .form-field, .auth-form, catalog-search
    ============================================================ */
 
+/* Chrome/Edge: kill native search input focus outline
+   ============================================================ */
+input[type="search"] {
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+    -webkit-appearance: none;
+}
+
+input[type="search"]:focus,
+input[type="search"]:focus-visible,
+input[type="search"]:focus-within {
+    outline: none;
+    box-shadow: none;
+    border-color: transparent;
+}
+
 .inline-form {
     display: inline-flex;
     margin: 0;

@@ -59,30 +59,51 @@ $buildCatalogUrl = static function (array $overrides = []) use ($filters): strin
                     Discover books, request loans, and expand your knowledge.
                 </p>
 
-                <form action="<?= htmlspecialchars(url('/books')); ?>" class="relative flex items-center bg-white rounded-lg shadow-lg overflow-hidden h-[54px] w-full max-w-2xl" method="GET">
-                    <div class="pl-5 text-slate-400 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-[22px]">search</span>
-                    </div>
-                    <input
-                        class="flex-1 bg-transparent border-none outline-none text-slate-700 px-3 py-3 text-[14px] md:text-[15px] placeholder:text-slate-400"
-                        name="search"
-                        type="search"
-                        value="<?= htmlspecialchars($filters['search']); ?>"
-                        placeholder="Search books by title, author, or keyword..."
-                    >
-                    <?php if ($filters['category_id'] !== null): ?>
-                        <input name="category" type="hidden" value="<?= htmlspecialchars((string) $filters['category_id']); ?>">
-                    <?php endif; ?>
-                    <?php if ($filters['availability'] !== 'all'): ?>
-                        <input name="availability" type="hidden" value="<?= htmlspecialchars($filters['availability']); ?>">
-                    <?php endif; ?>
-                    <?php if ($filters['sort'] !== 'latest'): ?>
-                        <input name="sort" type="hidden" value="<?= htmlspecialchars($filters['sort']); ?>">
-                    <?php endif; ?>
-                    <div class="pr-2">
-                        <button class="bg-[#1e4ed8] hover:bg-blue-800 text-white font-medium px-5 md:px-7 py-2 md:py-2.5 text-[14px] md:text-[15px] rounded-md transition-colors" type="submit">Search</button>
-                    </div>
-                </form>
+<form action="<?= htmlspecialchars(url('/books')); ?>" method="GET" class="w-full max-w-3xl">
+    <label for="book-search" class="sr-only">Search books</label>
+
+        <div
+        class="group flex h-[58px] items-center overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.08)] transition-all duration-200
+               focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-500/15 focus-within:shadow-[0_14px_40px_rgba(30,78,216,0.16)]
+               outline-none focus-within:outline-none"
+    >
+        <div class="flex h-full items-center pl-5 text-slate-400">
+            <span class="material-symbols-outlined text-[22px] leading-none">search</span>
+        </div>
+
+        <input
+            id="book-search"
+            name="search"
+            type="search"
+            value="<?= htmlspecialchars($filters['search']); ?>"
+            placeholder="Search books by title, author, or keyword..."
+            autocomplete="off"
+            class="h-full w-full min-w-0 flex-1 bg-transparent px-3 text-[15px] text-slate-800 placeholder:text-slate-400
+                   border-0 outline-none ring-0
+                   focus:outline-none focus:ring-0 focus:border-0
+                   focus-visible:outline-none focus-visible:ring-0"
+        >
+
+        <?php if ($filters['category_id'] !== null): ?>
+            <input name="category" type="hidden" value="<?= htmlspecialchars((string) $filters['category_id']); ?>">
+        <?php endif; ?>
+        <?php if ($filters['availability'] !== 'all'): ?>
+            <input name="availability" type="hidden" value="<?= htmlspecialchars($filters['availability']); ?>">
+        <?php endif; ?>
+        <?php if ($filters['sort'] !== 'latest'): ?>
+            <input name="sort" type="hidden" value="<?= htmlspecialchars($filters['sort']); ?>">
+        <?php endif; ?>
+
+        <div class="flex h-full items-center pr-2">
+            <button
+                type="submit"
+                class="inline-flex h-[42px] items-center rounded-xl bg-gradient-to-r from-blue-700 to-blue-600 px-6 text-[14px] font-semibold text-white shadow-sm transition-all duration-200 hover:from-blue-800 hover:to-blue-700 hover:shadow-md active:scale-[0.98]"
+            >
+                Search
+            </button>
+        </div>
+    </div>
+</form>
             </div>
 
             <div class="w-full lg:w-[45%] hidden md:flex gap-4 justify-end">
