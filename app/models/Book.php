@@ -28,45 +28,44 @@ class Book
 
         $search = trim((string) ($filters['search'] ?? ''));
         if ($search !== '') {
-            $where[] = '(b.title LIKE :search OR b.author LIKE :search OR COALESCE(b.description, \'\') LIKE :search)';
+            $where[] = '(v.title LIKE :search OR v.author LIKE :search OR COALESCE(v.description, \'\') LIKE :search)';
             $params['search'] = '%' . $search . '%';
         }
 
         $categoryId = $filters['category_id'] ?? null;
         if (is_int($categoryId) && $categoryId > 0) {
-            $where[] = 'b.category_id = :category_id';
+            $where[] = 'v.category_id = :category_id';
             $params['category_id'] = $categoryId;
         }
 
         $availability = (string) ($filters['availability'] ?? 'all');
         if ($availability === 'available') {
-            $where[] = 'b.stock > 0';
+            $where[] = 'v.stock > 0';
         } elseif ($availability === 'out_of_stock') {
-            $where[] = 'b.stock <= 0';
+            $where[] = 'v.stock <= 0';
         }
 
         $whereSql = $where === [] ? '' : 'WHERE ' . implode(' AND ', $where);
 
         $orderBy = match ((string) ($filters['sort'] ?? 'latest')) {
-            'title_asc' => 'b.title ASC, b.author ASC',
-            'title_desc' => 'b.title DESC, b.author DESC',
-            'author_asc' => 'b.author ASC, b.title ASC',
-            'stock_desc' => 'b.stock DESC, b.title ASC',
-            default => 'b.id DESC',
+            'title_asc' => 'v.title ASC, v.author ASC',
+            'title_desc' => 'v.title DESC, v.author DESC',
+            'author_asc' => 'v.author ASC, v.title ASC',
+            'stock_desc' => 'v.stock DESC, v.title ASC',
+            default => 'v.id DESC',
         };
 
         $stmt = $this->connection->prepare(
             "SELECT
-                b.id,
-                b.title,
-                b.author,
-                                b.stock,
-                b.cover,
-                COALESCE(b.description, '') AS description,
-                c.id AS category_id,
-                c.name AS category_name
-            FROM books b
-            INNER JOIN categories c ON c.id = b.category_id
+                v.id,
+                v.title,
+                v.author,
+                v.stock,
+                v.cover,
+                v.description,
+                v.category_id,
+                v.category_name
+            FROM vw_book_catalog v
             {$whereSql}
             ORDER BY {$orderBy}"
         );
@@ -82,18 +81,17 @@ class Book
         }
 
         $stmt = $this->connection->query(
-            "SELECT
-                b.id,
-                b.title,
-                b.author,
-                                b.stock,
-                b.cover,
-                COALESCE(b.description, '') AS description,
-                b.category_id,
-                COALESCE(c.name, 'Uncategorized') AS category_name
-            FROM books b
-            LEFT JOIN categories c ON c.id = b.category_id
-            ORDER BY b.id DESC"
+            'SELECT
+                v.id,
+                v.title,
+                v.author,
+                v.stock,
+                v.cover,
+                v.description,
+                v.category_id,
+                v.category_name
+            FROM vw_book_catalog v
+            ORDER BY v.id DESC'
         );
 
         return $stmt->fetchAll() ?: [];
@@ -146,17 +144,16 @@ class Book
 
         $stmt = $this->connection->prepare(
             'SELECT
-                b.id,
-                b.title,
-                b.author,
-                                b.stock,
-                b.cover,
-                COALESCE(b.description, \'\') AS description,
-                b.category_id,
-                COALESCE(c.name, \'Uncategorized\') AS category_name
-            FROM books b
-            LEFT JOIN categories c ON c.id = b.category_id
-            WHERE b.id = :id
+                v.id,
+                v.title,
+                v.author,
+                v.stock,
+                v.cover,
+                v.description,
+                v.category_id,
+                v.category_name
+            FROM vw_book_catalog v
+            WHERE v.id = :id
             LIMIT 1'
         );
         $stmt->execute(['id' => $id]);
@@ -195,17 +192,16 @@ class Book
 
         $statement = $this->connection->prepare(
             'SELECT
-                b.id,
-                b.title,
-                b.author,
-                b.stock,
-                b.cover,
-                COALESCE(b.description, \'\') AS description,
-                b.category_id,
-                COALESCE(c.name, \'Uncategorized\') AS category_name
-            FROM books b
-            LEFT JOIN categories c ON c.id = b.category_id
-            WHERE b.id IN (' . implode(', ', $placeholders) . ')'
+                v.id,
+                v.title,
+                v.author,
+                v.stock,
+                v.cover,
+                v.description,
+                v.category_id,
+                v.category_name
+            FROM vw_book_catalog v
+            WHERE v.id IN (' . implode(', ', $placeholders) . ')'
         );
         $statement->execute($params);
 
@@ -225,19 +221,18 @@ class Book
 
         $stmt = $this->connection->prepare(
             "SELECT
-                b.id,
-                b.title,
-                b.author,
-                                b.stock,
-                b.cover,
-                COALESCE(b.description, '') AS description,
-                c.id AS category_id,
-                c.name AS category_name
-            FROM books b
-            INNER JOIN categories c ON c.id = b.category_id
-            WHERE b.category_id = :category_id
-                AND b.id <> :exclude_id
-            ORDER BY b.id DESC
+                v.id,
+                v.title,
+                v.author,
+                v.stock,
+                v.cover,
+                v.description,
+                v.category_id,
+                v.category_name
+            FROM vw_book_catalog v
+            WHERE v.category_id = :category_id
+                AND v.id <> :exclude_id
+            ORDER BY v.id DESC
             LIMIT {$limit}"
         );
         $stmt->execute([

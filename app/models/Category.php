@@ -35,14 +35,12 @@ class Category
 
         $statement = $this->connection->query(
             'SELECT
-                c.id,
-                c.name,
-                COUNT(b.id) AS book_count,
-                COALESCE(SUM(b.stock), 0) AS stock_total
-            FROM categories c
-            LEFT JOIN books b ON b.category_id = c.id
-            GROUP BY c.id, c.name
-            ORDER BY c.name ASC'
+                v.id,
+                v.name,
+                v.book_count,
+                v.stock_total
+            FROM vw_category_summary v
+            ORDER BY v.name ASC'
         );
 
         return $statement ? ($statement->fetchAll() ?: []) : [];
