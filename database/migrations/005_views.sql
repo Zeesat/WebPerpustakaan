@@ -3,7 +3,7 @@
 -- Views simplify repeated JOIN queries used across models
 -- ============================================================
 
-USE library_management;
+USE u169077025_db_libmanage;
 
 -- -----------------------------------------------------------
 -- 1. vw_book_catalog

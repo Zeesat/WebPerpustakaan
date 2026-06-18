@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS library_management;
-USE library_management;
+CREATE DATABASE IF NOT EXISTS u169077025_db_libmanage;
+USE u169077025_db_libmanage;
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,

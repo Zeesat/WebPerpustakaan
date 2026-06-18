@@ -2,7 +2,7 @@
 -- Migration 006: Create stored functions
 -- ============================================================
 
-USE library_management;
+USE u169077025_db_libmanage;
 
 DELIMITER //
 

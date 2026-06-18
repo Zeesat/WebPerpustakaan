@@ -3,7 +3,7 @@
 -- and update books.category_id foreign key to allow category_id=0
 -- ============================================================
 
-USE library_management;
+USE u169077025_db_libmanage;
 
 -- 1. Insert the "Uncategorized" category with a specific id=0.
 --    Since categories.id is AUTO_INCREMENT, we temporarily disable

@@ -2,7 +2,7 @@
 -- Migration 007: Create stored procedures
 -- ============================================================
 
-USE library_management;
+USE u169077025_db_libmanage;
 
 DELIMITER //
 

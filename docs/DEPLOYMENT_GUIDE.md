@@ -47,43 +47,18 @@ database/migrations/007_procedures.sql
 database/migrations/008_triggers.sql
 ```
 
-### Step 2: Sesuaikan nama database di file migration
+### Step 2: Jalankan migration secara berurutan
 
-**PENTING:** File migration menggunakan `USE library_management;` (database development lokal). Di server produksi, database bernama `u169077025_db_libmanage`.
-
-**Cara A (edit file sebelum upload):**
-Buka setiap file `.sql` dan ganti baris:
-```sql
-USE library_management;
-```
-menjadi:
-```sql
-USE u169077025_db_libmanage;
-```
-
-**Cara B (jalankan langsung ke database target):**
-Jalankan mysql dengan flag `--database` tanpa perlu edit file:
-```bash
-mysql -u u169077025_ale -p --database u169077025_db_libmanage < 005_views.sql
-mysql -u u169077025_ale -p --database u169077025_db_libmanage < 006_functions.sql
-mysql -u u169077025_ale -p --database u169077025_db_libmanage < 007_procedures.sql
-mysql -u u169077025_ale -p --database u169077025_db_libmanage < 008_triggers.sql
-```
-
-### Step 3: Jalankan migration secara berurutan
+Semua file migration sudah menggunakan `USE u169077025_db_libmanage;` — tidak perlu edit manual.
 
 ```bash
-# Pastikan urutan: views → functions → procedures → triggers
-mysql -u u169077025_ale -pPerpustakaan1239 -h <host_produksi> --database u169077025_db_libmanage < database/migrations/005_views.sql
-
-mysql -u u169077025_ale -pPerpustakaan1239 -h <host_produksi> --database u169077025_db_libmanage < database/migrations/006_functions.sql
-
-mysql -u u169077025_ale -pPerpustakaan1239 -h <host_produksi> --database u169077025_db_libmanage < database/migrations/007_procedures.sql
-
-mysql -u u169077025_ale -pPerpustakaan1239 -h <host_produksi> --database u169077025_db_libmanage < database/migrations/008_triggers.sql
+mysql -u u169077025_ale -pPerpustakaan1239 -h <host_produksi> < database/migrations/005_views.sql
+mysql -u u169077025_ale -pPerpustakaan1239 -h <host_produksi> < database/migrations/006_functions.sql
+mysql -u u169077025_ale -pPerpustakaan1239 -h <host_produksi> < database/migrations/007_procedures.sql
+mysql -u u169077025_ale -pPerpustakaan1239 -h <host_produksi> < database/migrations/008_triggers.sql
 ```
 
-### Step 4: Verifikasi
+### Step 3: Verifikasi
 
 Jalankan query berikut untuk memastikan semua objek terbuat:
 

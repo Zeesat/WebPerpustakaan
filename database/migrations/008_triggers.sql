@@ -2,7 +2,7 @@
 -- Migration 008: Create triggers
 -- ============================================================
 
-USE library_management;
+USE u169077025_db_libmanage;
 
 DELIMITER //
 
